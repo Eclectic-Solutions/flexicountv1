@@ -1,0 +1,39 @@
+page-timer {
+    .cls-timer-disp{
+        background: blue;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        display: table;
+        position: relative;
+    }
+    
+    #id_countdown{
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+        display: table-cell;
+        font-size: 36px;
+        font-weight: normal;
+    }
+    
+    .timer-txt{
+        margin: 0 auto;
+        text-align: center;
+        display: table;
+        padding: 20px 0;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    
+    #home_page1{
+        
+        .header_image
+        {
+            height: 27px;
+        }
+    }
+}

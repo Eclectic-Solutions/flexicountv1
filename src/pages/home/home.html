@@ -1,14 +1,76 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content padding id="home_page">  
+  <h1><img class="logo_text" src="../assets/imgs/brand.png"/></h1>
+  <h6>Powered By StoreTech</h6>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <h6>Please Sign In</h6>
+
+  <ion-list id="id_content_login" [class]="classVariable1">
+      <ion-row>
+        <ion-col col-12>
+            <ion-item class="ref_input">
+              <ion-label fixed>Username</ion-label>
+              <ion-input type="text" #username id="unamebox"></ion-input>
+            </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+          <ion-col col-12>
+            <ion-item class="ref_input">
+              <ion-label fixed>Password</ion-label>
+              <ion-input type="password" #password id="pwdbox"></ion-input>
+            </ion-item>
+          </ion-col>
+      </ion-row>
+
+      <ion-row>
+          <ion-col col-12>
+              <ion-item>
+                <ion-label>Language</ion-label>
+                <ion-select [(ngModel)]="userLanguage">
+                    <div *ngFor="let item of data; let i = index" >
+                        <ion-option value="{{item.CultureID}}" selected="{{(i==0).toString()}}">{{item.Text}}</ion-option>
+                    </div>
+                  
+                </ion-select>
+              </ion-item>
+              
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+              <ion-item class="ckbx">
+                  <ion-label>Remember Me</ion-label>
+                  <ion-checkbox  [(ngModel)]="pepperonichk"></ion-checkbox>
+              </ion-item>
+          </ion-col>
+      </ion-row>
+
+      <ion-row>
+          <ion-col col-12>
+            <button ion-button color="textlight" full (click)=login()>Log In</button>
+          </ion-col>
+      </ion-row>
+    
+    </ion-list>
+  
+    <ion-list class="login_area" id="id_content_confirm_url" [class]="classVariable2">
+        
+        <ion-row>
+            <ion-col col-12>
+                <ion-label class="cls-siteurl-lbl">Enter Store Name </ion-label>
+                <ion-item class="ref_input">                    
+                    <ion-input type="text" #siteloginurl id="siteloginbox" placeholder="demofm"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        
+        <ion-row>
+            <ion-col col-12>
+                <button ion-button color="textlight" full (click)=saveSiteConfirmUrl()>Save</button>
+            </ion-col>
+        </ion-row>
+        
+    </ion-list>
+  
 </ion-content>

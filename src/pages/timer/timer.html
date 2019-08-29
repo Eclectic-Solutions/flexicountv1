@@ -1,0 +1,28 @@
+<ion-content padding id="home_page1">
+  <img class="header_image" src="../assets/imgs/brand.png"/>
+  <h2 class="mtitle" >Timer</h2>
+
+  <ion-col col-12>
+    
+    <div class="cls-timer-disp"><p id="id_countdown">{{timer}}</p></div>
+    <div class="timer-txt">Timer for: {{LoginUserapiDetails}}</div>
+    
+    
+    <button ion-button color="secondary" block default (click) = stopTimer() >Stop Timer</button>
+    <!--<button ion-button color="light" block default (click) = back()>Back</button>-->
+    
+    
+  </ion-col>
+  
+  <ion-row>
+        <ion-col col-12 style="border: none;">
+          <div col-6 style="float: left;">            
+            <ion-icon name="home" color="primary" size="large" (click)=home() style="font-size: 36px;"></ion-icon>
+          </div>
+          <div col-6 style="float: left; text-align: right;">
+            <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon>           
+          </div>
+        </ion-col>        
+  </ion-row>
+
+</ion-content>

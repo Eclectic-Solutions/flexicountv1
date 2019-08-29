@@ -4,26 +4,75 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpModule } from '@angular/http';
+import { Keyboard } from '@ionic-native/keyboard';
+import { Camera } from '@ionic-native/camera';
+import { SQLite } from '@ionic-native/sqlite';
+import { Toast } from '@ionic-native/toast';
+
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
+
+
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { AlertPage } from '../pages/alert/alert';
+import { SettingsPage } from '../pages/settings/settings';
+import { ManualArrivalConfirmationPage } from '../pages/manual-arrival-confirmation/manual-arrival-confirmation';
+import { ArrivalConfirmationPage } from '../pages/arrival-confirmation/arrival-confirmation';
+import { TimerPage } from '../pages/timer/timer';
+import { TimerSignoffPage } from '../pages/timer-signoff/timer-signoff';
+import { CompletionSummaryPage } from '../pages/completion-summary/completion-summary';
+import { SignoffPage } from '../pages/signoff/signoff';
+import { Signoff2Page } from '../pages/signoff2/signoff2';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    DashboardPage,
+    AlertPage,
+    SettingsPage,
+    ManualArrivalConfirmationPage,
+    ArrivalConfirmationPage,
+    TimerPage,
+    TimerSignoffPage,
+    CompletionSummaryPage,
+    SignoffPage,
+    Signoff2Page
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    HttpModule,
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    DashboardPage,
+    AlertPage,
+    SettingsPage,
+    ManualArrivalConfirmationPage,
+    ArrivalConfirmationPage,
+    TimerPage,
+    TimerSignoffPage,
+    CompletionSummaryPage,
+    SignoffPage,
+    Signoff2Page
   ],
   providers: [
     StatusBar,
+    BarcodeScanner,
     SplashScreen,
+    Keyboard,
+    Camera,
+    SQLite,
+    Toast,    
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

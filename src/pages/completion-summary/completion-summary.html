@@ -1,0 +1,28 @@
+<ion-content padding id="home_page">
+  <img class="header_image" src="../assets/imgs/brand.png"/>
+  <h2 class="mtitle" >Completion summary</h2>
+
+  <div class="scan-item">    
+  
+  <ion-card>  
+    
+    <h3 class="text_center">You have signed off cleaning for {{LoginUserapiDetails}}<br/><br/>Alert sent: {{data?.MetricAlertMonitoring.AlertSentTime | date: 'short' : '+0100'}}<br/>Arrival time: {{data?.MetricAlertMonitoring.ArrivalDateTime | date: 'short'}}<br/>Completion time: {{data?.MetricAlertMonitoring.CompletionDateTime | date: 'short' : '+0100'}}<br/>Completed within: {{data?.MetricAlertMonitoring.CompletedWithin}}</h3>
+    
+  </ion-card>
+  
+  </div>
+
+<button ion-button color="secondary" full large (click)=signOffAnotherLocation() >Sign Off <br/>Another Location</button>
+<ion-row>
+        <ion-col col-12 style="border: none;">
+          <div col-6 style="float: left;">            
+            <ion-icon name="home" color="primary" size="large" (click)=home() style="font-size: 36px;"></ion-icon>
+          </div>
+          <div col-6 style="float: left; text-align: right;">
+            <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon>           
+          </div>
+        </ion-col>        
+  </ion-row>
+
+
+</ion-content>

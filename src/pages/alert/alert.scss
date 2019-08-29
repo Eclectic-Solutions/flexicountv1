@@ -1,0 +1,73 @@
+page-alert {
+    
+    #home_page{
+        background: color($colors, light);
+        h1
+        {
+            text-align: center;
+            font-family: sans-serif;
+            span.light_color {
+                color: color($colors, textlight);
+            }
+            img.logo_text {
+                padding: 0 3% 0 0;
+                vertical-align: middle;
+            }
+            .mtitle {
+                width: 100%;
+                border: 1px solid rgb(165, 31, 31);
+                background: color($colors, primary);
+            }
+        }
+        ion-row.header .col {
+            background: color($colors, primary);
+            color: color($colors, light);
+        }  
+        ion-row .col {
+           border: 1px solid #ddd;
+           color: #f00;
+        }
+        ion-row.blk_font .col {
+            border: 1px solid #ddd;
+            color: #000;
+        }
+        .header_image
+        {
+            height: 27px;
+        }
+    }
+    .cls-alert-page .scroll-content ion-item.item{background: none;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner{
+        background: #FFF;
+        margin-bottom: 22px;
+        padding: 0;
+        border-bottom: none;
+    }
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md{margin: 0 0 0 0;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor2 .card-content-md:first-child{border-bottom: 1px solid #808080;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-red .card-content-md .cls-sad-2{float: right;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-red .card-content-md .cls-sad-2 ion-icon{color: #FF0000; font-size: 22px;}
+    .cls-arrow-2{float: right;}
+    .cls-arrow-2 ion-icon{color: #FF0000; font-size: 22px;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md ion-card.cls-rowcolor2{border-left:10px solid #FF0000;}
+    
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md ion-card.cls-rowcolor1{border-left:10px solid #ffc000;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md ion-card.cls-rowcolor0{border-left:10px solid #92d050;}
+    
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor1 .card-content-md:first-child{border-bottom: 1px solid #808080;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor1 .card-content-md .cls-sad-1{float: right; display: none;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor1 .card-content-md .cls-arrow-1{float: right;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor1 .card-content-md .cls-arrow-1 ion-icon{color: #ffc000; font-size: 22px;}
+    
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor0 .card-content-md:first-child{border-bottom: 1px solid #808080;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor0 .card-content-md .cls-sad-0{float: right; display: none;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor0 .card-content-md .cls-arrow-0{float: right;}
+    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor0 .card-content-md .cls-arrow-0 ion-icon{color: #92d050; font-size: 22px;}
+    
+    .cls-disp-false{display: none;}
+    
+    
+    .ggtg{display: none;}
+    
+    .cls-thold{margin-right: 10px;}
+}

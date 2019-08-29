@@ -1,0 +1,36 @@
+page-timer-signoff {
+    #home_page{
+        background: color($colors, light);
+        /*h2.mtitle 
+        {
+            text-align: center;
+            width: 100%;
+            background: color($colors, primary);
+            border-radius: 5px;
+            color: #fff;
+            padding: 5px 2px;
+        }*/
+        .header_image
+        {
+            height: 27px;
+        }
+        h3.text_center {
+        text-align: center;
+        padding: 5% 10%;
+        font-weight: 400;
+        font-size: 20px;
+        }
+        .qrscaner {
+            height: 200px;
+            width: 200px;
+            border: 1px solid #ddd;
+            margin: 10% auto;
+        }
+        .card-md {
+            margin: 0px 10px;
+        }
+        .scan-item {
+            margin: 5% 0 10%;
+        }
+    }
+}

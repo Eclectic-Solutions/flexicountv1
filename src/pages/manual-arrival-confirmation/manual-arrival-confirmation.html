@@ -1,0 +1,26 @@
+<ion-content padding id="home_page">
+  <img class="header_image" src="../assets/imgs/brand.png"/>
+  <h2 class="mtitle" >Arrival Confirmation</h2>
+
+  <div class="scan-item" >
+    
+  <ion-card>
+    <h3 class="text_center">Please confirm you have arrived at location {{LoginUserapiDetails}}</h3>
+  </ion-card>
+  </div>
+
+<button ion-button color="secondary" full large (click) = manualConfirmation()>ARRIVAL CONFIRMATION</button>
+
+<ion-row>
+        <ion-col col-12 style="border: none;">
+          <div col-6 style="float: left;">            
+            <ion-icon name="home" color="primary" size="large" (click)=home() style="font-size: 36px;"></ion-icon>
+          </div>
+          <div col-6 style="float: left; text-align: right;">
+            <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon>           
+          </div>
+        </ion-col>        
+  </ion-row>
+
+
+</ion-content>

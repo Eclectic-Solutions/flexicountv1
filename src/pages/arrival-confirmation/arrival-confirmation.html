@@ -1,0 +1,13 @@
+<ion-content padding id="home_page1">
+  <img class="header_image" src="../assets/imgs/brand.png"/>
+  <h2 class="mtitle" >Arrival confirmation</h2>
+
+  <ion-col col-12>
+    
+    <h3 class="text_center" >Please confirm the location you are at by scanning the sensor's QR code in the window below</h3>      
+    <div class="qrscaner" ></div>    
+    <button ion-button color="secondary" full large (click) = scan2Code() >Capture QR Code</button>
+    <button *ngIf="aDevice==1" ion-button color="primary" full (click) = gotoTimerPage()>Redirect Timer</button>
+  </ion-col>
+
+</ion-content>

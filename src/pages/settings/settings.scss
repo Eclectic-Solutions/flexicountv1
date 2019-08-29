@@ -1,0 +1,64 @@
+page-settings {
+    #settings_page_body{
+        background: color($colors, light);
+        h1
+        {
+            text-align: center;
+            font-family: sans-serif;
+            span.light_color {
+                color: color($colors, textlight);
+            }
+            img.logo_text {
+                padding: 0 3% 0 0;
+                vertical-align: middle;
+            }
+            .mtitle {
+                width: 100%;
+                border: 1px solid rgb(165, 31, 31);
+                background: color($colors, primary);
+            }
+        }
+        ion-row.header .col {
+            background: color($colors, primary);
+            color: color($colors, light);
+        }  
+        ion-row .col {
+           border: 1px solid #ddd;
+           color: #f00;
+        }
+        ion-row.blk_font .col {
+            border: 1px solid #ddd;
+            color: #000;
+        }
+        .header_image
+        {
+            height: 27px;
+        }
+        ion-item.item.item-block.item-md.item-toggle {
+    margin-bottom: 30px;
+    padding-left: 0;
+    line-height: 25px;
+    border-top: 1px solid #e4e2e2;
+}
+.item-md.item-toggle ion-label {
+    margin-left: 16px;
+}
+        
+        
+    }
+.cls-settings-pg .scroll-content .cls-settings-edit-link{background: none; text-align: right; color: #0000FF; cursor: pointer; outline: none; padding-left: 0;}
+.cls-settings-pg .scroll-content .cls-edit-head-content .item-inner{border-bottom: none; padding-right: 0;}
+.cls-settings-pg .scroll-content .cls-edit-head-content{margin-bottom: 40px; padding-left: 0; }
+.cls-settings-pg .scroll-content .cls-edit-head-content .item-inner ion-label.label-md{padding-right:0; margin: 0; }
+.cls-settings-pg .scroll-content .cls-edit-head-content .item-inner ion-label.label-md div.cls-log-url{
+    line-height: 50px;
+    padding-left: 16px;
+    border-bottom: 1px solid #cecdcd;
+}
+.cls-settings-pg .scroll-content .cls-edit-head-content .item-inner ion-label.label-md div.cls-site-lnk{
+    line-height: 50px;
+    padding-left: 16px;
+    border-bottom: 1px solid #cecdcd;
+    text-align: center;
+}
+}

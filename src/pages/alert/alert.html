@@ -1,0 +1,38 @@
+<ion-content padding id="home_page" class="cls-alert-page">
+  <img class="header_image" src="../assets/imgs/brand.png"/>
+
+  <h2 class="mtitle">Alerts</h2>
+  <ion-item *ngFor="let item of data; let i = index">
+  
+  <ion-card class="cls-rowcolor{{ item.MetricAlertClass }}">
+    <ion-card-content>      
+      {{ item.Domain.DomainCode }} - {{ item.Store.Name }} - {{ item.Department.Name }}
+      <div class="cls-sad-{{ item.MetricAlertClass }} cls-disp-{{ item.SadFacePressed }}">
+        <ion-icon ios="ios-sad" md="md-sad"></ion-icon>
+      </div>
+    </ion-card-content>
+    <ion-card-content>
+      <span class="cls-thold">Threshold: {{ item.Criteria }} </span>Latest usage: {{ item.LatestUsage }}
+      <ion-item class="cls-arrow-{{ item.MetricAlertClass }}" tappable (click)=arrivalConfirmation(item.DomainID,item.StoreID,item.DepartmentID,item.Domain.Name,item.Store.Name,item.Department.Name,item.Domain.DomainCode)>
+        <ion-icon name="arrow-round-forward"></ion-icon>
+      </ion-item>      
+    </ion-card-content>
+  </ion-card>
+    
+  </ion-item>
+
+ 
+  
+  <ion-row>
+        <ion-col col-12 style="border: none;">
+          <div col-6 style="float: left;">            
+            <ion-icon name="home" color="primary" size="large" (click)=home() style="font-size: 36px;"></ion-icon>
+          </div>
+          <div col-6 style="float: left; text-align: right;">
+            <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon>           
+          </div>
+        </ion-col>        
+  </ion-row>
+
+
+</ion-content>

@@ -1,3 +1,65 @@
 page-home {
-
+    #home_page{
+        background: color($colors, light);
+        .cls-siteurl-lbl{margin-left: 3px;}
+        
+        h1{
+            text-align: center;
+            font-family: sans-serif;
+            span.light_color {
+                color: color($colors, textlight);
+            }
+            img.logo_text {
+                padding: 18% 0 0 0;
+                vertical-align: middle;
+            }
+        }
+        
+        .header_image{
+            height: 27px;
+        }
+        
+        h6 {
+            text-align: center;
+            padding: 2% 0 0;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        
+        .login_area {
+            margin: 6% auto;
+            border: 1px solid #ddd;
+            padding: 5%;
+            box-shadow: 0 0 6px #ddd;
+        }
+        
+        .ref_input {
+            border: 1px solid #ddd;
+            height: 15px;
+        }
+        
+        .text {
+            color: color($colors, textlight);
+        }
+        
+        .text.left{
+            text-align: left;
+        }
+        
+        .text.right{
+            text-align: right;
+        }
+        
+        .ckbx .item-inner ion-label {
+            font-size: 10px;
+        }
+        
+        .ckbx  .checkbox-md {
+            margin: 9px 9px 9px 4px;
+        }
+        
+        .cls-disp-none{display: none;}
+        
+        .cls-disp-blck{display: block;}
+    }
 }
