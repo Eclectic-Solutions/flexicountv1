@@ -12,6 +12,7 @@ import { SQLite } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Push } from '@ionic-native/push';
 
 
 
@@ -72,7 +73,8 @@ import { Signoff2Page } from '../pages/signoff2/signoff2';
     Keyboard,
     Camera,
     SQLite,
-    Toast,    
+    Toast,
+    Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
