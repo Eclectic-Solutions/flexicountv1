@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 
-//import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
+//import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { Storage } from '@ionic/storage';
 
 import { TimerPage } from '../timer/timer';
@@ -26,7 +26,7 @@ export class ArrivalConfirmationPage {
   option:BarcodeScannerOptions;
   public aDevice = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public barcodeScaner: BarcodeScanner, public platform: Platform, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public barcodeScaner: BarcodeScanner, public platform: Platform, private storage: Storage, private alertController:AlertController) {
   }
 
   ionViewDidLoad() {
@@ -37,40 +37,53 @@ export class ArrivalConfirmationPage {
   }
   
   scan2Code(){
-     this.option={
-       prompt: "Focus the QR code in the window below to sign off cleaning"
-     }
-     this.barcodeScaner.scan(this.option).then(barcodeData => {
-       console.log(barcodeData);
-       this.data = barcodeData;
-       
-       
-       
-       //this.navCtrl.push(TimerPage, { data: barcodeData.text });
-       
-       this.storage.get('alertTimerSettings').then((val7) => {
-     
-       if(val7==true)
-       {
-        //redirect to the next page ie Timer Page
-        this.navCtrl.push(TimerPage, { data: barcodeData.text });
-       }
-       else
-       {
-         //redirect to the next page of the Timer Page ie Timer Page
-         this.navCtrl.push(TimerSignoffPage);
-       }
-     
-      });
-      
-      
-      
-      })
-     
-      .catch(err => {
-          console.log('Error', err);
-      });
+  
+   this.option={
+    prompt: "Focus the QR code in the window below to sign off cleaning"
    }
+   
+   this.barcodeScaner.scan(this.option).then(barcodeData => {
+   
+    console.log(barcodeData);
+    this.data = barcodeData;
+    
+    this.storage.get('alertTimerSettings').then((val7) => {
+    
+     if(val7==true)
+     {
+       //redirect to the next page ie Timer Page
+       this.navCtrl.push(TimerPage, { data: barcodeData.text });
+     }
+     else
+     {
+       //redirect to the next page of the Timer Page ie Timer Page
+       this.navCtrl.push(TimerSignoffPage);
+     }
+    
+    });
+   
+   
+   }).catch(err => {
+   
+    console.log('Error', err);
+    
+    let addTodoAlert=this.alertController.create({
+                       
+       title: "QR Scan Error",
+       message: "error: "+err,
+       buttons:[
+         {
+           text:"OK",           
+         }
+       ]
+     
+     });
+     
+     addTodoAlert.present();
+    
+   });
+  
+  }
    
    gotoTimerPage(){
     //this.navCtrl.push(TimerPage);
