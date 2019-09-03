@@ -82,12 +82,14 @@ export class MyApp {
     
       console.log('device token -> ' + data.registrationId);
       
+      /*
       const alert = this.alertCtrl.create({
         title: 'Device Token',
         message: data.registrationId,
         buttons: ['OK']
       });        
       alert.present();
+      */
       
       var headers = new Headers();
       headers.append("Accept", 'application/json');

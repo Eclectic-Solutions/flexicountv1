@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 //import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 import { Storage } from '@ionic/storage';
 
 import { TimerPage } from '../timer/timer';
@@ -67,6 +67,7 @@ export class ArrivalConfirmationPage {
    
     console.log('Error', err);
     
+    /*
     let addTodoAlert=this.alertController.create({
                        
        title: "QR Scan Error",
@@ -80,6 +81,7 @@ export class ArrivalConfirmationPage {
      });
      
      addTodoAlert.present();
+     */
     
    });
   
