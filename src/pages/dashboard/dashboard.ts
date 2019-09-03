@@ -24,7 +24,69 @@ import { SignoffPage } from '../signoff/signoff';
 })
 export class DashboardPage {
 
+  keydeviceToken:string = 'deviceToken';
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,private alertController:AlertController, public platform: Platform, private storage: Storage) {
+  
+   this.saveDeviceToken();
+  
+  }
+  
+  saveDeviceToken(){
+  
+   this.storage.get('deviceToken').then((valdeviceToken) => {
+   
+    if(valdeviceToken)
+    {
+     
+     this.storage.get('loginUserToken').then((valloginUserToken) => {
+     
+      if(valloginUserToken)
+      {
+        /*var headers = new Headers();
+        headers.append("Accept", 'application/json');
+        headers.append('Content-Type', 'application/json' );
+        const requestOptions = new RequestOptions({ headers: headers });*/
+        
+        var headers = new Headers();
+        headers.append("Authorization", 'Bearer '+valloginUserToken);       
+        const requestOptions = new RequestOptions({ headers: headers });
+        
+        let postData = {
+         "TokenPayload": valdeviceToken
+        }
+        
+        /*this.http.post("https://auth.biblicalarchaeology.org/pushnotification.php", postData, requestOptions)      
+        .subscribe(datalogin =>{
+          this.storage.set(this.keydeviceToken,'');
+          console.log(datalogin);
+        }, error => {
+          console.log(error);
+        });*/
+        
+        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+        
+           this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/AddDeviceToken', postData, requestOptions)
+           .map(res => res.json())
+           .subscribe(datalogin =>{
+           
+            this.storage.set(this.keydeviceToken,'');
+            console.log(datalogin);
+             
+           },err => {
+           console.log(err);
+          });
+        
+        });
+      
+      }     
+     
+     });
+     
+    }
+   
+   });
+  
   }
 
   ionViewDidLoad() {
