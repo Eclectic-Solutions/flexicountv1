@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { Insomnia } from '@ionic-native/insomnia';
 
 
 import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirmation';
@@ -36,7 +37,15 @@ export class TimerPage {
   url: string;
   data: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, private insomnia: Insomnia) {
+  
+   this.insomnia.keepAwake()
+  .then(
+    () => console.log('success'),
+    () => console.log('error')
+   );
+  
+  
    this.startTimer();
   }
     
@@ -133,14 +142,35 @@ export class TimerPage {
   }
   
   back(){
+  
+    this.insomnia.allowSleepAgain()
+    .then(
+     () => console.log('success'),
+     () => console.log('error')
+    );
+    
     this.navCtrl.push(ArrivalConfirmationPage);
   }
   
   home(){
+  
+   this.insomnia.allowSleepAgain()
+    .then(
+     () => console.log('success'),
+     () => console.log('error')
+    );
+    
    this.navCtrl.push(DashboardPage);
   }
   
   stopTimer(){
+  
+   this.insomnia.allowSleepAgain()
+    .then(
+     () => console.log('success'),
+     () => console.log('error')
+    );
+    
     this.navCtrl.push(TimerSignoffPage);
   }
 

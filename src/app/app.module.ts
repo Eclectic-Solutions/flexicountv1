@@ -15,6 +15,8 @@ import { Toast } from '@ionic-native/toast';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Push } from '@ionic-native/push';
 
+import { Insomnia } from '@ionic-native/insomnia';
+
 
 
 
@@ -76,6 +78,7 @@ import { Signoff2Page } from '../pages/signoff2/signoff2';
     SQLite,
     Toast,
     Push,
+    Insomnia,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
