@@ -9,6 +9,8 @@ import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
 import { TimerPage } from '../timer/timer';
 import { CompletionSummaryPage } from '../completion-summary/completion-summary';
+import { ManualArrivalConfirmationPage } from '../manual-arrival-confirmation/manual-arrival-confirmation';
+import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirmation';
 
 
 
@@ -51,7 +53,30 @@ export class TimerSignoffPage {
   }
   
   back(){
-    this.navCtrl.push(TimerPage);
+    //this.navCtrl.push(TimerPage);
+    this.storage.get('alertTimerSettings').then((val7) => {
+    
+     if(val7==true)
+     {
+      //redirect to the next page ie Timer Page
+      this.navCtrl.push(TimerPage);
+     }
+     else
+     {
+       this.storage.get('alertScanQrSettings').then((val) => {
+         //check wheather QRScan settings is on or off
+         if(val==true)
+         {
+          this.navCtrl.push(ArrivalConfirmationPage);
+         }
+         else
+         {     
+          this.navCtrl.push(ManualArrivalConfirmationPage);     
+         }    
+       });
+     }
+     
+    });
   }
   
   completion_summary(){

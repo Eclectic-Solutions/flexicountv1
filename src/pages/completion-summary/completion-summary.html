@@ -12,17 +12,23 @@
   
   </div>
 
-<button ion-button color="secondary" full large (click)=signOffAnotherLocation() >Sign Off <br/>Another Location</button>
-<ion-row class="footer-btnn">
-        <ion-col col-12 style="border: none;">
-          <div col-6 style="float: left;">            
-            <ion-icon name="home" color="primary" size="large" (click)=home() style="font-size: 36px;"></ion-icon>
-          </div>
-          <div col-6 style="float: left; text-align: right;">
-            <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon>           
-          </div>
-        </ion-col>        
-  </ion-row>
-
+  <button ion-button color="secondary" full large (click)=signOffAnotherLocation() >Sign Off <br/>Another Location</button>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>  
+    <ion-grid>
+        <ion-row>
+          <ion-col col-2 style="border: none;">
+            <ion-icon name="home" color="primary" size="large" (click)=home() style="font-size: 36px;"></ion-icon>
+          </ion-col>
+          <ion-col col-8 style="border: none;">
+          </ion-col>
+          <ion-col col-2 style="border: none; text-align: right;">
+            <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon> 
+          </ion-col>
+        </ion-row>
+    </ion-grid>  
+  </ion-toolbar>
+</ion-footer>

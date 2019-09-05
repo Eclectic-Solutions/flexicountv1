@@ -11,6 +11,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirmation';
 import { TimerSignoffPage } from '../timer-signoff/timer-signoff';
 import { DashboardPage } from '../dashboard/dashboard';
+import { ManualArrivalConfirmationPage } from '../manual-arrival-confirmation/manual-arrival-confirmation';
 
 /**
  * Generated class for the TimerPage page.
@@ -149,7 +150,18 @@ export class TimerPage {
      () => console.log('error')
     );
     
-    this.navCtrl.push(ArrivalConfirmationPage);
+    //this.navCtrl.push(ArrivalConfirmationPage);
+    this.storage.get('alertScanQrSettings').then((val) => {
+      //check wheather QRScan settings is on or off
+      if(val==true)
+      {
+       this.navCtrl.push(ArrivalConfirmationPage);
+      }
+      else
+      {     
+       this.navCtrl.push(ManualArrivalConfirmationPage);     
+      }    
+    });
   }
   
   home(){
