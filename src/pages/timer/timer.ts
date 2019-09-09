@@ -33,6 +33,7 @@ export class TimerPage {
   
   public LoginUserapiDetails='';
   
+  keytimervalue:string = 'loginUserTimerValue';
   
   
   url: string;
@@ -60,6 +61,28 @@ export class TimerPage {
   }
   
   startTimer(){
+  
+   this.storage.get('loginUserTimerValue').then((timeVal) => {
+    console.log('Current Timer Value: '+timeVal);
+    
+    if(timeVal)
+    {
+     var hms = timeVal;   // your input string
+     var a = hms.split(':'); // split it at the colons
+
+     // minutes are worth 60 seconds. Hours are worth 60 minutes.
+     var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+     seconds--;
+     
+     console.log(seconds);
+     this.seconds = seconds;
+    }
+    
+   });
+  
+  
+  
+  
    var intervalVar=setInterval(function(){
    
    //alert('hi');
@@ -144,6 +167,9 @@ export class TimerPage {
   
   back(){
   
+   //code to reset user timer storage value
+   this.storage.set(this.keytimervalue,'');
+  
     this.insomnia.allowSleepAgain()
     .then(
      () => console.log('success'),
@@ -166,6 +192,9 @@ export class TimerPage {
   
   home(){
   
+   //code to reset user timer storage value
+   this.storage.set(this.keytimervalue,'');
+  
    this.insomnia.allowSleepAgain()
     .then(
      () => console.log('success'),
@@ -182,6 +211,9 @@ export class TimerPage {
      () => console.log('success'),
      () => console.log('error')
     );
+    
+    
+    this.storage.set(this.keytimervalue,this.timer);
     
     this.navCtrl.push(TimerSignoffPage);
   }

@@ -29,6 +29,7 @@ import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirm
 export class TimerSignoffPage {
 
   public LoginUserapiDetails='';
+  keytimervalue:string = 'loginUserTimerValue';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
   }
@@ -49,6 +50,10 @@ export class TimerSignoffPage {
   }
   
   home(){
+  
+    //code to reset user timer storage value
+    this.storage.set(this.keytimervalue,'');
+  
     this.navCtrl.push(DashboardPage);
   }
   
@@ -80,6 +85,10 @@ export class TimerSignoffPage {
   }
   
   completion_summary(){
+  
+   //code to reset user timer storage value
+   this.storage.set(this.keytimervalue,'');
+    
    this.navCtrl.push(CompletionSummaryPage);
   }
 
