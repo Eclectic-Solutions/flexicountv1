@@ -25,6 +25,7 @@ import { SignoffPage } from '../signoff/signoff';
 export class DashboardPage {
 
   keydeviceToken:string = 'deviceToken';
+  keyUsertoken:string = 'loginUserToken';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,private alertController:AlertController, public platform: Platform, private storage: Storage) {
   
@@ -97,7 +98,8 @@ export class DashboardPage {
    this.navCtrl.push(AlertPage);
   }
   
-  logout(){
+  logout(){  
+   this.storage.set(this.keyUsertoken,'');
    this.navCtrl.push(HomePage);    
   }
   
