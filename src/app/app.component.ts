@@ -151,7 +151,7 @@ export class MyApp {
                 
                 const alert = this.alertCtrl.create({
                   title: 'Deliver API Error',
-                  message: 'error= '+ err,
+                  message: 'error= '+ err+', DomainID= '+ data.DomainID+', StoreID= '+data.StoreID+', DepartmentID= '+data.DepartmentID,
                   buttons: ['OK']
                 });
                 alert.present();
@@ -220,7 +220,7 @@ export class MyApp {
                             
                             const alert = this.alertCtrl.create({
                               title: 'ACK API Error',
-                              message: 'error= '+ err,
+                              message: 'error= '+ err+', DomainID= '+ data.DomainID+', StoreID= '+data.StoreID+', DepartmentID= '+data.DepartmentID,
                               buttons: ['OK']
                             });
                             alert.present();
@@ -295,7 +295,7 @@ export class MyApp {
                     
                     const alert = this.alertCtrl.create({
                       title: 'ACK API Error',
-                      message: 'error= '+ err,
+                      message: 'error= '+ err+', DomainID= '+ data.DomainID+', StoreID= '+data.StoreID+', DepartmentID= '+data.DepartmentID,
                       buttons: ['OK']
                     });
                     alert.present();
