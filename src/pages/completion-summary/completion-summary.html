@@ -6,7 +6,26 @@
   
   <ion-card>  
     
-    <h3 class="text_center">You have signed off cleaning for {{LoginUserapiDetails}}<br/><br/>Alert sent: {{data?.MetricAlertMonitoring.AlertSentTime | date: 'short' : '+0100'}}<br/>Arrival time: {{data?.MetricAlertMonitoring.ArrivalDateTime | date: 'short'}}<br/>Completion time: {{data?.MetricAlertMonitoring.CompletionDateTime | date: 'short' : '+0100'}}<br/>Completed within: {{data?.MetricAlertMonitoring.CompletedWithin}}</h3>
+    <!--<h3 class="text_center">
+      You have signed off cleaning for {{LoginUserapiDetails}}<br/><br/>
+      Alert sent: {{data?.MetricAlertMonitoring.AlertSentTime | date: 'short' : '+0100'}}<br/>
+      Arrival time: {{data?.MetricAlertMonitoring.ArrivalDateTime | date: 'short' : '+0100'}}<br/>
+      Completion time: {{data?.MetricAlertMonitoring.CompletionDateTime | date: 'short' : '+0100'}}<br/>
+      Completed within: {{data?.MetricAlertMonitoring.CompletedWithin}}
+    </h3>-->
+    
+    
+    <h3 class="text_center">
+      You have signed off cleaning for {{LoginUserapiDetails}}<br/><br/>
+      Alert sent: {{data?.MetricAlertMonitoring.AlertSentTime | date: 'dd/M/y, h:mm a' : '+0100'}}<br/>
+      Arrival time: {{data?.MetricAlertMonitoring.ArrivalDateTime | date: 'dd/M/y, h:mm a' : '+0100'}}<br/>
+      Completion time: {{data?.MetricAlertMonitoring.CompletionDateTime | date: 'dd/M/y, h:mm a' : '+0100'}}<br/>
+      Completed within: {{data?.MetricAlertMonitoring.FormattedCompletedWithin}}
+    </h3>
+    
+    <!--<p>Arrival Time Date-Format: {{data?.MetricAlertMonitoring.ArrivalDateTime | date: 'd/M/yy, h:mm a' : '+0100'}}</p>-->
+    
+    
     
   </ion-card>
   
