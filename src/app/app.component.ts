@@ -156,14 +156,14 @@ export class MyApp {
               },err => {
                 //console.log(err);
                 
-                /*
+                
                 const alert = this.alertCtrl.create({
                   title: 'Deliver API Error',
-                  message: 'error= '+ err+', DomainID= '+ data.DomainID+', StoreID= '+data.StoreID+', DepartmentID= '+data.DepartmentID,
+                  message: 'returndata=> '+JSON.stringify(data),
                   buttons: ['OK']
                 });
                 alert.present();
-                */
+                
               });
             }
             
@@ -229,14 +229,14 @@ export class MyApp {
                         },err => {
                             //console.log(err);                            
                             
-                            /*
+                            
                             const alert = this.alertCtrl.create({
                               title: 'ACK API Error',
-                              message: 'error= '+ err+', DomainID= '+ data.DomainID+', StoreID= '+data.StoreID+', DepartmentID= '+data.DepartmentID,
+                              message: 'returndata=> '+JSON.stringify(data),
                               buttons: ['OK']
                             });
                             alert.present();
-                            */
+                            
                             
                         });
                         
@@ -308,14 +308,14 @@ export class MyApp {
                 },err => {
                     //console.log(err);
                     
-                    /*
+                    
                     const alert = this.alertCtrl.create({
                       title: 'ACK API Error',
-                      message: 'error= '+ err+', DomainID= '+ data.DomainID+', StoreID= '+data.StoreID+', DepartmentID= '+data.DepartmentID,
+                      message: 'returndata=> '+JSON.stringify(data),
                       buttons: ['OK']
                     });
                     alert.present();
-                    */
+                    
                 });
                 
                 
