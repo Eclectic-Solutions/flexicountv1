@@ -141,27 +141,13 @@ export class MyApp {
               .map(res => res.json())
               .subscribe(data1 =>{
                
-                //console.log(data1);
-                
-                /*
-                const alert = this.alertCtrl.create({
-                  title: 'Deliver API',
-                  message: 'DomainID= '+ data.additionalData.DomainID+', StoreID= '+data.additionalData.StoreID+', DepartmentID= '+data.additionalData.DepartmentID+', DeliveredDateTime= '+data1.DeliveredDateTime,
-                  buttons: ['OK']
-                });
-                alert.present();
-                */                
-                
               },err => {
-                //console.log(err);                
-                
                 const alert = this.alertCtrl.create({
                   title: 'Deliver API Error',
                   message: 'err=> '+err,
                   buttons: ['OK']
                 });
-                alert.present();
-                
+                alert.present();                
               });
             }
             
@@ -212,30 +198,13 @@ export class MyApp {
                         this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
                         .map(res => res.json())
                         .subscribe(data1 =>{                            
-                            //console.log(data1);
-                            
-                            /*
-                            const alert = this.alertCtrl.create({
-                              title: 'ACK API',
-                              message: 'DomainID= '+ data.DomainID+', StoreID= '+data.StoreID+', DepartmentID= '+data.DepartmentID+', AcknowledgedDateTime= '+data1.AcknowledgedDateTime,
-                              buttons: ['OK']
-                            });
-                            alert.present();
-                            */
-                            
-                            
                         },err => {
-                            //console.log(err);                            
-                            
-                            
                             const alert = this.alertCtrl.create({
                               title: 'ACK API Error',
                               message: 'err=> '+err,
                               buttons: ['OK']
                             });
                             alert.present();
-                            
-                            
                         });
                         
                         
@@ -291,28 +260,13 @@ export class MyApp {
                 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
                 .map(res => res.json())
                 .subscribe(data1 =>{                    
-                    //console.log(data1);
-                    
-                    /*                    
-                    const alert = this.alertCtrl.create({
-                      title: 'ACK API',
-                      message: 'DomainID= '+ data.additionalData.DomainID+', StoreID= '+data.additionalData.StoreID+', DepartmentID= '+data.additionalData.DepartmentID+', AcknowledgedDateTime= '+data1.AcknowledgedDateTime,
-                      buttons: ['OK']
-                    });
-                    alert.present();
-                    */
-                    
                 },err => {
-                    //console.log(err);
-                    
-                    
                     const alert = this.alertCtrl.create({
                       title: 'ACK API Error',
                       message: 'err=> '+err,
                       buttons: ['OK']
                     });
-                    alert.present();
-                    
+                    alert.present();                    
                 });
                 
                 
