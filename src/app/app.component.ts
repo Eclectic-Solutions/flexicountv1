@@ -91,6 +91,7 @@ export class MyApp {
       
       */
       
+      /*
       var headers = new Headers();
       headers.append("Accept", 'application/json');
       headers.append('Content-Type', 'application/json' );
@@ -106,7 +107,9 @@ export class MyApp {
       }, error => {
         console.log(error);	
 	
-      });      
+      });
+      
+      */
       
       this.storage.set(this.keydeviceToken,data.registrationId);      
       
