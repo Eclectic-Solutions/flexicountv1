@@ -13,7 +13,7 @@
     </ion-card-content>
     <ion-card-content>
       <span class="cls-thold">Threshold: {{ item.Criteria }} </span>Latest usage: {{ item.LatestUsage }}
-      <ion-item class="cls-arrow-{{ item.MetricAlertClass }}" tappable (click)=arrivalConfirmation(item.DomainID,item.StoreID,item.DepartmentID,item.Domain.Name,item.Store.Name,item.Department.Name,item.Domain.DomainCode)>
+      <ion-item class="cls-arrow-{{ item.MetricAlertClass }}" tappable (click)=arrivalConfirmation(item.DomainID,item.StoreID,item.DepartmentID,item.Domain.Name,item.Store.Name,item.Department.Name,item.Domain.Description)>
         <ion-icon name="arrow-round-forward"></ion-icon>
       </ion-item>      
     </ion-card-content>

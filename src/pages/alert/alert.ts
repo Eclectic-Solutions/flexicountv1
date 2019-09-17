@@ -96,7 +96,7 @@ export class AlertPage {
     this.navCtrl.push(DashboardPage);
   }
   
-  arrivalConfirmation(DomainID:string, StoreID:string, DepartmentID:string, DomainName:string, StoreName:string, DepartmentName:string, DomainCode:string){
+  arrivalConfirmation(DomainID:string, StoreID:string, DepartmentID:string, DomainName:string, StoreName:string, DepartmentName:string, Description:string){
   
   console.log(DomainID);
   console.log(StoreID);
@@ -105,10 +105,10 @@ export class AlertPage {
   console.log(DomainName);
   console.log(StoreName);
   console.log(DepartmentName);
-  console.log(DomainCode);
+  console.log(Description);
   
   this.storage.set(this.keyDomainID,DomainID+'**__**'+StoreID+'**__**'+DepartmentID);
-  this.storage.set(this.keyAllapiDetails,DomainName+'**__**'+StoreName+'**__**'+DepartmentName+'**__**'+DomainCode);
+  this.storage.set(this.keyAllapiDetails,DomainName+'**__**'+StoreName+'**__**'+DepartmentName+'**__**'+Description);
   
   
   //this.storage.set(this.keyStoreID,StoreID);
