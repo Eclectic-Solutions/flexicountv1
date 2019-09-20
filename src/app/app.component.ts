@@ -67,12 +67,13 @@ export class MyApp {
   
     const options: PushOptions = {
         android: {
-          senderID: '112807975750'
+          senderID: '112807975750',
+          sound: 'default'
         },
         ios: {
             alert: 'true',
             badge: true,
-            sound: 'false'
+            sound: 'true'
         }
     };
 
