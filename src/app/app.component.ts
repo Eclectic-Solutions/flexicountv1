@@ -9,6 +9,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 
+import { NativeAudio } from '@ionic-native/native-audio';
+
 
 
 import { HomePage } from '../pages/home/home';
@@ -21,7 +23,7 @@ export class MyApp {
   rootPage:any = HomePage;
   keydeviceToken:string = 'deviceToken';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -38,9 +40,31 @@ export class MyApp {
       
       splashScreen.hide();
       
+      //code start for native audio
+      
+      this.nativeAudio.preloadSimple('uniqueId1', 'assets/ding.mp3').then((success)=>{
+        console.log("success");
+      },(error)=>{
+        console.log(error);
+      });
+      
+      //code end for native audio
+      
       this.initPushNotification();
     });
   }
+  
+  //code start to play native audio
+  
+  play(){
+    this.nativeAudio.play('uniqueId1').then((success)=>{
+      console.log("success playing");
+    },(error)=>{
+      console.log(error);
+    });
+  }
+  
+  //code end to play native audio
   
   
   initPushNotification(){
@@ -67,8 +91,7 @@ export class MyApp {
   
     const options: PushOptions = {
         android: {
-          senderID: '112807975750',
-          sound: 'default'
+          senderID: '112807975750'          
         },
         ios: {
             alert: 'true',
@@ -161,7 +184,13 @@ export class MyApp {
       
       console.log('message -> ' + data.message);      
       if(data.additionalData.foreground)
-      { 
+      {
+        //code start to play custom notification sound
+        
+        this.play();
+        
+        //code end to play custom notification sound
+        
         const alert = this.alertCtrl.create({
           title: 'Notification',
           message: data.message,
@@ -232,7 +261,14 @@ export class MyApp {
         alert.present();
       }
       else
-      {
+      {      
+        //code start to play custom notification sound
+        
+        this.play();
+        
+        //code end to play custom notification sound
+      
+      
         //this.nav.push(AlertPage);
         
         //code to check wheather sitelogin url is stored or not

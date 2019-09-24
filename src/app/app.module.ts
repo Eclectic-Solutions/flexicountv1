@@ -17,7 +17,7 @@ import { Push } from '@ionic-native/push';
 
 import { Insomnia } from '@ionic-native/insomnia';
 
-
+import { NativeAudio } from '@ionic-native/native-audio';
 
 
 import { MyApp } from './app.component';
@@ -79,6 +79,7 @@ import { Signoff2Page } from '../pages/signoff2/signoff2';
     Toast,
     Push,
     Insomnia,
+    NativeAudio,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
