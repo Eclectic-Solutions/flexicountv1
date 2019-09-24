@@ -145,18 +145,32 @@ export class TimerPage {
        "DepartmentID": curDepartmentID
       }
       
-      this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+      //code start to call MetricAlertStartedCleaning api
       
-	this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-	 .map(res => res.json())
-	 .subscribe(data =>{
-		 this.data = data;
-		 console.log(data);
-	 },err => {
-		 console.log(err);
-	 });
-	 
+      this.storage.get('loginUserTimerValue').then((timeVal) => {
+       if(timeVal)
+       {
+        //nothing do
+       }
+       else
+       {
+         this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+         
+           this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+            .map(res => res.json())
+            .subscribe(data =>{
+                    this.data = data;
+                    console.log(data);
+            },err => {
+                    console.log(err);
+            });
+            
+        });
+      }
+      
      });
+     
+     //code start to call MetricAlertStartedCleaning api
       
     
     });
