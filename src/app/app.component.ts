@@ -52,6 +52,8 @@ export class MyApp {
       
       this.initPushNotification();
     });
+    
+    
   }
   
   //code start to play native audio
@@ -191,6 +193,10 @@ export class MyApp {
         
         //code end to play custom notification sound
         
+        
+        let view = this.nav.getActive();
+        //alert(view.component.name);
+        
         const alert = this.alertCtrl.create({
           title: 'Notification',
           message: data.message,
@@ -237,8 +243,11 @@ export class MyApp {
                             alert.present();
                         });
                         
+                        if(view.component.name!='TimerPage')
+                        {
+                          this.nav.push(AlertPage);
+                        }                        
                         
-                        this.nav.push(AlertPage);
                       }
                       else
                       {
@@ -267,6 +276,9 @@ export class MyApp {
         this.play();
         
         //code end to play custom notification sound
+        
+        let view = this.nav.getActive();
+        //alert(view.component.name);
       
       
         //this.nav.push(AlertPage);
@@ -306,8 +318,10 @@ export class MyApp {
                     alert.present();                    
                 });
                 
-                
-                this.nav.push(AlertPage);
+                if(view.component.name!='TimerPage')
+                {
+                  this.nav.push(AlertPage);
+                }
               }
               else
               {
