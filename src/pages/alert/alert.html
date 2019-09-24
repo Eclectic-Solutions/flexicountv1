@@ -15,8 +15,8 @@
       <span class="cls-thold">Threshold: {{ item.Criteria }} </span>Latest usage: {{ item.LatestUsage }}
       <ion-item class="cls-arrow-{{ item.MetricAlertClass }}" tappable (click)=arrivalConfirmation(item.DomainID,item.StoreID,item.DepartmentID,item.Domain.Name,item.Store.Name,item.Department.Name,item.Domain.Description)>
         <ion-icon name="arrow-round-forward"></ion-icon>
-      </ion-item>
-      <span class="cls-alert-sent-time">Alert Sent {{ item.AlertSentTime | date: 'dd/MM/y HH:mm:ss' : '+0100' }}</span>
+      </ion-item>      
+      <span class="cls-alert-sent-time" *ngIf="item.AlertSentTime?.length > 0">Alert Sent {{ item.AlertSentTime | date: 'dd/MM/y HH:mm:ss' : '+0100' }}</span>
     </ion-card-content>
   </ion-card>
     
