@@ -81,7 +81,8 @@
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
-      "cordova-plugin-insomnia": {}
+      "cordova-plugin-insomnia": {},
+      "cordova-plugin-nativeaudio": {}
     },
     "platforms": [
       "android"
