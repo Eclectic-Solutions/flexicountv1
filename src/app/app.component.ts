@@ -93,12 +93,13 @@ export class MyApp {
   
     const options: PushOptions = {
         android: {
-          senderID: '112807975750'          
+          senderID: '112807975750',
+          sound: 'false'
         },
         ios: {
             alert: 'true',
             badge: true,
-            sound: 'true'
+            sound: 'false'
         }
     };
 
@@ -141,7 +142,13 @@ export class MyApp {
       
     });
     
-    pushObject.on('notification').subscribe((data: any) => {    
+    pushObject.on('notification').subscribe((data: any) => {
+    
+      //code start to play custom notification sound
+        
+      this.play();
+      
+      //code end to play custom notification sound
       
       //start code to call MetricAlertMonitoringDeliver api
       
@@ -189,7 +196,7 @@ export class MyApp {
       {
         //code start to play custom notification sound
         
-        this.play();
+        //this.play();
         
         //code end to play custom notification sound
         
@@ -273,7 +280,7 @@ export class MyApp {
       {      
         //code start to play custom notification sound
         
-        this.play();
+        //this.play();
         
         //code end to play custom notification sound
         
