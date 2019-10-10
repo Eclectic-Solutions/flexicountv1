@@ -47,18 +47,7 @@ export class AlertPage {
     }, 2000);
   }
   
-  loadUser(){  
-  
-   /*let alert = this.alertCtrl.create({
-    title: 'New Friend!',
-    subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
-    buttons: ['OK'],
-    cssClass: 'popup-pin',
-    enableBackdropDismiss: false
-   });
-   
-   alert.present();*/
-  
+  loadUser(){ 
   
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    
@@ -103,7 +92,7 @@ export class AlertPage {
   
   
   onSelectChange(selectedValue: any) {
-   //console.log('Selected', selectedValue);
+   console.log(selectedValue);
    
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    

@@ -200,9 +200,10 @@ export class MyApp {
         const alert = this.alertCtrl.create({
           title: 'Notification',
           message: data.message,
+          enableBackdropDismiss: false,
           buttons:[
             {
-              text:"OK",
+              text:"Alert Acknowledged",
               handler:()=>
               {
                 //this.nav.push(AlertPage);
@@ -245,7 +246,7 @@ export class MyApp {
                                 const alert = this.alertCtrl.create({
                                   title: 'ACK API Error',
                                   message: 'err=> '+err,
-                                  buttons: ['Alert Acknowledged']
+                                  buttons: ['OK']
                                 });
                                 alert.present();
                             });
@@ -325,7 +326,7 @@ export class MyApp {
                         const alert = this.alertCtrl.create({
                           title: 'ACK API Error',
                           message: 'err=> '+err,
-                          buttons: ['Alert Acknowledged']
+                          buttons: ['OK']
                         });
                         alert.present();                    
                     });
