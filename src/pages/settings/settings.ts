@@ -25,6 +25,10 @@ export class SettingsPage {
   public peppertimer:boolean = true;
   key1:string = 'alertTimerSettings';
   
+  public pepperalert:boolean = true;
+  keyalertack:string = 'alertAlertAcknowledgedSettings';
+  
+  
   keyconfirmsiteurl:string = 'loginUserConfirmSiteURL';
   
   siteName:string = 'Ikea.storetech.com';
@@ -71,6 +75,18 @@ export class SettingsPage {
       this.peppertimer = true;
      }
     });
+    
+    this.storage.get('alertAlertAcknowledgedSettings').then((val77) => {
+     console.log(val77);
+     if(val77==false)
+     {
+      this.pepperalert = false;
+     }
+     else
+     {
+      this.pepperalert = true;
+     }
+    });
   }
   
   home(){
@@ -92,6 +108,13 @@ export class SettingsPage {
    this.storage.set(this.key1,this.peppertimer);
    console.log(this.peppertimer);
   }
+  
+  changeAlertAcknowledged()
+  {
+   this.storage.set(this.keyalertack,this.pepperalert);
+   console.log(this.pepperalert);
+  }
+  
   
   editSiteLoginURL()
   {
