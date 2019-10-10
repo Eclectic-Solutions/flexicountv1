@@ -2,6 +2,21 @@
   <img class="header_image" src="../assets/imgs/brand.png"/>
 
   <h2 class="mtitle">Alerts</h2>
+  
+  
+  <ion-list [class]="classSort">
+  <ion-item>
+    <ion-label>Sort</ion-label>
+    <ion-select [(ngModel)]="sort" (ionChange)="onSelectChange($event)">
+      <ion-option value="Class" selected>Percentage Usag</ion-option>
+      <ion-option value="location">Location</ion-option>
+      <ion-option value="building">Building</ion-option>
+      <ion-option value="floor">Floor</ion-option>
+    </ion-select>
+  </ion-item>
+  </ion-list>
+  
+  
   <ion-item *ngFor="let item of data; let i = index">
   
   <ion-card class="cls-rowcolor{{ item.MetricAlertClass }}">

@@ -25,6 +25,7 @@ export class AlertPage {
 
   url: string;
   data: string;
+  classSort: string = 'cls-sort cls-disp-none';
   
   keyDomainID:string = 'loginuserDomainID';
   keyAllapiDetails:string = 'loginuserApiDetails';
@@ -46,7 +47,18 @@ export class AlertPage {
     }, 2000);
   }
   
-  loadUser(){
+  loadUser(){  
+  
+   /*let alert = this.alertCtrl.create({
+    title: 'New Friend!',
+    subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
+    buttons: ['OK'],
+    cssClass: 'popup-pin',
+    enableBackdropDismiss: false
+   });
+   
+   alert.present();*/
+  
   
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    
@@ -76,6 +88,7 @@ export class AlertPage {
 	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
 	  .map(res => res.json())
 	  .subscribe(data =>{
+                  this.classSort = 'cls-sort cls-disp-blck';
 		  this.data = data;
 		  console.log(data);
 	  },err => {
@@ -87,6 +100,42 @@ export class AlertPage {
    
    });   
   }
+  
+  
+  onSelectChange(selectedValue: any) {
+   //console.log('Selected', selectedValue);
+   
+   this.storage.get('loginUserToken').then((valloginUserToken) => {
+   
+    if(valloginUserToken!='')
+    {
+       var headers = new Headers();
+       headers.append("Authorization", 'Bearer '+valloginUserToken);       
+       const requestOptions = new RequestOptions({ headers: headers });
+       
+       let postData = {
+	"SortColumn": selectedValue,
+	"SortDirection": "Descending"
+       }
+       
+       this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+       
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	  .map(res => res.json())
+	  .subscribe(data =>{
+		  this.data = data;
+		  console.log(data);
+	  },err => {
+		  console.log(err);
+	  });
+      });
+      
+    }
+   
+   });
+   
+  }
+  
   
   home(){
     this.navCtrl.push(DashboardPage);
