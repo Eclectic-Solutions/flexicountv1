@@ -219,35 +219,46 @@ export class MyApp {
                     
                       if(valloginUserToken!='')
                       {
-                        //code to call MetricAlertMonitoringAcknowledge API
+                        //code start to check wheather alert ack settings is on
                         
-                        var headers = new Headers();
-                        headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                        const requestOptions = new RequestOptions({ headers: headers });
+                        this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{
                         
-                        let postData = {
-                          "DomainID": data.additionalData.DomainID,
-                          "StoreID": data.additionalData.StoreID,
-                          "DepartmentID": data.additionalData.DepartmentID
-                        }
-                        
-                        this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
-                        .map(res => res.json())
-                        .subscribe(data1 =>{                            
-                        },err => {
-                            const alert = this.alertCtrl.create({
-                              title: 'ACK API Error',
-                              message: 'err=> '+err,
-                              buttons: ['OK']
+                          if(alertAckVal==true)
+                          {
+                      
+                            //code to call MetricAlertMonitoringAcknowledge API
+                            
+                            var headers = new Headers();
+                            headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                            const requestOptions = new RequestOptions({ headers: headers });
+                            
+                            let postData = {
+                              "DomainID": data.additionalData.DomainID,
+                              "StoreID": data.additionalData.StoreID,
+                              "DepartmentID": data.additionalData.DepartmentID
+                            }
+                            
+                            this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
+                            .map(res => res.json())
+                            .subscribe(data1 =>{                            
+                            },err => {
+                                const alert = this.alertCtrl.create({
+                                  title: 'ACK API Error',
+                                  message: 'err=> '+err,
+                                  buttons: ['Alert Acknowledged']
+                                });
+                                alert.present();
                             });
-                            alert.present();
+                            
+                            if(view.component.name!='TimerPage')
+                            {
+                              this.nav.push(AlertPage);
+                            }
+                          }
+                          
                         });
                         
-                        if(view.component.name!='TimerPage')
-                        {
-                          this.nav.push(AlertPage);
-                        }                        
-                        
+                        //code end to check wheather alert ack settings is on
                       }
                       else
                       {
@@ -290,34 +301,43 @@ export class MyApp {
             
               if(valloginUserToken!='')
               {
-                //code to call MetricAlertMonitoringAcknowledge API
+                //code start to check wheather alert ack settings is on
                 
-                var headers = new Headers();
-                headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                const requestOptions = new RequestOptions({ headers: headers });
-                
-                let postData = {
-                  "DomainID": data.additionalData.DomainID,
-                  "StoreID": data.additionalData.StoreID,
-                  "DepartmentID": data.additionalData.DepartmentID
-                }
-                
-                this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
-                .map(res => res.json())
-                .subscribe(data1 =>{                    
-                },err => {
-                    const alert = this.alertCtrl.create({
-                      title: 'ACK API Error',
-                      message: 'err=> '+err,
-                      buttons: ['OK']
+                this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{              
+                  if(alertAckVal==true)
+                  {
+                    //code to call MetricAlertMonitoringAcknowledge API
+                    
+                    var headers = new Headers();
+                    headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                    const requestOptions = new RequestOptions({ headers: headers });
+                    
+                    let postData = {
+                      "DomainID": data.additionalData.DomainID,
+                      "StoreID": data.additionalData.StoreID,
+                      "DepartmentID": data.additionalData.DepartmentID
+                    }
+                    
+                    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
+                    .map(res => res.json())
+                    .subscribe(data1 =>{                    
+                    },err => {
+                        const alert = this.alertCtrl.create({
+                          title: 'ACK API Error',
+                          message: 'err=> '+err,
+                          buttons: ['Alert Acknowledged']
+                        });
+                        alert.present();                    
                     });
-                    alert.present();                    
+                    
+                    if(view.component.name!='TimerPage')
+                    {
+                      this.nav.push(AlertPage);
+                    }
+                  }
                 });
                 
-                if(view.component.name!='TimerPage')
-                {
-                  this.nav.push(AlertPage);
-                }
+                //code end to check wheather alert ack settings is on
               }
               else
               {
