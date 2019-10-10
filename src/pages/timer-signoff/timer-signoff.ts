@@ -28,11 +28,73 @@ import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirm
 })
 export class TimerSignoffPage {
 
+  public timer='';
+  public min=0;
+  public seconds = 0;
+  
+  
+
   public LoginUserapiDetails='';
   keytimervalue:string = 'loginUserTimerValue';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
+  
+   this.startTimer();
+   
   }
+  
+  //timer js code start
+  
+  startTimer(){
+  
+   this.storage.get('loginUserTimerValue').then((timeVal) => {
+    console.log('Current Timer Value: '+timeVal);
+    
+    if(timeVal)
+    {
+     var hms = timeVal;   // your input string
+     var a = hms.split(':'); // split it at the colons
+
+     // minutes are worth 60 seconds. Hours are worth 60 minutes.
+     var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+     seconds--;
+     
+     console.log(seconds);
+     this.seconds = seconds;
+    }
+    
+   });
+  
+  
+  
+  
+   var intervalVar=setInterval(function(){
+   
+   //alert('hi');
+   this.seconds++;
+   this.secondsToString();
+   //this.min++;
+   
+   }.bind(this),1000)
+  }
+  
+  secondsToString()
+  {
+    var seconds = this.seconds;
+    
+    var numhours = Math.floor(((seconds % 31536000) % 86400) / 3600);
+    var numminutes = Math.floor((((seconds % 31536000) % 86400) % 3600) / 60);
+    var numseconds = (((seconds % 31536000) % 86400) % 3600) % 60;
+    
+    var numhours_print = ("0" + numhours).slice(-2);
+    var numminutes_print = ("0" + numminutes).slice(-2);
+    var numseconds_print = ("0" + numseconds).slice(-2);
+    
+    //this.timer = numhours + ":" + numminutes + ":" + numseconds;
+    this.timer = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
+  }
+  
+  //timer js code end
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimerSignoffPage');
@@ -64,6 +126,7 @@ export class TimerSignoffPage {
      if(val7==true)
      {
       //redirect to the next page ie Timer Page
+      this.storage.set(this.keytimervalue,this.timer);
       this.navCtrl.push(TimerPage);
      }
      else
