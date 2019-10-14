@@ -224,7 +224,8 @@ export class MyApp {
                         
                         this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{
                         
-                          if(alertAckVal==true)
+                          //if(alertAckVal==true)
+                          if(alertAckVal)
                           {
                       
                             //code to call MetricAlertMonitoringAcknowledge API
