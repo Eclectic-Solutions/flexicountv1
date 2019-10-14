@@ -41,6 +41,7 @@ export class HomePage {
   
   key:string = 'alertScanQrSettings';
   key1:string = 'alertTimerSettings';
+  keyalertack:string = 'alertAlertAcknowledgedSettings';
 
   constructor(public navCtrl: NavController, private storage: Storage, private http: Http, public alertCtrl: AlertController) {
 
@@ -139,7 +140,8 @@ export class HomePage {
 	this.userUrlValue=final_site_login_url;
 	
 	this.storage.set(this.key,true);
-	this.storage.set(this.key1,true);	
+	this.storage.set(this.key1,true);
+        this.storage.set(this.keyalertack,true);
 	
 	this.loadLanguages();
 	

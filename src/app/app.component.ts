@@ -224,8 +224,7 @@ export class MyApp {
                         
                         this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{
                         
-                          //if(alertAckVal==true)
-                          if(alertAckVal)
+                          if(alertAckVal==true)
                           {
                       
                             //code to call MetricAlertMonitoringAcknowledge API
@@ -283,8 +282,14 @@ export class MyApp {
         alert.present();
       }
       else
-      { 
-        let view = this.nav.getActive();        
+      {      
+        
+        
+        let view = this.nav.getActive();
+        //alert(view.component.name);
+      
+      
+        //this.nav.push(AlertPage);
         
         //code to check wheather sitelogin url is stored or not
         
@@ -299,35 +304,8 @@ export class MyApp {
               {
                 //code start to check wheather alert ack settings is on
                 
-                this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{
-                
-                  const alert11 = this.alertCtrl.create({
-                    title: 'All Data',
-                    message: 'DomainID=> '+data.additionalData.DomainID+', StoreID=> '+data.additionalData.StoreID+', DepartmentID=> '+data.additionalData.DepartmentID+', Acksettings Value=> '+alertAckVal,
-                    buttons: ['OK']
-                  });
-                  alert11.present();
-                  
-                  const alert22 = this.alertCtrl.create({
-                    title: 'site url',
-                    message: 'siteurl=> '+valLoginUserConfirmSiteURL,
-                    buttons: ['OK']
-                  });
-                  alert22.present();
-                  
-                  const alert33 = this.alertCtrl.create({
-                    title: 'login token',
-                    message: 'token=> '+valloginUserToken,
-                    buttons: ['OK']
-                  });
-                  alert33.present();
-                
-                
-                
-                
-                
-                  //if(alertAckVal==true)
-                  if(alertAckVal)
+                this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{              
+                  if(alertAckVal==true)
                   {
                     //code to call MetricAlertMonitoringAcknowledge API
                     
@@ -335,16 +313,10 @@ export class MyApp {
                     headers.append("Authorization", 'Bearer '+valloginUserToken);       
                     const requestOptions = new RequestOptions({ headers: headers });
                     
-                    /*let postData = {
+                    let postData = {
                       "DomainID": data.additionalData.DomainID,
                       "StoreID": data.additionalData.StoreID,
                       "DepartmentID": data.additionalData.DepartmentID
-                    }*/
-                    
-                    let postData = {
-                      "DomainID": 3,
-                      "StoreID": 7,
-                      "DepartmentID": 11
                     }
                     
                     this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
