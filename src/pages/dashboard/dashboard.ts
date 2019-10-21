@@ -71,7 +71,7 @@ export class DashboardPage {
            .map(res => res.json())
            .subscribe(datalogin =>{
            
-            this.storage.set(this.keydeviceToken,'');
+            //this.storage.set(this.keydeviceToken,'');
             console.log(datalogin);
              
            },err => {
@@ -98,8 +98,53 @@ export class DashboardPage {
    this.navCtrl.push(AlertPage);
   }
   
-  logout(){  
-   this.storage.set(this.keyUsertoken,'');
+  logout(){
+  
+   //this.storage.set(this.keyUsertoken,'');   
+   
+   //api call for logout and send device token
+   
+   this.storage.get('deviceToken').then((valdeviceToken) => {
+   
+    if(valdeviceToken)
+    {
+     
+     this.storage.get('loginUserToken').then((valloginUserToken) => {
+     
+      if(valloginUserToken)
+      {
+        var headers = new Headers();
+        headers.append("Authorization", 'Bearer '+valloginUserToken);       
+        const requestOptions = new RequestOptions({ headers: headers });
+        
+        let postData = {
+         "TokenPayload": valdeviceToken
+        }
+        
+        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+        
+           this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/RemoveDeviceToken', postData, requestOptions)
+           .map(res => res.json())
+           .subscribe(datalogin =>{
+            
+            this.storage.set(this.keyUsertoken,'');
+            console.log(datalogin);
+             
+           },err => {
+           console.log(err);
+          });
+        
+        });
+      
+      }     
+     
+     });
+     
+    }
+   
+   });
+   
+   
    this.navCtrl.push(HomePage);    
   }
   
