@@ -68,7 +68,7 @@ export class AlertPage {
        const requestOptions = new RequestOptions({ headers: headers });
        
        let postData = {
-	"SortColumn": "PercentUsage",
+	"SortColumn": "Class,AlertSentTime asc",
 	"SortDirection": "Descending"
        }
        
