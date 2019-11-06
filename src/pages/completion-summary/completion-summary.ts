@@ -78,9 +78,9 @@ export class CompletionSummaryPage {
 	 .map(res => res.json())
 	 .subscribe(data =>{
 		 this.data = data;
-		 console.log(data);
+		 //console.log(data);
 	 },err => {
-		 console.log(err);
+		 //console.log(err);
 	 });
 	 
      });
@@ -97,7 +97,19 @@ export class CompletionSummaryPage {
    
    this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
     let all_values = valloginuserApiDetails.split("**__**");
-    this.LoginUserapiDetails = all_values[3]+' - '+all_values[1]+' - '+all_values[2];
+    
+    let first_value = '';
+    
+    if(all_values[3]=='null')
+    {
+     first_value = all_values[0];
+    }
+    else
+    {
+     first_value = all_values[3];
+    }
+    
+    this.LoginUserapiDetails = first_value+' - '+all_values[1]+' - '+all_values[2];
    });
   
   }

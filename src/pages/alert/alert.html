@@ -19,7 +19,14 @@
   
   <ion-card class="cls-rowcolor{{ item.MetricAlertClass }}">
     <ion-card-content>      
-      {{ item.Domain.Description }} - {{ item.Store.Name }} - {{ item.Department.Name }}
+      <!--<span *ngIf="item.Domain.Description?.length > 0">
+        {{ item.Domain.Description }}        
+      </span> -->
+      
+      <div *ngIf="item.Domain.Description?.length > 0;then content else other_content"></div>    
+      <ng-template #content>{{ item.Domain.Description }}</ng-template>
+      <ng-template #other_content>{{ item.Domain.Name }}</ng-template>      
+      - {{ item.Store.Name }} - {{ item.Department.Name }}
       <div class="cls-sad-{{ item.MetricAlertClass }} cls-disp-{{ item.SadFacePressed }}" style="float: right;">
         <ion-icon ios="ios-sad" md="md-sad"></ion-icon>
       </div>

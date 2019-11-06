@@ -39,7 +39,19 @@ export class ManualArrivalConfirmationPage {
    
    this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
     let all_values = valloginuserApiDetails.split("**__**");
-    this.LoginUserapiDetails = all_values[3]+' - '+all_values[1]+' - '+all_values[2];
+    
+    let first_value = '';
+    
+    if(all_values[3]=='null')
+    {
+     first_value = all_values[0];
+    }
+    else
+    {
+     first_value = all_values[3];
+    }
+    
+    this.LoginUserapiDetails = first_value+' - '+all_values[1]+' - '+all_values[2];
    });  
   }
   
