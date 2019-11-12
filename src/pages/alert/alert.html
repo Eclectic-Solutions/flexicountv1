@@ -5,11 +5,11 @@
   
   <ion-grid>    
     <ion-row>
-        <ion-col col-6 class="cls-no-bdr">          
+        <ion-col col-7 class="cls-no-bdr">          
           <ion-list [class]="classSort">
           <ion-item>
             <ion-label>Sort</ion-label>
-            <ion-select [(ngModel)]="sort" (ionChange)="onSelectChange($event)">
+            <ion-select [(ngModel)]="sort" (ionChange)="onSelectChange($event)" class="cls-ion-select">
               <ion-option value="Class,AlertSentTime asc" selected>Priority</ion-option>
               <ion-option value="location">Location</ion-option>      
             </ion-select>
@@ -17,11 +17,10 @@
           </ion-list>
           
         </ion-col>
-        <ion-col col-6 class="cls-no-bdr">          
+        <ion-col col-5 class="cls-no-bdr">          
           <ion-list [class]="classFilter">          
           
-          <ion-item>
-            <ion-label>Filter</ion-label>
+          <ion-item>            
             <ion-select [(ngModel)]="itemBuilding" (ionChange)="onFilterChange($event)">
                 <ion-option value="null" selected>All</ion-option>
                 <div *ngFor="let itembuilding of databuilding; let i = index" >
