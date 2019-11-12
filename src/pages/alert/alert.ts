@@ -25,7 +25,12 @@ export class AlertPage {
 
   url: string;
   data: string;
+  databuilding: string;
+  itemBuilding:string;
+  sort:string;
+  
   classSort: string = 'cls-sort cls-disp-none';
+  classFilter: string = 'cls-filter cls-disp-none';
   
   keyDomainID:string = 'loginuserDomainID';
   keyAllapiDetails:string = 'loginuserApiDetails';
@@ -35,6 +40,7 @@ export class AlertPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlertPage');
+    this.loadBuilding();
     this.loadUser();
   }
   
@@ -47,22 +53,44 @@ export class AlertPage {
     }, 2000);
   }
   
+  //code start to load building for filter
+  
+  loadBuilding(){
+  
+   this.storage.get('loginUserToken').then((valloginUserToken) => {
+   
+    if(valloginUserToken!='')
+    {
+       var headers = new Headers();
+       headers.append("Authorization", 'Bearer '+valloginUserToken);       
+       const requestOptions = new RequestOptions({ headers: headers });
+       
+       this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+       
+	 this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetRegions', requestOptions)
+	  .map(res => res.json())
+	  .subscribe(data =>{                  
+		  this.databuilding = data;
+		  console.log(data);
+	  },err => {
+		  console.log(err);
+	  });
+      });
+      
+    }
+   
+   });
+  
+  }
+  
+  //code end to load building for filter
+  
   loadUser(){ 
   
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    
     if(valloginUserToken!='')
     {
-      /*this.http.get('https://demofm.storetech.com/api/Mobile/GetMetricAlertMonitoring')
-  	.map(res => res.json())
-  	.subscribe(data =>{
-  		this.data = data;
-  		console.log(data);
-  	},err => {
-  		console.log(err);
-  	});
-	*/
-	
        var headers = new Headers();
        headers.append("Authorization", 'Bearer '+valloginUserToken);       
        const requestOptions = new RequestOptions({ headers: headers });
@@ -78,6 +106,7 @@ export class AlertPage {
 	  .map(res => res.json())
 	  .subscribe(data =>{
                   this.classSort = 'cls-sort cls-disp-blck';
+                  this.classFilter = 'cls-filter cls-disp-blck';
 		  this.data = data;
 		  console.log(data);
 	  },err => {
@@ -91,8 +120,21 @@ export class AlertPage {
   }
   
   
-  onSelectChange(selectedValue: any) {
-   console.log(selectedValue);
+  onSelectChange(selectedValue: any, itemBuilding: any) {
+  
+   console.log('sort value: '+selectedValue);
+   console.log('filter building: '+this.itemBuilding);
+   
+   let regionValue='';
+   
+   if(this.itemBuilding)
+   {
+    regionValue=this.itemBuilding;
+   }
+   else
+   {
+    regionValue='null';
+   }
    
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    
@@ -107,9 +149,61 @@ export class AlertPage {
 	"SortDirection": "Descending"
        }
        
+       
+       
+       this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {       
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring?regionID='+regionValue, postData, requestOptions)
+	  .map(res => res.json())
+	  .subscribe(data =>{
+		  this.data = data;
+		  console.log(data);
+	  },err => {
+		  console.log(err);
+	  });
+      });
+      
+    }
+   
+   });
+   
+  }
+  
+  
+  
+  onFilterChange(selectedFilterValue: any, sort: any) {  
+   
+   console.log('sort value: '+this.sort);
+   console.log('filter building: '+selectedFilterValue);
+   
+   let selectedValue='';
+   
+   if(this.sort)
+   {
+    selectedValue=this.sort;
+   }
+   else
+   {
+    selectedValue='Class,AlertSentTime asc';
+   }
+   
+   this.storage.get('loginUserToken').then((valloginUserToken) => {
+   
+    if(valloginUserToken!='')
+    {
+       var headers = new Headers();
+       headers.append("Authorization", 'Bearer '+valloginUserToken);       
+       const requestOptions = new RequestOptions({ headers: headers });
+       
+       let postData = {
+	"SortColumn": selectedValue,
+	"SortDirection": "Descending"
+       }
+       
+       
+       
        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
        
-	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring?regionID='+selectedFilterValue, postData, requestOptions)
 	  .map(res => res.json())
 	  .subscribe(data =>{
 		  this.data = data;

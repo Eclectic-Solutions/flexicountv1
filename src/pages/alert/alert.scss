@@ -35,6 +35,8 @@ page-alert {
         {
             height: 27px;
         }
+        
+        .cls-no-bdr{border: none !important;}
     }
     .cls-alert-page .scroll-content ion-item.item{background: none;}
     .cls-alert-page .scroll-content ion-item.item .item-inner{
@@ -78,4 +80,5 @@ page-alert {
     .cls-disp-none{display: none;}        
     .cls-disp-blck{display: block;}
     .cls-sort ion-item .item-inner .input-wrapper ion-label{margin-left: 10px !important;}
+    
 }
