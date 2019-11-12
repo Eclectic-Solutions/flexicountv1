@@ -146,13 +146,14 @@ export class AlertPage {
        
        let postData = {
 	"SortColumn": selectedValue,
-	"SortDirection": "Descending"
+	"SortDirection": "Descending",
+        "regionID": regionValue
        }
        
        
        
        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {       
-	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring?regionID='+regionValue, postData, requestOptions)
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
 	  .map(res => res.json())
 	  .subscribe(data =>{
 		  this.data = data;
@@ -196,14 +197,15 @@ export class AlertPage {
        
        let postData = {
 	"SortColumn": selectedValue,
-	"SortDirection": "Descending"
+	"SortDirection": "Descending",
+        "regionID": selectedFilterValue
        }
        
        
        
        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
        
-	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring?regionID='+selectedFilterValue, postData, requestOptions)
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
 	  .map(res => res.json())
 	  .subscribe(data =>{
 		  this.data = data;
