@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -29,17 +29,23 @@ export class AlertPage {
   itemBuilding:string;
   sort:string;
   
+  loader: any;
+  
   classSort: string = 'cls-sort cls-disp-none';
   classFilter: string = 'cls-filter cls-disp-none';
   
   keyDomainID:string = 'loginuserDomainID';
   keyAllapiDetails:string = 'loginuserApiDetails';
+  public loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController, private storage: Storage, private loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlertPage');
+    
+    this.createDisplayLoading();
+    
     this.loadBuilding();
     this.loadUser();
   }
@@ -52,6 +58,26 @@ export class AlertPage {
       refresher.complete();
     }, 2000);
   }
+  
+  
+  //code start to show & hide loading popup
+  
+  createDisplayLoading(){
+  
+   this.loader = this.loadingCtrl.create({  
+    content : "Please wait..."   
+   });  
+   this.loader.present();
+   
+  }
+  
+  hideLoader()
+  {
+   this.loader.dismiss();
+  }
+  
+  //code end to show & hide loading popup
+  
   
   //code start to load building for filter
   
@@ -109,6 +135,7 @@ export class AlertPage {
                   this.classFilter = 'cls-filter cls-disp-blck';
 		  this.data = data;
 		  console.log(data);
+                  this.hideLoader();
 	  },err => {
 		  console.log(err);
 	  });
@@ -136,6 +163,8 @@ export class AlertPage {
     regionValue='null';
    }
    
+   this.createDisplayLoading();
+   
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    
     if(valloginUserToken!='')
@@ -158,6 +187,7 @@ export class AlertPage {
 	  .subscribe(data =>{
 		  this.data = data;
 		  console.log(data);
+                  this.hideLoader();
 	  },err => {
 		  console.log(err);
 	  });
@@ -187,6 +217,8 @@ export class AlertPage {
     selectedValue='Class,AlertSentTime asc';
    }
    
+   this.createDisplayLoading();
+   
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    
     if(valloginUserToken!='')
@@ -210,6 +242,7 @@ export class AlertPage {
 	  .subscribe(data =>{
 		  this.data = data;
 		  console.log(data);
+                  this.hideLoader();
 	  },err => {
 		  console.log(err);
 	  });
