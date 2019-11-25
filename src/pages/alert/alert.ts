@@ -65,7 +65,7 @@ export class AlertPage {
   createDisplayLoading(){
   
    this.loader = this.loadingCtrl.create({  
-    content : "Please wait..."   
+    content : "Loading..."   
    });  
    this.loader.present();
    
