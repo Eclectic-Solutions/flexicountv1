@@ -110,4 +110,7 @@
     <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
     <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
     <engine name="android" spec="7.1.1" />
+    <platform name="ios">
+        <resource-file src="GoogleService-Info.plist" />
+    </platform>
 </widget>
