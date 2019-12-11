@@ -199,8 +199,16 @@ export class HomePage {
   
   login(){
   
+    let UserName = this.uname.value;
+    let Password = this.password.value;
     
-    if(this.uname.value=='')
+    UserName = UserName.trim();
+    Password = Password.trim();
+    
+  
+    console.log(Password);
+    
+    if(UserName=='')
     {
       const alert = this.alertCtrl.create({	
 	subTitle: 'Please enter Username',
@@ -209,7 +217,7 @@ export class HomePage {
       alert.present();
       
     }
-    else if(this.password.value=='')
+    else if(Password=='')
     {
       const alert = this.alertCtrl.create({	
 	subTitle: 'Please enter Password',
@@ -232,8 +240,8 @@ export class HomePage {
       
       if(this.pepperonichk==true)
       {
-	this.storage.set(this.keyuname,this.uname.value);
-	this.storage.set(this.keypwd,this.password.value);
+	this.storage.set(this.keyuname,UserName);
+	this.storage.set(this.keypwd,Password);
 	this.storage.set(this.keyremember,this.pepperonichk);
 	this.storage.set(this.keylanguage,this.curUserLanguage);
 	
@@ -255,8 +263,8 @@ export class HomePage {
       const requestOptions = new RequestOptions({ headers: headers });
       
       let postData = {
-	"Username": this.uname.value,
-	"password": this.password.value,
+	"Username": UserName,
+	"password": Password,
 	"CultureID": this.curUserLanguage
       }      
       

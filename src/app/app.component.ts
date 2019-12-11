@@ -203,7 +203,7 @@ export class MyApp {
           enableBackdropDismiss: false,
           buttons:[
             {
-              text:"Alert Acknowledged",
+              text:"OK",
               handler:()=>
               {
                 //this.nav.push(AlertPage);
