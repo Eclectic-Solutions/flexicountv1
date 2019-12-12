@@ -14,17 +14,22 @@
     </div>
   </ion-item>
   
+  
+  <!--<ion-item>
+    <div>
+      Confirm Site Login URL:<br/>
+    </div>
+  </ion-item>-->
+  
   <ion-item class="cls-edit-head-content">    
-    <div class="cls-log-url">
+    <div style="border-bottom: 0.55px solid #c8c7cc; padding: 10px 0 10px 10px;">
       Confirm Site Login URL:
     </div>
-    <div class="cls-site-lnk">
+    <div style="padding: 10px 10px 10px 10px;">
       {{siteName}}
     </div>
   </ion-item>
-  
-  
-  
+
   <ion-item>
     <ion-label>Alerts - Turn on Timer</ion-label>
     <ion-toggle [(ngModel)]="peppertimer" (ionChange)="changeTimerSettings()" color="secondary"></ion-toggle>
