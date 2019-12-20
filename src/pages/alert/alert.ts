@@ -122,7 +122,7 @@ export class AlertPage {
        const requestOptions = new RequestOptions({ headers: headers });
        
        let postData = {
-	"SortColumn": "Class,AlertSentTime asc",
+	"SortColumn": "Class desc,AlertSentTime",
 	"SortDirection": "Descending"
        }
        
@@ -214,7 +214,7 @@ export class AlertPage {
    }
    else
    {
-    selectedValue='Class,AlertSentTime asc';
+    selectedValue='Class desc,AlertSentTime';
    }
    
    this.createDisplayLoading();

@@ -10,7 +10,8 @@
           <ion-item>
             <ion-label>Sort</ion-label>
             <ion-select [(ngModel)]="sort" (ionChange)="onSelectChange($event)" class="cls-ion-select">
-              <ion-option value="Class,AlertSentTime asc" selected>Priority</ion-option>
+              <ion-option value="Class desc,AlertSentTime" selected>Priority</ion-option>
+              <ion-option value="Class desc,PercentUsage">Percent Usage</ion-option>
               <ion-option value="location">Location</ion-option>      
             </ion-select>
           </ion-item>
