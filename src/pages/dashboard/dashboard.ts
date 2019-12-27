@@ -154,6 +154,36 @@ export class DashboardPage {
   
   signoffpg(){
     //this.navCtrl.push(SignoffPage);
+    
+    const alert = this.alertController.create({
+      message: 'This option is currently disabled',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  
+  registerHub(){    
+    const alert = this.alertController.create({
+      message: 'This option is currently disabled',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  
+  registerSensor(){  
+   const alert = this.alertController.create({
+      message: 'This option is currently disabled',
+      buttons: ['OK']
+    });
+    alert.present();  
+  }
+  
+  viewDevices(){
+   const alert = this.alertController.create({
+      message: 'This option is currently disabled',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }
