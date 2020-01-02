@@ -157,7 +157,7 @@ export class MyApp {
             if(valloginUserToken!='')
             {
               //code start: condition start to call api not for
-              if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
+              if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
               {
                 
                 //code start: testing alert                
@@ -247,7 +247,7 @@ export class MyApp {
                           {
                             //code start: condition start to call api not for
                             
-                            if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
+                            if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
                             {
                               
                               //code start: testing alert                
@@ -345,7 +345,7 @@ export class MyApp {
                   if(alertAckVal==true)
                   {
                     //code start: condition start to call api not for                            
-                    if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
+                    if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
                     {
                       //code start: testing alert                
                     const alert = this.alertCtrl.create({
