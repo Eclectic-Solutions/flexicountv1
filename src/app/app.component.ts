@@ -152,29 +152,34 @@ export class MyApp {
           this.storage.get('loginUserToken').then((valloginUserToken) => {
           
             if(valloginUserToken!='')
-            {      
-              var headers = new Headers();
-              headers.append("Authorization", 'Bearer '+valloginUserToken);       
-              const requestOptions = new RequestOptions({ headers: headers });
-              
-              let postData = {
-                "DomainID": data.additionalData.DomainID,
-                "StoreID": data.additionalData.StoreID,
-                "DepartmentID": data.additionalData.DepartmentID
-              }
-              
-              this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringDeliver',postData,requestOptions)
-              .map(res => res.json())
-              .subscribe(data1 =>{
-               
-              },err => {
-                const alert = this.alertCtrl.create({
-                  title: 'Deliver API Error',
-                  message: 'err=> '+err,
-                  buttons: ['OK']
+            {
+              //code start: condition start to call api not for
+              if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
+              {              
+                var headers = new Headers();
+                headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                const requestOptions = new RequestOptions({ headers: headers });
+                
+                let postData = {
+                  "DomainID": data.additionalData.DomainID,
+                  "StoreID": data.additionalData.StoreID,
+                  "DepartmentID": data.additionalData.DepartmentID
+                }
+                
+                this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringDeliver',postData,requestOptions)
+                .map(res => res.json())
+                .subscribe(data1 =>{
+                 
+                },err => {
+                  const alert = this.alertCtrl.create({
+                    title: 'Deliver API Error',
+                    message: 'err=> '+err,
+                    buttons: ['OK']
+                  });
+                  alert.present();                
                 });
-                alert.present();                
-              });
+              }
+              //code end: condition end to call api not for
             }
             
           });
@@ -226,30 +231,36 @@ export class MyApp {
                         
                           if(alertAckVal==true)
                           {
-                      
-                            //code to call MetricAlertMonitoringAcknowledge API
+                            //code start: condition start to call api not for
                             
-                            var headers = new Headers();
-                            headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                            const requestOptions = new RequestOptions({ headers: headers });
-                            
-                            let postData = {
-                              "DomainID": data.additionalData.DomainID,
-                              "StoreID": data.additionalData.StoreID,
-                              "DepartmentID": data.additionalData.DepartmentID
-                            }
-                            
-                            this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
-                            .map(res => res.json())
-                            .subscribe(data1 =>{                            
-                            },err => {
-                                const alert = this.alertCtrl.create({
-                                  title: 'ACK API Error',
-                                  message: 'err=> '+err,
-                                  buttons: ['OK']
-                                });
-                                alert.present();
-                            });
+                            if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
+                            {                      
+                              //code to call MetricAlertMonitoringAcknowledge API
+                              
+                              var headers = new Headers();
+                              headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                              const requestOptions = new RequestOptions({ headers: headers });
+                              
+                              let postData = {
+                                "DomainID": data.additionalData.DomainID,
+                                "StoreID": data.additionalData.StoreID,
+                                "DepartmentID": data.additionalData.DepartmentID
+                              }
+                              
+                              this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
+                              .map(res => res.json())
+                              .subscribe(data1 =>{                            
+                              },err => {
+                                  const alert = this.alertCtrl.create({
+                                    title: 'ACK API Error',
+                                    message: 'err=> '+err,
+                                    buttons: ['OK']
+                                  });
+                                  alert.present();
+                              });
+                              
+                            }                              
+                            //code end: condition end to call api not for
                             
                             if(view.component.name!='TimerPage')
                             {
@@ -307,29 +318,35 @@ export class MyApp {
                 this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{              
                   if(alertAckVal==true)
                   {
-                    //code to call MetricAlertMonitoringAcknowledge API
-                    
-                    var headers = new Headers();
-                    headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                    const requestOptions = new RequestOptions({ headers: headers });
-                    
-                    let postData = {
-                      "DomainID": data.additionalData.DomainID,
-                      "StoreID": data.additionalData.StoreID,
-                      "DepartmentID": data.additionalData.DepartmentID
+                    //code start: condition start to call api not for                            
+                    if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
+                    {
+                      //code to call MetricAlertMonitoringAcknowledge API
+                      
+                      var headers = new Headers();
+                      headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                      const requestOptions = new RequestOptions({ headers: headers });
+                      
+                      let postData = {
+                        "DomainID": data.additionalData.DomainID,
+                        "StoreID": data.additionalData.StoreID,
+                        "DepartmentID": data.additionalData.DepartmentID
+                      }
+                      
+                      this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
+                      .map(res => res.json())
+                      .subscribe(data1 =>{                    
+                      },err => {
+                          const alert = this.alertCtrl.create({
+                            title: 'ACK API Error',
+                            message: 'err=> '+err,
+                            buttons: ['OK']
+                          });
+                          alert.present();                    
+                      });
+                      
                     }
-                    
-                    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
-                    .map(res => res.json())
-                    .subscribe(data1 =>{                    
-                    },err => {
-                        const alert = this.alertCtrl.create({
-                          title: 'ACK API Error',
-                          message: 'err=> '+err,
-                          buttons: ['OK']
-                        });
-                        alert.present();                    
-                    });
+                    //code end: condition end to call api not for
                     
                     if(view.component.name!='TimerPage')
                     {
