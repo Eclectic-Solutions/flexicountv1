@@ -117,7 +117,8 @@ export class MyApp {
       
       */
       
-      /*
+      //code start: store device token in BAS
+      
       var headers = new Headers();
       headers.append("Accept", 'application/json');
       headers.append('Content-Type', 'application/json' );
@@ -135,7 +136,9 @@ export class MyApp {
 	
       });
       
-      */
+      //code end: store device token in BAS
+      
+      
       
       this.storage.set(this.keydeviceToken,data.registrationId);      
       
@@ -155,7 +158,16 @@ export class MyApp {
             {
               //code start: condition start to call api not for
               if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
-              {              
+              {
+                
+                //code start: testing alert                
+                const alert = this.alertCtrl.create({
+                  title: 'Testing Alert',
+                  message: data.additionalData.Action,
+                  buttons: ['OK']
+                });                
+                //code end: testing alert
+                
                 var headers = new Headers();
                 headers.append("Authorization", 'Bearer '+valloginUserToken);       
                 const requestOptions = new RequestOptions({ headers: headers });
@@ -234,7 +246,17 @@ export class MyApp {
                             //code start: condition start to call api not for
                             
                             if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
-                            {                      
+                            {
+                              
+                              //code start: testing alert                
+                              const alert = this.alertCtrl.create({
+                                title: 'Testing Alert',
+                                message: data.additionalData.Action,
+                                buttons: ['OK']
+                              });                
+                              //code end: testing alert
+                              
+                              
                               //code to call MetricAlertMonitoringAcknowledge API
                               
                               var headers = new Headers();
@@ -318,6 +340,16 @@ export class MyApp {
                 this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{              
                   if(alertAckVal==true)
                   {
+                    
+                    //code start: testing alert                
+                    const alert = this.alertCtrl.create({
+                      title: 'Testing Alert',
+                      message: data.additionalData.Action,
+                      buttons: ['OK']
+                    });                
+                    //code end: testing alert
+                    
+                    
                     //code start: condition start to call api not for                            
                     if(data.additionalData.Action!="completed_cleaning" || data.additionalData.Action!="started_cleaning")
                     {
