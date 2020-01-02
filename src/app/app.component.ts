@@ -159,17 +159,6 @@ export class MyApp {
               //code start: condition start to call api not for
               if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
               {
-                
-                //code start: testing alert                
-                const alert = this.alertCtrl.create({
-                  title: 'Testing Alert',
-                  message: data.additionalData.Action,
-                  buttons: ['OK']
-                });
-                
-                alert.present();
-                //code end: testing alert
-                
                 var headers = new Headers();
                 headers.append("Authorization", 'Bearer '+valloginUserToken);       
                 const requestOptions = new RequestOptions({ headers: headers });
@@ -249,17 +238,6 @@ export class MyApp {
                             
                             if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
                             {
-                              
-                              //code start: testing alert                
-                              const alert = this.alertCtrl.create({
-                                title: 'Testing Alert',
-                                message: data.additionalData.Action,
-                                buttons: ['OK']
-                              });
-                              
-                              alert.present();
-                              //code end: testing alert
-                              
                               
                               //code to call MetricAlertMonitoringAcknowledge API
                               
@@ -347,17 +325,6 @@ export class MyApp {
                     //code start: condition start to call api not for                            
                     if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
                     {
-                      //code start: testing alert                
-                    const alert = this.alertCtrl.create({
-                      title: 'Testing Alert',
-                      message: data.additionalData.Action,
-                      buttons: ['OK']
-                    });
-                    
-                    alert.present();
-                    //code end: testing alert
-                    
-                    
                       //code to call MetricAlertMonitoringAcknowledge API
                       
                       var headers = new Headers();
