@@ -80,12 +80,14 @@ export class MyApp {
         } else {
           console.log('We do NOT have permission to send push notifications');
           
+          /*
           const alert = this.alertCtrl.create({
             title: 'Notification Alert',
             message: 'We do not have permission to send notification. Please enable notification.',
             buttons: ['OK']
           });        
           alert.present();
+          */
         }
       });
     }
