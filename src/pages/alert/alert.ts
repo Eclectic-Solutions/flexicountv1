@@ -169,6 +169,7 @@ export class AlertPage {
    
     if(valloginUserToken!='')
     {
+       let postData ="";
        let lastChar = selectedValue[selectedValue.length -1];
        //console.log('last character: '+lastChar);
     
