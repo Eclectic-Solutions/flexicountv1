@@ -169,16 +169,29 @@ export class AlertPage {
    
     if(valloginUserToken!='')
     {
+       let lastChar = selectedValue[selectedValue.length -1];
+       //console.log('last character: '+lastChar);
+    
        var headers = new Headers();
        headers.append("Authorization", 'Bearer '+valloginUserToken);       
        const requestOptions = new RequestOptions({ headers: headers });
        
-       let postData = {
+       if(lastChar==1)
+       {
+	let postData = {
+	"SortColumn": "Class desc,AlertSentTime",
+	"SortDirection": "Ascending",
+	"regionID": regionValue
+	}
+       }
+       else
+       {
+	let postData = {
 	"SortColumn": selectedValue,
 	"SortDirection": "Descending",
-        "regionID": regionValue
+	"regionID": regionValue
+	}
        }
-       
        
        
        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {       
