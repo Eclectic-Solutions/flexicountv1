@@ -146,7 +146,7 @@ export class AlertPage {
    });   
   }
   
-  
+  /*
   onSelectChange(selectedValue: any, itemBuilding: any) {
   
    console.log('sort value: '+selectedValue);
@@ -199,8 +199,115 @@ export class AlertPage {
    
   }
   
+  */
+  
+  //new code logic start
+  
+  onSelectChange(selectedValue: any, itemBuilding: any) {
+  
+   console.log('sort value: '+selectedValue);
+   console.log('filter building: '+this.itemBuilding);
+   
+   let regionValue='';
+   let postData='';
+   let lastChar='';
+   
+   if(this.itemBuilding)
+   {
+    regionValue=this.itemBuilding;
+   }
+   else
+   {
+    regionValue='null';
+   }
+   
+   this.createDisplayLoading();
+   
+   this.storage.get('loginUserToken').then((valloginUserToken) => {
+   
+    if(valloginUserToken!='')
+    {
+       let lastChar = selectedValue[selectedValue.length -1];
+       
+       var headers = new Headers();
+       headers.append("Authorization", 'Bearer '+valloginUserToken);       
+       const requestOptions = new RequestOptions({ headers: headers });
+       
+       /*let postData = {
+	"SortColumn": selectedValue,
+	"SortDirection": "Descending",
+        "regionID": regionValue
+       }*/
+       
+       if(lastChar=='1')
+       {
+	 console.log('last char 1');
+	 let postData = {
+	  "SortColumn": 'Class desc,AlertSentTime',
+	  "SortDirection": "Ascending",
+	  "regionID": regionValue
+	 }
+	
+	 this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {       
+	  this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	   .map(res => res.json())
+	   .subscribe(data =>{
+		   this.data = data;
+		   console.log(data);
+		   this.hideLoader();
+	   },err => {
+		   console.log(err);
+	   });
+	});
+       }
+       else
+       {
+	 console.log('last char 2');
+	 let postData = {
+	  "SortColumn": selectedValue,
+	  "SortDirection": "Descending",
+	  "regionID": regionValue
+	 }
+	
+	 this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {       
+	   this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	    .map(res => res.json())
+	    .subscribe(data =>{
+		    this.data = data;
+		    console.log(data);
+		    this.hideLoader();
+	    },err => {
+		    console.log(err);
+	    });
+	 });
+       }
+       
+       
+       
+       /*
+       this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {       
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	  .map(res => res.json())
+	  .subscribe(data =>{
+		  this.data = data;
+		  console.log(data);
+                  this.hideLoader();
+	  },err => {
+		  console.log(err);
+	  });
+      });
+      */
+      
+    }
+   
+   });
+   
+  }
+  
+  //new code logic end
   
   
+  /*
   onFilterChange(selectedFilterValue: any, sort: any) {  
    
    console.log('sort value: '+this.sort);
@@ -253,6 +360,116 @@ export class AlertPage {
    });
    
   }
+  */
+  
+  //new code logic start
+  
+  onFilterChange(selectedFilterValue: any, sort: any) {  
+   
+   console.log('sort value: '+this.sort);
+   console.log('filter building: '+selectedFilterValue);
+   
+   let selectedValue='';
+   let postData='';   
+   let lastChar1 = this.sort[this.sort.length -1];
+   
+   if(this.sort)
+   {
+    if(lastChar1=='1')
+    {
+     console.log('last char 1');
+     selectedValue='Class desc,AlertSentTime';
+    }
+    else
+    {
+     console.log('last char 2');
+     selectedValue=this.sort;
+    }
+   }
+   else
+   {
+    selectedValue='Class desc,AlertSentTime';
+   }
+   
+   this.createDisplayLoading();
+   
+   this.storage.get('loginUserToken').then((valloginUserToken) => {
+   
+    if(valloginUserToken!='')
+    {
+       var headers = new Headers();
+       headers.append("Authorization", 'Bearer '+valloginUserToken);       
+       const requestOptions = new RequestOptions({ headers: headers });
+       
+       if(lastChar1=='1')
+       {
+	 let postData = {
+	 "SortColumn": selectedValue,
+	 "SortDirection": "Ascending",
+	 "regionID": selectedFilterValue
+	}
+	
+	this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+       
+	   this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	    .map(res => res.json())
+	    .subscribe(data =>{
+		    this.data = data;
+		    console.log(data);
+		    this.hideLoader();
+	    },err => {
+		    console.log(err);
+	    });
+	});
+       }
+       else
+       {
+	let postData = {
+	 "SortColumn": selectedValue,
+	 "SortDirection": "Descending",
+	 "regionID": selectedFilterValue
+	}
+	
+	this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+       
+	   this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	    .map(res => res.json())
+	    .subscribe(data =>{
+		    this.data = data;
+		    console.log(data);
+		    this.hideLoader();
+	    },err => {
+		    console.log(err);
+	    });
+	});
+	
+       }
+       
+       
+       
+       
+       /*
+       this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+       
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	  .map(res => res.json())
+	  .subscribe(data =>{
+		  this.data = data;
+		  console.log(data);
+                  this.hideLoader();
+	  },err => {
+		  console.log(err);
+	  });
+      });
+      */
+      
+    }
+   
+   });
+   
+  }
+  
+  //new code logic end
   
   
   home(){
