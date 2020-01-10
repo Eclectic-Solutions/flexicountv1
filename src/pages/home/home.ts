@@ -139,7 +139,7 @@ export class HomePage {
 	this.storage.set(this.keyconfirmsiteurl,final_site_login_url);
 	this.userUrlValue=final_site_login_url;
 	
-	this.storage.set(this.key,true);
+	this.storage.set(this.key,false);
 	this.storage.set(this.key1,true);
         this.storage.set(this.keyalertack,true);
 	
