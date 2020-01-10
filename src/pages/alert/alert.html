@@ -78,7 +78,7 @@
         <ion-icon name="arrow-round-forward"></ion-icon>
       </ion-item>      
       <span class="cls-alert-sent-time" *ngIf="item.AlertSentTime?.length > 0">Alert Sent {{ item.AlertSentTime | date: 'dd/MM/y HH:mm:ss' }}</span>
-      <span class="cls-alert-assigned-fullname" *ngIf="item.AssignedFullName?.length > 0" style="color: #b98b00;">Cleaning in progress</span>
+      <span class="cls-alert-assigned-fullname" *ngIf="item.ArrivalDateTime?.length > 0" style="color: #b98b00;">Cleaning in progress</span>
     </ion-card-content>
   </ion-card>
     
