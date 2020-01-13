@@ -99,7 +99,7 @@ export class MyApp {
         },
         ios: {
             alert: 'true',
-            badge: true,
+            badge: 'true',
             sound: 'true'
         }
     };
