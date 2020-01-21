@@ -3,6 +3,8 @@ import { Platform, AlertController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { BackgroundMode } from '@ionic-native/background-mode';
+
 
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -23,7 +25,7 @@ export class MyApp {
   rootPage:any = HomePage;
   keydeviceToken:string = 'deviceToken';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio, private backgroundMode: BackgroundMode) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -49,6 +51,8 @@ export class MyApp {
       });
       
       //code end for native audio
+      
+      this.backgroundMode.enable();
       
       this.initPushNotification();
     });
