@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
@@ -74,7 +73,6 @@ import { Signoff2Page } from '../pages/signoff2/signoff2';
     StatusBar,
     BarcodeScanner,
     SplashScreen,
-    BackgroundMode,
     Keyboard,
     Camera,
     SQLite,
