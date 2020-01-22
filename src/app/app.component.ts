@@ -268,7 +268,7 @@ export class MyApp {
                             }                              
                             //code end: condition end to call api not for
                             
-                            if(view.component.name!='TimerPage')
+                            if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
                             {
                               this.nav.push(AlertPage);
                             }
@@ -354,7 +354,7 @@ export class MyApp {
                     }
                     //code end: condition end to call api not for
                     
-                    if(view.component.name!='TimerPage')
+                    if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
                     {
                       this.nav.push(AlertPage);
                     }
