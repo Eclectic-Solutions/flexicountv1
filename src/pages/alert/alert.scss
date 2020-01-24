@@ -23,14 +23,14 @@ page-alert {
             background: color($colors, primary);
             color: color($colors, light);
         }  
-        ion-row .col {
+        /*ion-row .col {
            border: 1px solid #ddd;
            color: #f00;
-        }
-        ion-row.blk_font .col {
+        }*/
+        /*ion-row.blk_font .col {
             border: 1px solid #ddd;
             color: #000;
-        }
+        }*/
         .header_image
         {
             height: 27px;
@@ -61,7 +61,12 @@ page-alert {
     .cls-arrow-2 ion-icon{color: #FF0000 !important; font-size: 22px;}
     .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md ion-card.cls-rowcolor2{border-left:10px solid #FF0000;}
     
-    .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md ion-card.cls-rowcolor1{border-left:10px solid #ffc000;}
+    /*.cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md ion-card.cls-rowcolor1{border-left:10px solid #ffc000;}*/
+       
+    .cls-rowcolor1{border-left:10px solid #ffc000;}
+    .cls-arrow-1{float: right;}
+    .cls-arrow-1 ion-icon{color: #ffc000 !important; font-size: 22px;}
+    
     .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md ion-card.cls-rowcolor0{border-left:10px solid #92d050;}
     
     .cls-alert-page .scroll-content ion-item.item .item-inner .input-wrapper ion-label.label-md .cls-rowcolor1 .card-content-md:first-child{border-bottom: 1px solid #808080;}
@@ -95,7 +100,7 @@ page-alert {
     ion-card.cls-rowcolor2 { border-left: 10px solid rgb(255, 0, 0);}
     .label-ios {margin-top: 0px; margin-bottom: 0;}
     ion-card.cls-rowcolor0{border-left: 10px solid rgb(146, 208, 80);}
-    .cls-arrow-2{margin-top : 20px}
+    /*.cls-arrow-2{margin-top : 20px}*/
     .ion-ios-arrow-round-forward:before {font-size: 30px;font-weight: 600;}    
     ion-icon.icon.icon-ios.ion-ios-arrow-round-forward.item-icon {color: #92d050; float: right;}
     
