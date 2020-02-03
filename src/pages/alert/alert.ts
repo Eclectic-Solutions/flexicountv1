@@ -371,10 +371,12 @@ export class AlertPage {
    
    let selectedValue='';
    let postData='';   
-   let lastChar1 = this.sort[this.sort.length -1];
+   //let lastChar1 = this.sort[this.sort.length -1];
+   let lastChar1 = '';
    
    if(this.sort)
    {
+    let lastChar1 = this.sort[this.sort.length -1];
     if(lastChar1=='1')
     {
      console.log('last char 1');
