@@ -358,7 +358,7 @@ export class MyApp {
                     }
                     //code end: condition end to call api not for
                     
-                    if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                    //if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
                     {
                       this.nav.push(AlertPage);
                     }
