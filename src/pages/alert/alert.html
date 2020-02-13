@@ -8,7 +8,7 @@
         <ion-col col-7 class="cls-no-bdr">          
           <ion-list [class]="classSort">
           <ion-item>
-            <ion-label>Sort</ion-label>
+            <ion-label style="display:none;">Sort</ion-label>
             <ion-select [(ngModel)]="sort" (ionChange)="onSelectChange($event)" class="cls-ion-select">
               <ion-option value="Class desc,AlertSentTime" selected>Priority Desc</ion-option>
               <ion-option value="Class desc,AlertSentTime1">Priority Asc</ion-option>
