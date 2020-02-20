@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -12,6 +12,7 @@ import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirm
 import { TimerSignoffPage } from '../timer-signoff/timer-signoff';
 import { DashboardPage } from '../dashboard/dashboard';
 import { ManualArrivalConfirmationPage } from '../manual-arrival-confirmation/manual-arrival-confirmation';
+import { AlertPage } from '../alert/alert';
 
 /**
  * Generated class for the TimerPage page.
@@ -39,7 +40,7 @@ export class TimerPage {
   url: string;
   data: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, private insomnia: Insomnia) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, private insomnia: Insomnia, public alertCtrl:AlertController) {
   
    this.insomnia.keepAwake()
   .then(
@@ -48,7 +49,7 @@ export class TimerPage {
    );
   
   
-   this.startTimer();
+   //this.startTimer();
   }
     
   doRefresh(refresher) {
@@ -173,6 +174,30 @@ export class TimerPage {
             .subscribe(data =>{
                     this.data = data;
                     console.log(data);
+                    
+                    if(data.AlreadyStarted==true)
+                    {                    
+                     const alert = this.alertCtrl.create({
+                      title: 'Alert',
+                      message: 'Somebody has already started cleaning for this location',
+                      buttons:[
+                       {
+                        text:"OK",
+                        handler:()=>
+                        {
+                         this.navCtrl.push(AlertPage);
+                        }
+                       }
+                      ]
+                     
+                     });
+                     alert.present();
+                    }
+                    else
+                    {
+                     this.startTimer();
+                    }
+                    
             },err => {
                     console.log(err);
             });
