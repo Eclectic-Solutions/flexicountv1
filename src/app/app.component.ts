@@ -201,52 +201,42 @@ export class MyApp {
       console.log('message -> ' + data.message);      
       if(data.additionalData.foreground)
       {
-        //code start to play custom notification sound
-        
-        this.play();
-        
+        //code start to play custom notification sound        
+        this.play();        
         //code end to play custom notification sound
-        
-        
+                
         let view = this.nav.getActive();
         //alert(view.component.name);
         
-        const alert = this.alertCtrl.create({
-          title: 'Notification',
-          message: data.message,
-          enableBackdropDismiss: false,
-          buttons:[
-            {
-              text:"OK",
-              handler:()=>
+        
+        //condition to check action is not completed_cleaning and started_cleaning then call api
+        if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
+        {
+          const alert = this.alertCtrl.create({
+            
+            title: 'Notification',
+            message: data.message,
+            enableBackdropDismiss: false,
+            buttons: [
               {
-                //this.nav.push(AlertPage);
-                
-                //code to check wheather sitelogin url is stored or not
-                
-                this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-                
-                  if(valLoginUserConfirmSiteURL)
-                  {
-                    //code to check user is logged in or not
-                    
-                    this.storage.get('loginUserToken').then((valloginUserToken) => {
-                    
-                      if(valloginUserToken!='')
-                      {
-                        //code start to check wheather alert ack settings is on
-                        
-                        this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{
-                        
-                          if(alertAckVal==true)
-                          {
-                            //code start: condition start to call api not for
-                            
-                            if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
+                text: 'Accept',
+                role: 'accept',
+                handler: () => {
+                  //code when user click on the accept option
+                  
+                  //code to check wheather sitelogin url is stored or not
+                  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                    if(valLoginUserConfirmSiteURL)
+                    {
+                      //code to check user is logged in or not
+                      this.storage.get('loginUserToken').then((valloginUserToken) => {
+                        if(valloginUserToken!='')
+                        {
+                          //code start to check wheather alert ack settings is on
+                          this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{                        
+                            if(alertAckVal==true)
                             {
-                              
                               //code to call MetricAlertMonitoringAcknowledge API
-                              
                               var headers = new Headers();
                               headers.append("Authorization", 'Bearer '+valloginUserToken);       
                               const requestOptions = new RequestOptions({ headers: headers });
@@ -254,7 +244,102 @@ export class MyApp {
                               let postData = {
                                 "DomainID": data.additionalData.DomainID,
                                 "StoreID": data.additionalData.StoreID,
-                                "DepartmentID": data.additionalData.DepartmentID
+                                "DepartmentID": data.additionalData.DepartmentID,
+                                "MetricAlertMonitoringsStatusID": 1
+                              }
+                              
+                              //code to call api
+                              this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
+                              .map(res => res.json())
+                              .subscribe(data1 =>{                                
+                                
+                                  //code start to check if notification status is already accepted or not                              
+                                  if(data1.AlreadyAccepted==true)
+                                  {
+                                    //code to show another alert for already accepted
+                                    const alert = this.alertCtrl.create({
+                                      title: 'Notification',
+                                      message: 'This notification has already been accepted. No further action required.',
+                                      buttons:[
+                                       {
+                                        text:"OK",
+                                        handler:()=>
+                                        {
+                                          if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                                          {
+                                            this.nav.push(AlertPage);
+                                          }
+                                        }
+                                       }
+                                      ]
+                                     
+                                     });
+                                    alert.present();
+                                  }
+                                  else
+                                  {
+                                    if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                                    {
+                                      this.nav.push(AlertPage);
+                                    }
+                                  }
+                                  
+                                  //code end to check if notification status is already accepted or not
+                                },err => {
+                                  const alert = this.alertCtrl.create({
+                                  title: 'ACK API Error',
+                                  message: 'err=> '+err,
+                                  buttons: ['OK']
+                                });
+                                alert.present();
+                              });
+                              
+                              //code start to check if notification status is already accepted or not
+                              
+                              //code end to check if notification status is already accepted or not
+                            }                        
+                          });
+                        }
+                        else
+                        {
+                          this.nav.push(HomePage);
+                        }
+                      });
+                    }
+                    else
+                    {
+                      this.nav.push(HomePage);
+                    }
+                  });
+                }
+              },
+              {
+                text: 'Reject',
+                role: 'reject',
+                handler: () => {
+                  //code when user click on the Reject option
+                  
+                  //code to check wheather sitelogin url is stored or not
+                  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                    if(valLoginUserConfirmSiteURL)
+                    {
+                      //code to check user is logged in or not
+                      this.storage.get('loginUserToken').then((valloginUserToken) => {
+                        if(valloginUserToken!='')
+                        {
+                          this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{
+                            if(alertAckVal==true)
+                            {
+                              //code to call MetricAlertMonitoringAcknowledge API
+                              var headers = new Headers();
+                              headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                              const requestOptions = new RequestOptions({ headers: headers });
+                              
+                              let postData = {
+                                "DomainID": data.additionalData.DomainID,
+                                "StoreID": data.additionalData.StoreID,
+                                "DepartmentID": data.additionalData.DepartmentID,
+                                "MetricAlertMonitoringsStatusID": 2
                               }
                               
                               this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
@@ -269,119 +354,292 @@ export class MyApp {
                                   alert.present();
                               });
                               
-                            }                              
-                            //code end: condition end to call api not for
-                            
-                            if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
-                            {
-                              this.nav.push(AlertPage);
+                              if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                              {
+                                this.nav.push(AlertPage);
+                              }
                             }
-                          }
-                          
-                        });
-                        
-                        //code end to check wheather alert ack settings is on
-                      }
-                      else
-                      {
-                        this.nav.push(HomePage);
-                      }
-                    
-                    });
-                    
-                  }
-                  else
-                  {
-                    this.nav.push(HomePage);
-                  }                  
-                });
-                
-              }
-            }
-          ]
-        });        
-        alert.present();
-      }
-      else
-      {      
-        
-        
-        let view = this.nav.getActive();
-        //alert(view.component.name);
-      
-      
-        //this.nav.push(AlertPage);
-        
-        //code to check wheather sitelogin url is stored or not
-        
-        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-        
-          if(valLoginUserConfirmSiteURL)
-          {
-            //code to check user is logged in or not
-            this.storage.get('loginUserToken').then((valloginUserToken) => {
-            
-              if(valloginUserToken!='')
-              {
-                //code start to check wheather alert ack settings is on
-                
-                this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{              
-                  if(alertAckVal==true)
-                  {
-                    //code start: condition start to call api not for                            
-                    if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
-                    {
-                      //code to call MetricAlertMonitoringAcknowledge API
-                      
-                      var headers = new Headers();
-                      headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                      const requestOptions = new RequestOptions({ headers: headers });
-                      
-                      let postData = {
-                        "DomainID": data.additionalData.DomainID,
-                        "StoreID": data.additionalData.StoreID,
-                        "DepartmentID": data.additionalData.DepartmentID
-                      }
-                      
-                      this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
-                      .map(res => res.json())
-                      .subscribe(data1 =>{                    
-                      },err => {
-                          const alert = this.alertCtrl.create({
-                            title: 'ACK API Error',
-                            message: 'err=> '+err,
-                            buttons: ['OK']
+                            else
+                            {
+                              if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                              {
+                                this.nav.push(AlertPage);
+                              }
+                            }
                           });
-                          alert.present();                    
+                        }
+                        else
+                        {
+                          this.nav.push(HomePage);
+                        }
                       });
-                      
                     }
-                    //code end: condition end to call api not for
-                    
+                    else
+                    {
+                      this.nav.push(HomePage);
+                    }
+                  });
+                  
+                }
+              }
+            ]
+          
+          });        
+          alert.present();
+        }
+        else
+        {
+          //code to other conditions
+          
+          const alert = this.alertCtrl.create({
+            title: 'Notification',
+            message: data.message,
+            enableBackdropDismiss: false,
+            buttons:[
+            {
+              text:"OK",
+              handler:()=>
+              {
+                //code to check wheather sitelogin url is stored or not
+                this.storage.get('loginUserToken').then((valloginUserToken) => {
+                  if(valloginUserToken!='')
+                  {
                     if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
                     {
                       this.nav.push(AlertPage);
                     }
                   }
+                  else
+                  {
+                    this.nav.push(HomePage);
+                  }
                 });
-                
-                //code end to check wheather alert ack settings is on
               }
-              else
-              {
-                this.nav.push(HomePage);
-              }
+            }
+            ]          
+          });        
+          alert.present();
+        }
+        
+      }//end code for foreground mode
+      else
+      {      
+        //code for when app is in background        
+        let view = this.nav.getActive();
+        
+        //condition to check action is not completed_cleaning and started_cleaning then call api
+        if(!(data.additionalData.Action=="completed_cleaning" || data.additionalData.Action=="started_cleaning"))
+        {
+          const alert = this.alertCtrl.create({
             
-            });
-            //this.nav.push(AlertPage);
-          }
-          else
-          {
-            this.nav.push(HomePage);
-          }                  
-        });
-      }
-    
+            title: 'Notification',
+            message: data.message,
+            enableBackdropDismiss: false,
+            buttons: [
+              {
+                text: 'Accept',
+                role: 'accept',
+                handler: () => {
+                  //code when user click on the accept option
+                  
+                  //code to check wheather sitelogin url is stored or not
+                  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                    if(valLoginUserConfirmSiteURL)
+                    {
+                      //code to check user is logged in or not
+                      this.storage.get('loginUserToken').then((valloginUserToken) => {
+                        if(valloginUserToken!='')
+                        {
+                          //code start to check wheather alert ack settings is on
+                          this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{                        
+                            if(alertAckVal==true)
+                            {
+                              //code to call MetricAlertMonitoringAcknowledge API
+                              var headers = new Headers();
+                              headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                              const requestOptions = new RequestOptions({ headers: headers });
+                              
+                              let postData = {
+                                "DomainID": data.additionalData.DomainID,
+                                "StoreID": data.additionalData.StoreID,
+                                "DepartmentID": data.additionalData.DepartmentID,
+                                "MetricAlertMonitoringsStatusID": 1
+                              }
+                              
+                              //code to call api
+                              this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
+                              .map(res => res.json())
+                              .subscribe(data1 =>{
+                                
+                                //code start to check if notification status is already accepted or not                              
+                                    if(data1.AlreadyAccepted==true)
+                                    {
+                                      //code to show another alert for already accepted
+                                      const alert = this.alertCtrl.create({
+                                        title: 'Notification',
+                                        message: 'This notification has already been accepted. No further action required.',
+                                        buttons:[
+                                         {
+                                          text:"OK",
+                                          handler:()=>
+                                          {
+                                            if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                                            {
+                                              this.nav.push(AlertPage);
+                                            }
+                                          }
+                                         }
+                                        ]
+                                       
+                                       });
+                                      alert.present();
+                                    }
+                                    else
+                                    {
+                                      if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                                      {
+                                        this.nav.push(AlertPage);
+                                      }
+                                    }
+                                //code end to check if notification status is already accepted or not
+                                
+                                
+                                },err => {
+                                  const alert = this.alertCtrl.create({
+                                  title: 'ACK API Error',
+                                  message: 'err=> '+err,
+                                  buttons: ['OK']
+                                });
+                                alert.present();
+                              });
+                              
+                              //code start to check if notification status is already accepted or not                              
+                              
+                              //code end to check if notification status is already accepted or not                              
+                            }                        
+                          });
+                        }
+                        else
+                        {
+                          this.nav.push(HomePage);
+                        }
+                      });
+                    }
+                    else
+                    {
+                      this.nav.push(HomePage);
+                    }
+                  });
+                }
+              },
+              {
+                text: 'Reject',
+                role: 'reject',
+                handler: () => {
+                  //code when user click on the Reject option
+                  
+                  //code to check wheather sitelogin url is stored or not
+                  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                    if(valLoginUserConfirmSiteURL)
+                    {
+                      //code to check user is logged in or not
+                      this.storage.get('loginUserToken').then((valloginUserToken) => {
+                        if(valloginUserToken!='')
+                        {
+                          this.storage.get('alertAlertAcknowledgedSettings').then((alertAckVal) =>{
+                            if(alertAckVal==true)
+                            {
+                              //code to call MetricAlertMonitoringAcknowledge API
+                              var headers = new Headers();
+                              headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                              const requestOptions = new RequestOptions({ headers: headers });
+                              
+                              let postData = {
+                                "DomainID": data.additionalData.DomainID,
+                                "StoreID": data.additionalData.StoreID,
+                                "DepartmentID": data.additionalData.DepartmentID,
+                                "MetricAlertMonitoringsStatusID": 2
+                              }
+                              
+                              this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertMonitoringAcknowledge',postData,requestOptions)
+                              .map(res => res.json())
+                              .subscribe(data1 =>{                            
+                              },err => {
+                                  const alert = this.alertCtrl.create({
+                                    title: 'ACK API Error',
+                                    message: 'err=> '+err,
+                                    buttons: ['OK']
+                                  });
+                                  alert.present();
+                              });
+                              
+                              if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                              {
+                                this.nav.push(AlertPage);
+                              }
+                            }
+                            else
+                            {
+                              if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                              {
+                                this.nav.push(AlertPage);
+                              }
+                            }
+                          });
+                        }
+                        else
+                        {
+                          this.nav.push(HomePage);
+                        }
+                      });
+                    }
+                    else
+                    {
+                      this.nav.push(HomePage);
+                    }
+                  });
+                  
+                }
+              }
+            ]
+          
+          });        
+          alert.present();
+        }
+        else
+        {
+          //code to other conditions
+          
+          const alert = this.alertCtrl.create({
+            title: 'Notification',
+            message: data.message,
+            enableBackdropDismiss: false,
+            buttons:[
+              {
+              text:"OK",
+              handler:()=>
+              {
+                //code to check wheather sitelogin url is stored or not
+                this.storage.get('loginUserToken').then((valloginUserToken) => {
+                  if(valloginUserToken!='')
+                  {
+                    if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                    {
+                      this.nav.push(AlertPage);
+                    }                        
+                  }
+                  else
+                  {
+                    this.nav.push(HomePage);
+                  }
+                });                
+              }
+            }
+            ]          
+          });        
+          alert.present();
+        }        
+      }//end code for background mode  
     });
     
     //pushObject.on('error').subscribe(error => console.error('Error with Push plugin' + error));
