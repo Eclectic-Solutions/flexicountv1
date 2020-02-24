@@ -49,7 +49,7 @@ export class TimerPage {
    );
   
   
-   //this.startTimer();
+   this.startTimer();
   }
     
   doRefresh(refresher) {
@@ -185,7 +185,7 @@ export class TimerPage {
                         text:"OK",
                         handler:()=>
                         {
-                         this.navCtrl.push(AlertPage);
+                         //this.navCtrl.push(AlertPage);
                         }
                        }
                       ]
@@ -195,7 +195,7 @@ export class TimerPage {
                     }
                     else
                     {
-                     this.startTimer();
+                     //this.startTimer();
                     }
                     
             },err => {
