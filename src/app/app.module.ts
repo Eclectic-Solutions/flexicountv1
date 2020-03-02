@@ -14,9 +14,7 @@ import { Toast } from '@ionic-native/toast';
 
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-//import { Push } from '@ionic-native/push';
-
-import { FCM } from '@ionic-native/fcm';
+import { Push } from '@ionic-native/push';
 
 import { Insomnia } from '@ionic-native/insomnia';
 
@@ -81,8 +79,7 @@ import { Signoff2Page } from '../pages/signoff2/signoff2';
     Camera,
     SQLite,
     Toast,
-    //Push,
-    FCM,
+    Push,
     Insomnia,
     NativeAudio,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
