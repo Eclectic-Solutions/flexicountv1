@@ -62,6 +62,7 @@ export class MyApp {
       
       fcm.getToken().then(token=>{
         console.log(token);
+        //backend.registerToken(token);
         
         const alert = this.alertCtrl.create({
           title: 'Device Token',
@@ -70,26 +71,6 @@ export class MyApp {
         });
         alert.present();
         
-        //code start: store device token in BAS
-        
-        var headers = new Headers();
-        headers.append("Accept", 'application/json');
-        headers.append('Content-Type', 'application/json' );
-        const requestOptions = new RequestOptions({ headers: headers });
-        
-        let postData = {
-          "deviceToken": token
-        }
-        
-        this.http.post("https://auth.biblicalarchaeology.org/pushnotification.php", postData, requestOptions)      
-        .subscribe(datalogin =>{
-            console.log(datalogin);
-        }, error => {
-          console.log(error);	
-          
-        });        
-        //code end: store device token in BAS        
-        this.storage.set(this.keydeviceToken,token);        
         
       });
       
@@ -584,7 +565,38 @@ export class MyApp {
       });
       
       fcm.onTokenRefresh().subscribe(token=>{
-        console.log(token);        
+        console.log(token);
+        //backend.registerToken(token);
+        
+        const alert = this.alertCtrl.create({
+          title: 'Device Token',
+          message: 'token=> '+token,
+          buttons: ['OK']
+        });
+        alert.present();
+        
+        //code start: store device token in BAS
+        
+        var headers = new Headers();
+        headers.append("Accept", 'application/json');
+        headers.append('Content-Type', 'application/json' );
+        const requestOptions = new RequestOptions({ headers: headers });
+        
+        let postData = {
+          "deviceToken": token
+        }
+        
+        this.http.post("https://auth.biblicalarchaeology.org/pushnotification.php", postData, requestOptions)      
+        .subscribe(datalogin =>{
+            console.log(datalogin);
+        }, error => {
+          console.log(error);	
+          
+        });        
+        //code end: store device token in BAS        
+        this.storage.set(this.keydeviceToken,token);
+        
+        
       });
       
       
