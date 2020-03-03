@@ -28,6 +28,7 @@ export class AlertPage {
   databuilding: string;
   itemBuilding:string;
   sort:string;
+  //filtredBuildingValue:string='null';
   
   loader: any;
   
@@ -37,6 +38,9 @@ export class AlertPage {
   keyDomainID:string = 'loginuserDomainID';
   keyAllapiDetails:string = 'loginuserApiDetails';
   public loading;
+  
+  //declare storage variable for building filter
+  keyBuildingFilter:string = 'BuildingFilterValue';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController, private storage: Storage, private loadingCtrl: LoadingController) {
   }
@@ -48,6 +52,8 @@ export class AlertPage {
     
     this.loadBuilding();
     this.loadUser();
+    
+    
   }
   
   doRefresh(refresher) {
@@ -98,6 +104,25 @@ export class AlertPage {
 	  .subscribe(data =>{                  
 		  this.databuilding = data;
 		  console.log(data);
+		  
+		  //code to set item building filter dropdown value
+		  
+		  this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
+		    console.log('building filter value at storage: '+valBuildingFilter);
+		    if(valBuildingFilter)
+		    {       
+		     console.log('valBuildingFilter: '+valBuildingFilter);
+		     this.itemBuilding=valBuildingFilter;
+		    }
+		    else
+		    {
+		     this.itemBuilding='null';
+		    }
+		  });
+		  
+		  //this.itemBuilding='null';
+		  
+		  
 	  },err => {
 		  console.log(err);
 	  });
@@ -111,12 +136,43 @@ export class AlertPage {
   
   //code end to load building for filter
   
-  loadUser(){ 
+  loadUser(){
   
    this.storage.get('loginUserToken').then((valloginUserToken) => {
    
     if(valloginUserToken!='')
     {
+     this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
+      console.log('building filter value at storage: '+valBuildingFilter);
+      if(valBuildingFilter)
+      {
+       var headers = new Headers();
+       headers.append("Authorization", 'Bearer '+valloginUserToken);       
+       const requestOptions = new RequestOptions({ headers: headers });
+       
+       let postData = {
+	"SortColumn": "Class desc,AlertSentTime",
+	"SortDirection": "Descending",
+	"regionID": valBuildingFilter
+       }
+       
+       this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+       
+	 this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/SortMetricAlertMonitoring', postData, requestOptions)
+	  .map(res => res.json())
+	  .subscribe(data =>{
+                  this.classSort = 'cls-sort cls-disp-blck';
+                  this.classFilter = 'cls-filter cls-disp-blck';
+		  this.data = data;
+		  console.log(data);
+                  this.hideLoader();
+	  },err => {
+		  console.log(err);
+	  });
+       });
+      }
+      else
+      {
        var headers = new Headers();
        headers.append("Authorization", 'Bearer '+valloginUserToken);       
        const requestOptions = new RequestOptions({ headers: headers });
@@ -139,9 +195,11 @@ export class AlertPage {
 	  },err => {
 		  console.log(err);
 	  });
-      });
-      
-    }
+       });
+      }
+    });
+   
+   }
    
    });   
   }
@@ -366,8 +424,11 @@ export class AlertPage {
   
   onFilterChange(selectedFilterValue: any, sort: any) {  
    
-   console.log('sort value: '+this.sort);
-   console.log('filter building: '+selectedFilterValue);
+   console.log('sort value1: '+this.sort);
+   console.log('filter building1: '+selectedFilterValue);
+   
+   //code start=> store selected building value in storage
+   this.storage.set(this.keyBuildingFilter,selectedFilterValue);              
    
    let selectedValue='';
    let postData='';   
@@ -475,11 +536,29 @@ export class AlertPage {
   
   
   home(){
-    this.navCtrl.push(DashboardPage);
+  
+   //code start=> remove selected building value from storage
+   this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
+    if(valBuildingFilter)
+    {
+     this.storage.set(this.keyBuildingFilter,'');
+    }
+   });
+  
+   this.navCtrl.push(DashboardPage);
   }
   
   back(){
-    this.navCtrl.push(DashboardPage);
+   
+   //code start=> remove selected building value from storage
+   this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
+    if(valBuildingFilter)
+    {
+     this.storage.set(this.keyBuildingFilter,'');
+    }
+   });
+   
+   this.navCtrl.push(DashboardPage);
   }
   
   arrivalConfirmation(DomainID:string, StoreID:string, DepartmentID:string, DomainName:string, StoreName:string, DepartmentName:string, Description:string){
@@ -492,6 +571,15 @@ export class AlertPage {
   console.log(StoreName);
   console.log(DepartmentName);
   console.log(Description);
+  
+  //code start=> remove selected building value from storage
+   this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
+    if(valBuildingFilter)
+    {
+     this.storage.set(this.keyBuildingFilter,'');
+    }
+   });
+  
   
   this.storage.set(this.keyDomainID,DomainID+'**__**'+StoreID+'**__**'+DepartmentID);
   this.storage.set(this.keyAllapiDetails,DomainName+'**__**'+StoreName+'**__**'+DepartmentName+'**__**'+Description);
