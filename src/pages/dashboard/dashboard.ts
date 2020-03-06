@@ -29,11 +29,21 @@ export class DashboardPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,private alertController:AlertController, public platform: Platform, private storage: Storage) {
   
+  //let platForm = this.platform.platforms();    
+  //console.log('current platform: '+platForm[0]);
+  
    this.saveDeviceToken();
   
   }
   
   saveDeviceToken(){
+  
+   let cur_platform='';
+   let platForm = this.platform.platforms();    
+   console.log('current platform: '+platForm[0]);
+   
+   cur_platform = platForm[0];   
+   console.log('cur_platform: '+cur_platform);
   
    this.storage.get('deviceToken').then((valdeviceToken) => {
    
@@ -54,7 +64,8 @@ export class DashboardPage {
         const requestOptions = new RequestOptions({ headers: headers });
         
         let postData = {
-         "TokenPayload": valdeviceToken
+         "TokenPayload": valdeviceToken,
+         "Device": cur_platform
         }
         
         /*this.http.post("https://auth.biblicalarchaeology.org/pushnotification.php", postData, requestOptions)      
