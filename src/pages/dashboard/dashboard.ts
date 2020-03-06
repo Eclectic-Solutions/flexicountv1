@@ -42,7 +42,15 @@ export class DashboardPage {
    let platForm = this.platform.platforms();    
    console.log('current platform: '+platForm[0]);
    
-   cur_platform = platForm[0];   
+   if(platForm[0]=='ios')
+   {
+    cur_platform = 'iOS';
+   }
+   else
+   {
+    cur_platform = 'Android';
+   }
+   
    console.log('cur_platform: '+cur_platform);
   
    this.storage.get('deviceToken').then((valdeviceToken) => {
