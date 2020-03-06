@@ -27,7 +27,7 @@ export class DashboardPage {
   keydeviceToken:string = 'deviceToken';
   keyUsertoken:string = 'loginUserToken';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,private alertController:AlertController, public platform: Platform, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,private alertController:AlertController, public platforms: Platform, private storage: Storage) {
   
   //let platForm = this.platform.platforms();    
   //console.log('current platform: '+platForm[0]);
@@ -39,10 +39,11 @@ export class DashboardPage {
   saveDeviceToken(){
   
    let cur_platform='';
-   let platForm = this.platform.platforms();    
-   console.log('current platform: '+platForm[0]);
    
-   if(platForm[0]=='ios')
+   let platForm = this.platforms.platforms();
+   //console.log(platForm[0]);
+   
+   if(this.platforms.is('ios'))
    {
     cur_platform = 'iOS';
    }
