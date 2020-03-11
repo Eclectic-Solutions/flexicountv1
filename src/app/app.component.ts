@@ -311,7 +311,8 @@ export class MyApp {
                       this.nav.push(HomePage);
                     }
                   });
-                }
+                },
+                cssClass: 'esol_green'
               },
               {
                 text: 'Reject',
@@ -380,7 +381,8 @@ export class MyApp {
                     }
                   });
                   
-                }
+                },
+                cssClass: 'esol_red'
               }
             ]
           
@@ -404,7 +406,8 @@ export class MyApp {
                 this.storage.get('loginUserToken').then((valloginUserToken) => {
                   if(valloginUserToken!='')
                   {
-                    if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                    //if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                    if(view.component.name!='TimerPage')
                     {
                       this.nav.push(AlertPage);
                     }
@@ -530,7 +533,8 @@ export class MyApp {
                       this.nav.push(HomePage);
                     }
                   });
-                }
+                },
+                cssClass: 'esol_green'
               },
               {
                 text: 'Reject',
@@ -599,7 +603,8 @@ export class MyApp {
                     }
                   });
                   
-                }
+                },
+                cssClass: 'esol_red'
               }
             ]
           
@@ -623,7 +628,8 @@ export class MyApp {
                 this.storage.get('loginUserToken').then((valloginUserToken) => {
                   if(valloginUserToken!='')
                   {
-                    if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                    //if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
+                    if(view.component.name!='TimerPage')
                     {
                       this.nav.push(AlertPage);
                     }                        

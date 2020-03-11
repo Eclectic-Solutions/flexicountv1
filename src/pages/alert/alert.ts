@@ -538,12 +538,14 @@ export class AlertPage {
   home(){
   
    //code start=> remove selected building value from storage
+   /*
    this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
     if(valBuildingFilter)
     {
      this.storage.set(this.keyBuildingFilter,'');
     }
    });
+   */
   
    this.navCtrl.push(DashboardPage);
   }
@@ -551,12 +553,14 @@ export class AlertPage {
   back(){
    
    //code start=> remove selected building value from storage
+   /*
    this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
     if(valBuildingFilter)
     {
      this.storage.set(this.keyBuildingFilter,'');
     }
    });
+   */
    
    this.navCtrl.push(DashboardPage);
   }
@@ -573,12 +577,15 @@ export class AlertPage {
   console.log(Description);
   
   //code start=> remove selected building value from storage
+  /*  
    this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
     if(valBuildingFilter)
     {
      this.storage.set(this.keyBuildingFilter,'');
     }
    });
+   
+   */
   
   
   this.storage.set(this.keyDomainID,DomainID+'**__**'+StoreID+'**__**'+DepartmentID);

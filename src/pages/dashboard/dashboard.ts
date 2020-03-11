@@ -26,6 +26,7 @@ export class DashboardPage {
 
   keydeviceToken:string = 'deviceToken';
   keyUsertoken:string = 'loginUserToken';
+  keyBuildingFilter:string = 'BuildingFilterValue';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,private alertController:AlertController, public platforms: Platform, private storage: Storage) {
   
@@ -119,6 +120,16 @@ export class DashboardPage {
   }
   
   logout(){
+  
+  
+  //code start=> remove selected building value from storage
+  
+   this.storage.get('BuildingFilterValue').then((valBuildingFilter) => {
+    if(valBuildingFilter)
+    {
+     this.storage.set(this.keyBuildingFilter,'');
+    }
+   });  
   
    //this.storage.set(this.keyUsertoken,'');   
    
