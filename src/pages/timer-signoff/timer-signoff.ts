@@ -36,6 +36,7 @@ export class TimerSignoffPage {
 
   public LoginUserapiDetails='';
   keytimervalue:string = 'loginUserTimerValue';
+  keytimervalueBackground:string = 'loginUserTimerValueBackground';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
   
@@ -92,6 +93,7 @@ export class TimerSignoffPage {
     
     //this.timer = numhours + ":" + numminutes + ":" + numseconds;
     this.timer = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
+    this.storage.set(this.keytimervalueBackground,this.timer);
   }
   
   //timer js code end
@@ -127,6 +129,7 @@ export class TimerSignoffPage {
   
     //code to reset user timer storage value
     this.storage.set(this.keytimervalue,'');
+    this.storage.set(this.keytimervalueBackground,'');
   
     this.navCtrl.push(DashboardPage);
   }
@@ -163,6 +166,7 @@ export class TimerSignoffPage {
   
    //code to reset user timer storage value
    this.storage.set(this.keytimervalue,'');
+   this.storage.set(this.keytimervalueBackground,'');
     
    this.navCtrl.push(CompletionSummaryPage);
   }

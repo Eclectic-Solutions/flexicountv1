@@ -35,7 +35,7 @@ export class TimerPage {
   public LoginUserapiDetails='';
   
   keytimervalue:string = 'loginUserTimerValue';
-  
+  keytimervalueBackground:string = 'loginUserTimerValueBackground';  
   
   url: string;
   data: string;
@@ -108,6 +108,7 @@ export class TimerPage {
     
     //this.timer = numhours + ":" + numminutes + ":" + numseconds;
     this.timer = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
+    this.storage.set(this.keytimervalueBackground,this.timer);
   }
   
   ionViewDidLoad() {
@@ -220,6 +221,7 @@ export class TimerPage {
   
    //code to reset user timer storage value
    this.storage.set(this.keytimervalue,'');
+   this.storage.set(this.keytimervalueBackground,'');
   
     this.insomnia.allowSleepAgain()
     .then(
@@ -245,6 +247,7 @@ export class TimerPage {
   
    //code to reset user timer storage value
    this.storage.set(this.keytimervalue,'');
+   this.storage.set(this.keytimervalueBackground,'');
   
    this.insomnia.allowSleepAgain()
     .then(
