@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -38,7 +38,7 @@ export class TimerSignoffPage {
   keytimervalue:string = 'loginUserTimerValue';
   keytimervalueBackground:string = 'loginUserTimerValueBackground';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, public alertCtrl:AlertController) {
   
    this.startTimer();
    
@@ -50,6 +50,13 @@ export class TimerSignoffPage {
   
    this.storage.get('loginUserTimerValue').then((timeVal) => {
     console.log('Current Timer Value: '+timeVal);
+    
+    const alert9 = this.alertCtrl.create({
+      title: 'saved time in timer-off',
+      message: 'savedtime=> '+timeVal,
+      buttons: ['OK']
+    });
+    alert9.present();
     
     if(timeVal)
     {

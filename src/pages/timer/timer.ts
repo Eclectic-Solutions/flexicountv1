@@ -66,6 +66,14 @@ export class TimerPage {
    this.storage.get('loginUserTimerValue').then((timeVal) => {
     console.log('Current Timer Value: '+timeVal);
     
+    
+    const alert8 = this.alertCtrl.create({
+      title: 'saved time',
+      message: 'savedtime=> '+timeVal,
+      buttons: ['OK']
+    });
+    alert8.present();
+    
     if(timeVal)
     {
      var hms = timeVal;   // your input string

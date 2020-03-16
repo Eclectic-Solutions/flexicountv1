@@ -70,10 +70,30 @@ export class MyApp {
                 this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
                   if(valTimerValueBackground!='')
                   {
+                    
+                    const alert11 = this.alertCtrl.create({
+                      title: 'local backgd time',
+                      message: 'savedbcktime=> '+valTimerValueBackground,
+                      buttons: ['OK']
+                    });
+                    alert11.present();
+                    
+                    
                     //code to fetch background timer value and convert it to seconds                    
                     var hms = valTimerValueBackground;
                     var a = hms.split(':');      
                     var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                    
+                    
+                    const alert12 = this.alertCtrl.create({
+                      title: 'background time in sec',
+                      message: 'time sec=> '+seconds,
+                      buttons: ['OK']
+                    });
+                    alert12.present();
+                    
+                    
+                    
                     
                     //code to fetch pause timestamp second                    
                     var pauseTimestampSecond=parseInt(valpauseTimeStamp);                    
@@ -95,6 +115,43 @@ export class MyApp {
                     
                     //this.timer = numhours + ":" + numminutes + ":" + numseconds;
                     var formatedTime = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
+                    
+                    const alert2 = this.alertCtrl.create({
+                      title: 'fetched pause time',
+                      message: 'pausetime=> '+pauseTimestampSecond,
+                      buttons: ['OK']
+                    });
+                    alert2.present();
+                    
+                    const alert3 = this.alertCtrl.create({
+                      title: 'resume time',
+                      message: 'resumetime=> '+resumetimeStamp,
+                      buttons: ['OK']
+                    });
+                    alert3.present();
+                    
+                    const alert4 = this.alertCtrl.create({
+                      title: 'time diff',
+                      message: 'timediff=> '+timeDiff,
+                      buttons: ['OK']
+                    });
+                    alert4.present();
+                    
+                    const alert5 = this.alertCtrl.create({
+                      title: 'calculated timestamp',
+                      message: 'caltimestamp=> '+totalSeconds,
+                      buttons: ['OK']
+                    });
+                    alert5.present();
+                    
+                    const alert6 = this.alertCtrl.create({
+                      title: 'formated time',
+                      message: 'formatedtime=> '+formatedTime,
+                      buttons: ['OK']
+                    });
+                    alert6.present();
+                    
+                    
                     this.storage.set(this.keytimervalue,formatedTime);
                     
                     //code to clear keytimervalueBackground
@@ -133,12 +190,26 @@ export class MyApp {
         //code to get current datetimestamp in second
         var pausetimeStamp = Math.floor(Date.now() / 1000);
         
+        const alert1 = this.alertCtrl.create({
+          title: 'pause time',
+          message: 'pausetime=> '+pausetimeStamp,
+          buttons: ['OK']
+        });
+        alert1.present();
+        
         this.storage.get('loginUserToken').then((valloginUserToken) => {
           if(valloginUserToken!='')
           {
             this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
               if(valTimerValueBackground!='')
               {
+                const alert10 = this.alertCtrl.create({
+                  title: 'pause time saved here',
+                  message: 'pausetime=> '+pausetimeStamp,
+                  buttons: ['OK']
+                });
+                alert10.present();
+                
                 this.storage.set(this.keyPausetimeStamp,pausetimeStamp);
               }
               else
