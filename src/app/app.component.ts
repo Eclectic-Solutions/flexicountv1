@@ -62,7 +62,7 @@ export class MyApp {
         let view = this.nav.getActive();
         
         //this code only work for timer page & timer sign off page
-        if(view=='TimerPage' || view=='TimerSignoffPage')
+        if(view.component.name=='TimerPage' || view.component.name=='TimerSignoffPage')
         {
           //code to get resume time stamp
           var today = new Date();
@@ -130,7 +130,7 @@ export class MyApp {
                     
                       const alert3 = this.alertCtrl.create({
                         title: 'resume time',
-                        message: 'resumetime=> '+resumetimeStamp,
+                        message: 'resumetime=> '+resumeTimeSeconds,
                         buttons: ['OK']
                       });
                       alert3.present();
@@ -197,7 +197,7 @@ export class MyApp {
         let view = this.nav.getActive();
         
         //this code only work for timer page & timer sign off page
-        if(view=='TimerPage' || view=='TimerSignoffPage')
+        if(view.component.name=='TimerPage' || view.component.name=='TimerSignoffPage')
         {
           //code to get pause time stamp
           var today = new Date();
