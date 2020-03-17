@@ -54,178 +54,201 @@ export class MyApp {
         console.log(error);
       });
       
+      
       //code end for native audio            
       
-      platform.resume.subscribe ( (e) => {        
+      platform.resume.subscribe ( (e) => {
         
-        //code to get current datetimestamp in second
-        var resumetimeStamp = Math.floor(Date.now() / 1000);
+        let view = this.nav.getActive();
         
-        this.storage.get('loginUserToken').then((valloginUserToken) => {
-          if(valloginUserToken!='')
-          {
-            this.storage.get('pauseTimeStamp').then((valpauseTimeStamp) => {
-              if(valpauseTimeStamp!='')
-              {
-                this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
-                  if(valTimerValueBackground!='')
-                  {
+        //this code only work for timer page & timer sign off page
+        if(view=='TimerPage' || view=='TimerSignoffPage')
+        {
+          //code to get resume time stamp
+          var today = new Date();
+          var resumetime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+          
+          //code to convert resume time to seconds
+          var a = resumetime.split(':');      
+          var resumeTimeSeconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+          
+          this.storage.get('loginUserToken').then((valloginUserToken) => {
+            if(valloginUserToken)
+            {
+              this.storage.get('pauseTimeStamp').then((valpauseTimeStamp) => {
+                if(valpauseTimeStamp)
+                {
+                  this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
+                    if(valTimerValueBackground)
+                    {                    
+                      const alert11 = this.alertCtrl.create({
+                        title: 'local backgd time',
+                        message: 'savedbcktime=> '+valTimerValueBackground,
+                        buttons: ['OK']
+                      });
+                      alert11.present();                    
                     
-                    const alert11 = this.alertCtrl.create({
-                      title: 'local backgd time',
-                      message: 'savedbcktime=> '+valTimerValueBackground,
-                      buttons: ['OK']
-                    });
-                    alert11.present();
+                      //code to fetch background timer value and convert it to seconds                    
+                      var hms = valTimerValueBackground;
+                      var a = hms.split(':');      
+                      var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);                    
                     
+                      const alert12 = this.alertCtrl.create({
+                        title: 'background time in sec',
+                        message: 'time sec=> '+seconds,
+                        buttons: ['OK']
+                      });
+                      alert12.present();                    
                     
-                    //code to fetch background timer value and convert it to seconds                    
-                    var hms = valTimerValueBackground;
-                    var a = hms.split(':');      
-                    var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                      //code to fetch pause timestamp second                    
+                      var pauseTimestampSecond=parseInt(valpauseTimeStamp);                    
                     
+                      //code to get difference between pause-time-stamp & resume-time-stamp                    
+                      var timeDiff=(resumeTimeSeconds - pauseTimestampSecond);
                     
-                    const alert12 = this.alertCtrl.create({
-                      title: 'background time in sec',
-                      message: 'time sec=> '+seconds,
-                      buttons: ['OK']
-                    });
-                    alert12.present();
+                      //code to add timeDif & background time seconds
+                      var totalSeconds = (seconds + timeDiff);
                     
+                      //code to convert totalSeconds to time format
+                      var numhours = Math.floor(((totalSeconds % 31536000) % 86400) / 3600);
+                      var numminutes = Math.floor((((totalSeconds % 31536000) % 86400) % 3600) / 60);
+                      var numseconds = (((totalSeconds % 31536000) % 86400) % 3600) % 60;
                     
+                      var numhours_print = ("0" + numhours).slice(-2);
+                      var numminutes_print = ("0" + numminutes).slice(-2);
+                      var numseconds_print = ("0" + numseconds).slice(-2);
                     
+                      //this.timer = numhours + ":" + numminutes + ":" + numseconds;
+                      var formatedTime = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
                     
-                    //code to fetch pause timestamp second                    
-                    var pauseTimestampSecond=parseInt(valpauseTimeStamp);                    
+                      const alert2 = this.alertCtrl.create({
+                        title: 'fetched pause time',
+                        message: 'pausetime=> '+pauseTimestampSecond,
+                        buttons: ['OK']
+                      });
+                      alert2.present();
                     
-                    //code to get difference between pause-time-stamp & resume-time-stamp                    
-                    var timeDiff=(resumetimeStamp - pauseTimestampSecond);
+                      const alert3 = this.alertCtrl.create({
+                        title: 'resume time',
+                        message: 'resumetime=> '+resumetimeStamp,
+                        buttons: ['OK']
+                      });
+                      alert3.present();
                     
-                    //code to add timeDif & background time seconds
-                    var totalSeconds = (seconds + timeDiff);
+                      const alert4 = this.alertCtrl.create({
+                        title: 'time diff',
+                        message: 'timediff=> '+timeDiff,
+                        buttons: ['OK']
+                      });
+                      alert4.present();
                     
-                    //code to convert totalSeconds to time format
-                    var numhours = Math.floor(((totalSeconds % 31536000) % 86400) / 3600);
-                    var numminutes = Math.floor((((totalSeconds % 31536000) % 86400) % 3600) / 60);
-                    var numseconds = (((totalSeconds % 31536000) % 86400) % 3600) % 60;
+                      const alert5 = this.alertCtrl.create({
+                        title: 'calculated timestamp',
+                        message: 'caltimestamp=> '+totalSeconds,
+                        buttons: ['OK']
+                      });
+                      alert5.present();
                     
-                    var numhours_print = ("0" + numhours).slice(-2);
-                    var numminutes_print = ("0" + numminutes).slice(-2);
-                    var numseconds_print = ("0" + numseconds).slice(-2);
+                      const alert6 = this.alertCtrl.create({
+                        title: 'formated time',
+                        message: 'formatedtime=> '+formatedTime,
+                        buttons: ['OK']
+                      });
+                      alert6.present();                    
                     
-                    //this.timer = numhours + ":" + numminutes + ":" + numseconds;
-                    var formatedTime = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
-                    
-                    const alert2 = this.alertCtrl.create({
-                      title: 'fetched pause time',
-                      message: 'pausetime=> '+pauseTimestampSecond,
-                      buttons: ['OK']
-                    });
-                    alert2.present();
-                    
-                    const alert3 = this.alertCtrl.create({
-                      title: 'resume time',
-                      message: 'resumetime=> '+resumetimeStamp,
-                      buttons: ['OK']
-                    });
-                    alert3.present();
-                    
-                    const alert4 = this.alertCtrl.create({
-                      title: 'time diff',
-                      message: 'timediff=> '+timeDiff,
-                      buttons: ['OK']
-                    });
-                    alert4.present();
-                    
-                    const alert5 = this.alertCtrl.create({
-                      title: 'calculated timestamp',
-                      message: 'caltimestamp=> '+totalSeconds,
-                      buttons: ['OK']
-                    });
-                    alert5.present();
-                    
-                    const alert6 = this.alertCtrl.create({
-                      title: 'formated time',
-                      message: 'formatedtime=> '+formatedTime,
-                      buttons: ['OK']
-                    });
-                    alert6.present();
-                    
-                    
-                    this.storage.set(this.keytimervalue,formatedTime);
-                    
-                    //code to clear keytimervalueBackground
-                    this.storage.set(this.keytimervalueBackground,'');
-                    
-                    //code to clear pauseTimeStamp
-                    this.storage.set(this.keyPausetimeStamp,'');
-                  }
-                  else
-                  {
-                    this.storage.set(this.keytimervalue,'');
-                    this.storage.set(this.keytimervalueBackground,'');
-                    this.storage.set(this.keyPausetimeStamp,'');
-                  }
-                });
-              }
-              else
-              {
-                this.storage.set(this.keyPausetimeStamp,'');
-              }
-            });
-          }
-          else
-          {
-            this.storage.set(this.keytimervalue,'');
-            this.storage.set(this.keytimervalueBackground,'');
-            this.storage.set(this.keyPausetimeStamp,'');
-          }
-        });
-        
-        
+                      this.storage.set(this.keytimervalue,formatedTime);                    
+                      //code to clear keytimervalueBackground
+                      this.storage.set(this.keytimervalueBackground,'');                    
+                      //code to clear pauseTimeStamp
+                      this.storage.set(this.keyPausetimeStamp,'');
+                    }//end of background saved time check
+                    else
+                    {
+                      this.storage.set(this.keytimervalue,'');
+                      this.storage.set(this.keytimervalueBackground,'');
+                      this.storage.set(this.keyPausetimeStamp,'');
+                    }
+                  });
+                }//end of pause time check
+                else
+                {
+                  this.storage.set(this.keyPausetimeStamp,'');
+                }
+              });
+            }//end of login check
+            else
+            {
+              this.storage.set(this.keytimervalue,'');
+              this.storage.set(this.keytimervalueBackground,'');
+              this.storage.set(this.keyPausetimeStamp,'');
+            }
+          });          
+        }//end of page check
+        else
+        {
+          this.storage.set(this.keytimervalue,'');
+          this.storage.set(this.keytimervalueBackground,'');
+          this.storage.set(this.keyPausetimeStamp,'');
+        }
       });
       
-      platform.pause.subscribe ( (e) => {        
+      platform.pause.subscribe ( (e) => {
         
-        //code to get current datetimestamp in second
-        var pausetimeStamp = Math.floor(Date.now() / 1000);
+        let view = this.nav.getActive();
         
-        const alert1 = this.alertCtrl.create({
-          title: 'pause time',
-          message: 'pausetime=> '+pausetimeStamp,
-          buttons: ['OK']
-        });
-        alert1.present();
-        
-        this.storage.get('loginUserToken').then((valloginUserToken) => {
-          if(valloginUserToken!='')
-          {
-            this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
-              if(valTimerValueBackground!='')
-              {
-                const alert10 = this.alertCtrl.create({
-                  title: 'pause time saved here',
-                  message: 'pausetime=> '+pausetimeStamp,
-                  buttons: ['OK']
-                });
-                alert10.present();
+        //this code only work for timer page & timer sign off page
+        if(view=='TimerPage' || view=='TimerSignoffPage')
+        {
+          //code to get pause time stamp
+          var today = new Date();
+          var pausetime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+          
+          //code to convert resume time to seconds
+          var a = pausetime.split(':');      
+          var pausetimeStamp = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+          
+          const alert1 = this.alertCtrl.create({
+            title: 'pause time',
+            message: 'pausetime=> '+pausetimeStamp,
+            buttons: ['OK']
+          });
+          alert1.present();
+          
+          this.storage.get('loginUserToken').then((valloginUserToken) => {
+            if(valloginUserToken)
+            {
+              this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
+                if(valTimerValueBackground)
+                {
+                  const alert10 = this.alertCtrl.create({
+                    title: 'pause time saved here',
+                    message: 'pausetime=> '+pausetimeStamp,
+                    buttons: ['OK']
+                  });
+                  alert10.present();
                 
-                this.storage.set(this.keyPausetimeStamp,pausetimeStamp);
-              }
-              else
-              {
-                this.storage.set(this.keyPausetimeStamp,'');
-              }    
-            });
-          }
-          else
-          {
-            this.storage.set(this.keytimervalueBackground,'');
-            this.storage.set(this.keyPausetimeStamp,'');
-            this.storage.set(this.keytimervalue,'');
-          }    
-        });
-        
+                  this.storage.set(this.keyPausetimeStamp,pausetimeStamp);
+                }//end of background time check
+                else
+                {
+                  this.storage.set(this.keyPausetimeStamp,'');
+                }    
+              });
+            }//end of login token check
+            else
+            {
+              this.storage.set(this.keytimervalueBackground,'');
+              this.storage.set(this.keyPausetimeStamp,'');
+              this.storage.set(this.keytimervalue,'');
+            }    
+          });          
+        }//end of page check
+        else
+        {
+          this.storage.set(this.keytimervalueBackground,'');
+          this.storage.set(this.keyPausetimeStamp,'');
+          this.storage.set(this.keytimervalue,'');
+        }
       });
       
       //this.backgroundMode.enable();
