@@ -17,6 +17,13 @@ import { NativeAudio } from '@ionic-native/native-audio';
 
 import { HomePage } from '../pages/home/home';
 import { AlertPage } from '../pages/alert/alert';
+
+
+import { TimerPage } from '../pages/timer/timer';
+import { TimerSignoffPage } from '../pages/timer-signoff/timer-signoff';
+
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -179,6 +186,7 @@ export class MyApp {
                       this.storage.set(this.keytimervalueBackground,'');                    
                       //code to clear pauseTimeStamp
                       this.storage.set(this.keyPausetimeStamp,'');
+                      this.nav.push(view.component.name);
                     }//end of background saved time check
                     else
                     {
