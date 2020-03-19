@@ -238,6 +238,7 @@ export class MyApp {
           const alert = this.alertCtrl.create({
             
             title: 'Notification',
+            mode:'ios',
             message: data.message,
             enableBackdropDismiss: false,
             buttons: [
@@ -459,6 +460,7 @@ export class MyApp {
           const alert = this.alertCtrl.create({
             
             title: 'Notification',
+            mode:'ios',
             message: data.message,
             enableBackdropDismiss: false,
             buttons: [
