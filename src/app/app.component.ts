@@ -52,29 +52,6 @@ export class MyApp {
       
       //code end for native audio
       
-      platform.resume.subscribe ( (e) => {
-        
-        const alert = this.alertCtrl.create({
-          title: 'resume',
-          message: 'resume called',
-          buttons: ['OK']
-        });
-        alert.present();
-        
-      });
-      
-      platform.pause.subscribe ( (e) => {
-        
-        const alert = this.alertCtrl.create({
-          title: 'pause',
-          message: 'pause called',
-          buttons: ['OK']
-        });
-        alert.present();
-        
-        
-      });
-      
       this.backgroundMode.enable();
       
       this.initPushNotification();
