@@ -27,10 +27,6 @@ export class DashboardPage {
   keydeviceToken:string = 'deviceToken';
   keyUsertoken:string = 'loginUserToken';
   keyBuildingFilter:string = 'BuildingFilterValue';
-  
-  keyPausetimeStamp:string = 'pauseTimeStamp';
-  keytimervalueBackground:string = 'loginUserTimerValueBackground';
-  keytimervalue:string = 'loginUserTimerValue';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,private alertController:AlertController, public platforms: Platform, private storage: Storage) {
   
@@ -124,11 +120,6 @@ export class DashboardPage {
   }
   
   logout(){
-  
-  
-  this.storage.set(this.keytimervalue,'');
-  this.storage.set(this.keytimervalueBackground,'');
-  this.storage.set(this.keyPausetimeStamp,'');
   
   
   //code start=> remove selected building value from storage

@@ -17,13 +17,6 @@ import { NativeAudio } from '@ionic-native/native-audio';
 
 import { HomePage } from '../pages/home/home';
 import { AlertPage } from '../pages/alert/alert';
-
-
-import { TimerPage } from '../pages/timer/timer';
-import { TimerSignoffPage } from '../pages/timer-signoff/timer-signoff';
-
-
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -31,10 +24,6 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage:any = HomePage;
   keydeviceToken:string = 'deviceToken';
-  
-  keyPausetimeStamp:string = 'pauseTimeStamp';
-  keytimervalueBackground:string = 'loginUserTimerValueBackground';
-  keytimervalue:string = 'loginUserTimerValue';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio, private backgroundMode: BackgroundMode) {
     platform.ready().then(() => {
@@ -61,164 +50,32 @@ export class MyApp {
         console.log(error);
       });
       
-      
-      //code end for native audio      
-      
-      platform.pause.subscribe ( (e) => {
-        
-        let view = this.nav.getActive();
-        
-        //this code only work for timer page & timer sign off page
-        if(view.component.name=='TimerPage' || view.component.name=='TimerSignoffPage')
-        {
-          //code to get pause time stamp
-          var today = new Date();
-          var pausetime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-          
-          //code to convert resume time to seconds
-          var a = pausetime.split(':');      
-          var pausetimeStamp = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);         
-          
-          this.storage.get('loginUserToken').then((valloginUserToken) => {
-            if(valloginUserToken)
-            {
-              this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
-                if(valTimerValueBackground)
-                {
-                  const alert10 = this.alertCtrl.create({
-                    title: 'pause time saved here',
-                    message: 'pausetime=> '+pausetimeStamp,
-                    buttons: ['OK']
-                  });
-                  alert10.present();
-                
-                  this.storage.set(this.keyPausetimeStamp,pausetimeStamp);
-                }//end of background time check
-                else
-                {
-                  this.storage.set(this.keyPausetimeStamp,'');
-                }    
-              });
-            }//end of login token check
-            else
-            {
-              this.storage.set(this.keytimervalueBackground,'');
-              this.storage.set(this.keyPausetimeStamp,'');
-              this.storage.set(this.keytimervalue,'');
-            }    
-          });          
-        }//end of page check
-        else
-        {
-          this.storage.set(this.keytimervalueBackground,'');
-          this.storage.set(this.keyPausetimeStamp,'');
-          this.storage.set(this.keytimervalue,'');
-        }
-      });
+      //code end for native audio
       
       platform.resume.subscribe ( (e) => {
         
-        let view = this.nav.getActive();
+        const alert = this.alertCtrl.create({
+          title: 'resume',
+          message: 'resume called',
+          buttons: ['OK']
+        });
+        alert.present();
         
-        //this code only work for timer page & timer sign off page
-        if(view.component.name=='TimerPage' || view.component.name=='TimerSignoffPage')
-        {
-          //code to get resume time stamp
-          var today = new Date();
-          var resumetime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-          
-          //code to convert resume time to seconds
-          var a = resumetime.split(':');      
-          var resumeTimeSeconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-          
-          this.storage.get('loginUserToken').then((valloginUserToken) => {
-            if(valloginUserToken)
-            {
-              this.storage.get('pauseTimeStamp').then((valpauseTimeStamp) => {
-                if(valpauseTimeStamp)
-                {
-                  this.storage.get('loginUserTimerValueBackground').then((valTimerValueBackground) => {
-                    if(valTimerValueBackground)
-                    {
-                      //code to fetch background timer value and convert it to seconds                    
-                      var hms = valTimerValueBackground;
-                      var a = hms.split(':');      
-                      var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
-                    
-                      //code to fetch pause timestamp second                    
-                      var pauseTimestampSecond=+(valpauseTimeStamp);                    
-                    
-                      //code to get difference between pause-time-stamp & resume-time-stamp                    
-                      var timeDiff=(resumeTimeSeconds - pauseTimestampSecond);
-                    
-                      //code to add timeDif & background time seconds
-                      var totalSeconds = (seconds + timeDiff);
-                    
-                      //code to convert totalSeconds to time format
-                      var numhours = Math.floor(((totalSeconds % 31536000) % 86400) / 3600);
-                      var numminutes = Math.floor((((totalSeconds % 31536000) % 86400) % 3600) / 60);
-                      var numseconds = (((totalSeconds % 31536000) % 86400) % 3600) % 60;
-                    
-                      var numhours_print = ("0" + numhours).slice(-2);
-                      var numminutes_print = ("0" + numminutes).slice(-2);
-                      var numseconds_print = ("0" + numseconds).slice(-2);
-                    
-                      //this.timer = numhours + ":" + numminutes + ":" + numseconds;
-                      var formatedTime = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
-                      
-                      
-                      const alert111 = this.alertCtrl.create({
-                        title: 'time details',
-                        message: 'resumetime=> '+resumetime+' | resumeTimeSeconds=>'+resumeTimeSeconds+'| saved bck time=>'+valTimerValueBackground+' | savedbckseconds=>'+seconds+' | timeDiff=>'+timeDiff+' | totalSeconds=>'+totalSeconds,
-                        buttons: ['OK']
-                      });
-                      alert111.present();
-                      
-                      const alert222 = this.alertCtrl.create({
-                        title: 'time details',
-                        message: 'formatedTime=>'+formatedTime,
-                        buttons: ['OK']
-                      });
-                      alert222.present();
-                    
-                      this.storage.set(this.keytimervalue,formatedTime);                    
-                      //code to clear keytimervalueBackground
-                      this.storage.set(this.keytimervalueBackground,'');                    
-                      //code to clear pauseTimeStamp
-                      this.storage.set(this.keyPausetimeStamp,'');
-                      this.nav.push(view.component.name);
-                    }//end of background saved time check
-                    else
-                    {
-                      this.storage.set(this.keytimervalue,'');
-                      this.storage.set(this.keytimervalueBackground,'');
-                      this.storage.set(this.keyPausetimeStamp,'');
-                    }
-                  });
-                }//end of pause time check
-                else
-                {
-                  this.storage.set(this.keyPausetimeStamp,'');
-                }
-              });
-            }//end of login check
-            else
-            {
-              this.storage.set(this.keytimervalue,'');
-              this.storage.set(this.keytimervalueBackground,'');
-              this.storage.set(this.keyPausetimeStamp,'');
-            }
-          });          
-        }//end of page check
-        else
-        {
-          this.storage.set(this.keytimervalue,'');
-          this.storage.set(this.keytimervalueBackground,'');
-          this.storage.set(this.keyPausetimeStamp,'');
-        }
       });
       
-      //this.backgroundMode.enable();
+      platform.pause.subscribe ( (e) => {
+        
+        const alert = this.alertCtrl.create({
+          title: 'pause',
+          message: 'pause called',
+          buttons: ['OK']
+        });
+        alert.present();
+        
+        
+      });
+      
+      this.backgroundMode.enable();
       
       this.initPushNotification();
     });

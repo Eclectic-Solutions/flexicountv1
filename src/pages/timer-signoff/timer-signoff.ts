@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -36,9 +36,8 @@ export class TimerSignoffPage {
 
   public LoginUserapiDetails='';
   keytimervalue:string = 'loginUserTimerValue';
-  keytimervalueBackground:string = 'loginUserTimerValueBackground';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
   
    this.startTimer();
    
@@ -50,13 +49,6 @@ export class TimerSignoffPage {
   
    this.storage.get('loginUserTimerValue').then((timeVal) => {
     console.log('Current Timer Value: '+timeVal);
-    
-    const alert9 = this.alertCtrl.create({
-      title: 'saved time in timer-off',
-      message: 'savedtime=> '+timeVal,
-      buttons: ['OK']
-    });
-    alert9.present();
     
     if(timeVal)
     {
@@ -100,7 +92,6 @@ export class TimerSignoffPage {
     
     //this.timer = numhours + ":" + numminutes + ":" + numseconds;
     this.timer = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
-    this.storage.set(this.keytimervalueBackground,this.timer);
   }
   
   //timer js code end
@@ -136,7 +127,6 @@ export class TimerSignoffPage {
   
     //code to reset user timer storage value
     this.storage.set(this.keytimervalue,'');
-    this.storage.set(this.keytimervalueBackground,'');
   
     this.navCtrl.push(DashboardPage);
   }
@@ -173,7 +163,6 @@ export class TimerSignoffPage {
   
    //code to reset user timer storage value
    this.storage.set(this.keytimervalue,'');
-   this.storage.set(this.keytimervalueBackground,'');
     
    this.navCtrl.push(CompletionSummaryPage);
   }
