@@ -20,6 +20,8 @@ import { Insomnia } from '@ionic-native/insomnia';
 
 import { NativeAudio } from '@ionic-native/native-audio';
 
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -82,6 +84,7 @@ import { Signoff2Page } from '../pages/signoff2/signoff2';
     Push,
     Insomnia,
     NativeAudio,
+    LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

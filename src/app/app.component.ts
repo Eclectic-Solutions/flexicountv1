@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 
 import { NativeAudio } from '@ionic-native/native-audio';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
 
@@ -25,7 +26,7 @@ export class MyApp {
   rootPage:any = HomePage;
   keydeviceToken:string = 'deviceToken';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio, private backgroundMode: BackgroundMode) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio, private backgroundMode: BackgroundMode, private localNotifications: LocalNotifications) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -52,13 +53,64 @@ export class MyApp {
       
       //code end for native audio
       
+      
+      
       this.backgroundMode.enable();
       
       this.initPushNotification();
+      
+      
+      //code start to trigger local notification on every 1min for ios device
+      
+      if(platform.is('ios'))
+      {
+        let timerId;
+        
+        //this function called when app goes to background mode
+        
+        this.backgroundMode.on('activate').subscribe(() => {
+          console.log('activated');
+          
+          timerId = setInterval(function(){
+          
+            //code to trigger local notification
+            
+            this.localNotifications.schedule({
+              id: 1,
+              text: 'App is running in background'
+            });
+            
+          }, 60000);
+          
+          
+        });
+        
+        //this function called when app comes to foreground mode from background mode
+        
+        this.backgroundMode.on('deactivate').subscribe(() => {
+          console.log('deactivated');          
+          clearInterval(timerId);
+        });
+      }
+      
+      //this code activate runs when app goes to background mode
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      //code end to trigger local notification on every 1min for ios device
+      
     });
     
     
   }
+  
   
   //code start to play native audio
   
