@@ -134,7 +134,7 @@ export class HomePage {
       }
       else
       {
-	let final_site_login_url=this.siteloginurl.value+'.storetech.com';
+	let final_site_login_url=this.siteloginurl.value+'.flexicount.com';
 	
 	this.storage.set(this.keyconfirmsiteurl,final_site_login_url);
 	this.userUrlValue=final_site_login_url;
@@ -154,7 +154,7 @@ export class HomePage {
   
     //alert('val: '+this.userUrlValue);
       
-    //this.http.get('https://demofm.storetech.com/api/Mobile/GetCultures')
+    //this.http.get('https://demofm.flexicount.com/api/Mobile/GetCultures')
     
     this.http.get('https://'+this.userUrlValue+'/api/Mobile/GetCultures')
     .map(res => res.json())

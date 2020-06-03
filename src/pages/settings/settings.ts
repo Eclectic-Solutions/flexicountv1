@@ -31,7 +31,7 @@ export class SettingsPage {
   
   keyconfirmsiteurl:string = 'loginUserConfirmSiteURL';
   
-  siteName:string = 'Ikea.storetech.com';
+  siteName:string = 'Ikea.flexicount.com';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
   }
@@ -47,7 +47,7 @@ export class SettingsPage {
      }
      else
      {
-      this.siteName='demofm.storetech.com';
+      this.siteName='demofm.flexicount.com';
      }
     });
     
@@ -142,8 +142,8 @@ export class SettingsPage {
         let siteText;
         siteText=inputData.newSiteLoginURL;
         //this.siteName=siteText;
-        this.siteName=siteText+'.storetech.com';
-        let siteText1=siteText+'.storetech.com';
+        this.siteName=siteText+'.flexicount.com';
+        let siteText1=siteText+'.flexicount.com';
         
         //this.storage.set(this.keyconfirmsiteurl,siteText);
         this.storage.set(this.keyconfirmsiteurl,siteText1);
