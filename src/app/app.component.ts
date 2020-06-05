@@ -25,6 +25,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage:any = HomePage;
   keydeviceToken:string = 'deviceToken';
+  keyconfirmsiteurl:string = 'loginUserConfirmSiteURL';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio, private backgroundMode: BackgroundMode, private localNotifications: LocalNotifications) {
     platform.ready().then(() => {
@@ -98,13 +99,9 @@ export class MyApp {
       
       
       
-      
-      
-      
-      
-      
-      
       //code end to trigger local notification on every 1min for ios device
+      
+      
       
     });
     
@@ -165,6 +162,10 @@ export class MyApp {
     pushObject.on('registration').subscribe((data: any) => {
     
       console.log('device token -> ' + data.registrationId);
+      
+      //clear local siteurl storage data from 
+      
+      this.storage.set(this.keyconfirmsiteurl,'');
       
       /*
       const alert = this.alertCtrl.create({
