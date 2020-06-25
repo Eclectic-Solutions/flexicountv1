@@ -6,6 +6,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { DashboardPage } from '../dashboard/dashboard';
+import { TimerPage } from '../timer/timer';
 
 @Component({
   selector: 'page-home',
@@ -42,6 +43,9 @@ export class HomePage {
   key:string = 'alertScanQrSettings';
   key1:string = 'alertTimerSettings';
   keyalertack:string = 'alertAlertAcknowledgedSettings';
+  
+  keyScanType:string = 'scanType';
+  keyscansignoff:string = 'alertScanQrSettingsSignoff';
 
   constructor(public navCtrl: NavController, private storage: Storage, private http: Http, public alertCtrl: AlertController) {
 
@@ -52,6 +56,10 @@ export class HomePage {
     //this.storage.set(this.keyconfirmsiteurl,'');
     //this.storage.set(this.key,'');
     //this.storage.set(this.key1,'');
+    //
+    //this.storage.set(this.keyScanType,'');
+    //this.storage.set(this.keyscansignoff,'');
+    
   
     this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
     
@@ -291,7 +299,28 @@ export class HomePage {
 	      this.storage.set(this.keyUsertoken,'');
 	    }
 	    
-	    this.navCtrl.push(DashboardPage);
+	    
+	    //check NFC is exists and redirect to the timer page otherwise to the home page
+	    
+	    this.storage.get('startNfcClean').then((valClean) => {
+	      
+	      if(valClean==true)
+	      {
+		this.storage.get('alertScanQrSettings').then((valScanActive) => {                   
+                  if(valScanActive==true)
+                  {
+		    this.navCtrl.push(TimerPage);
+		  }
+		});
+	      }
+	      else
+	      {
+		//redirect to home page for normal login
+		this.navCtrl.push(DashboardPage);
+	      }
+	      
+	    });
+	    
 	  }
 	  else
 	  {

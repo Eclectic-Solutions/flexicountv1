@@ -41,6 +41,8 @@ export class AlertPage {
   
   //declare storage variable for building filter
   keyBuildingFilter:string = 'BuildingFilterValue';
+  
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController, private storage: Storage, private loadingCtrl: LoadingController) {
   }
@@ -595,18 +597,36 @@ export class AlertPage {
   //this.storage.set(this.keyStoreID,StoreID);
   //this.storage.set(this.keyDepartmentID,DepartmentID);
   
-  
-   this.storage.get('alertScanQrSettings').then((val) => {
-    //check wheather QRScan settings is on or off
-    if(val==true)
+   this.storage.get('scanType').then((val99) => {
+   
+    if(val99=='notag')
     {
-     this.navCtrl.push(ArrivalConfirmationPage);
+     this.navCtrl.push(ManualArrivalConfirmationPage);
     }
     else
-    {     
-     this.navCtrl.push(ManualArrivalConfirmationPage);     
-    }    
+    {
+     if(val99=='qr')
+     {
+       this.storage.get('alertScanQrSettings').then((val) => {
+        //check wheather QRScan settings is on or off
+        if(val==true)
+        {
+         this.navCtrl.push(ArrivalConfirmationPage);
+        }
+        else
+        {     
+         this.navCtrl.push(ManualArrivalConfirmationPage);     
+        }    
+       });
+     }
+     else
+     {
+      //this.navCtrl.push(ManualArrivalConfirmationPage);
+     }
+     
+    }  
    });
+   
   }
 
 }

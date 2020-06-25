@@ -18,15 +18,27 @@ import { DashboardPage } from '../dashboard/dashboard';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
+ 
+ 
+  public scantype='notag';
+  keyScanType:string = 'scanType';
 
-  public pepperoni:boolean = true;
+  public pepperoni:boolean = false;  
   key:string = 'alertScanQrSettings';
+  
+  public scansignoff:boolean = false;  
+  keyscansignoff:string = 'alertScanQrSettingsSignoff';
+  
+  public disableScanSignin:boolean = false;
+  public disableScanSignoff:boolean = false;
+  
   
   public peppertimer:boolean = true;
   key1:string = 'alertTimerSettings';
   
   public pepperalert:boolean = true;
   keyalertack:string = 'alertAlertAcknowledgedSettings';
+  
   
   
   keyconfirmsiteurl:string = 'loginUserConfirmSiteURL';
@@ -64,6 +76,20 @@ export class SettingsPage {
      }
     });
     
+    
+    this.storage.get('alertScanQrSettingsSignoff').then((vall99) => {
+     console.log(vall99);
+     if(vall99==false)
+     {
+      this.scansignoff = false;
+     }
+     else
+     {
+      this.scansignoff = true;
+     }
+    });
+    
+    
     this.storage.get('alertTimerSettings').then((val98) => {
      console.log(val98);
      if(val98==false)
@@ -87,6 +113,37 @@ export class SettingsPage {
       this.pepperalert = true;
      }
     });
+    
+    
+    this.storage.get('scanType').then((vall7) => {
+      console.log(vall7);
+      if(vall7=='nfc')
+      {
+       this.scantype = 'nfc';
+       
+       this.disableScanSignin = false;
+       this.disableScanSignoff = false;
+      }
+      else if(vall7=='qr')
+      {
+       this.scantype = 'qr';
+       
+       this.disableScanSignin = false;
+       this.disableScanSignoff = false;
+       
+      }
+      else
+      {
+       this.scantype = 'notag';
+       this.pepperoni = false;
+       this.scansignoff = false;
+       
+       this.disableScanSignin = true;
+       this.disableScanSignoff = true;
+       
+      }
+    });
+    
   }
   
   home(){
@@ -100,7 +157,11 @@ export class SettingsPage {
   change(){
    this.storage.set(this.key,this.pepperoni);
    console.log(this.pepperoni);
-   
+  }
+  
+  changeScanSignoff(){
+   this.storage.set(this.keyscansignoff,this.scansignoff);
+   console.log(this.scansignoff);
   }
   
   changeTimerSettings()
@@ -113,6 +174,26 @@ export class SettingsPage {
   {
    this.storage.set(this.keyalertack,this.pepperalert);
    console.log(this.pepperalert);
+  }
+  
+  changeScanType()
+  {
+   this.storage.set(this.keyScanType,this.scantype);
+   console.log(this.scantype);
+   
+   if(this.scantype=='notag')
+   {
+    this.pepperoni = false;
+    this.scansignoff = false;
+    
+    this.disableScanSignin = true;
+    this.disableScanSignoff = true;
+   }
+   else
+   {
+    this.disableScanSignin = false;
+    this.disableScanSignoff = false;
+   }
   }
   
   

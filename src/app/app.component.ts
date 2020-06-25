@@ -14,10 +14,18 @@ import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
+import { NFC, Ndef } from '@ionic-native/nfc';
+
 
 
 import { HomePage } from '../pages/home/home';
 import { AlertPage } from '../pages/alert/alert';
+
+import { TimerPage } from '../pages/timer/timer';
+import { TimerSignoffPage } from '../pages/timer-signoff/timer-signoff';
+import { CompletionSummaryPage } from '../pages/completion-summary/completion-summary';
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -26,8 +34,13 @@ export class MyApp {
   rootPage:any = HomePage;
   keydeviceToken:string = 'deviceToken';
   keyconfirmsiteurl:string = 'loginUserConfirmSiteURL';
+  
+  keynfcclean:string = 'startNfcClean';
+  
+  keyDomainID:string = 'loginuserDomainID';
+  keyAllapiDetails:string = 'loginuserApiDetails';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio, private backgroundMode: BackgroundMode, private localNotifications: LocalNotifications) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private push: Push, private alertCtrl:AlertController, private http: Http, private storage: Storage, private nativeAudio: NativeAudio, private backgroundMode: BackgroundMode, private localNotifications: LocalNotifications, private nfc: NFC, private ndef: Ndef) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -102,10 +115,502 @@ export class MyApp {
       //code end to trigger local notification on every 1min for ios device
       
       
+      //code start for NFC
       
-    });
+      var isAppInForeground = true;
+      
+      document.addEventListener("pause", function pauseCallback() {
+        isAppInForeground = false;
+      }, false);
+
+      document.addEventListener("resume", function resumeCallback() {
+        isAppInForeground = true;
+      }, false);
+      
+      console.log('d:'+isAppInForeground);
+
+      
+      if(platform.is('ios'))
+      {
+      
+        this.nfc.beginSession().subscribe(res => {
+        
+          this.nfc.addNdefListener(() => {
+            console.log('successfully attached ndef listener');
+          }, (err) => {
+            console.log('error attaching ndef listener', err);
+          }).subscribe((event) => {
+            console.log('received ndef message. the tag contains: ', event.tag);
+            console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
+            
+            
+            //write => pending code to check location is redable or not
+            
+            //if(event.tag.id)
+            //{
+            //  
+            //}
+            //else
+            //{
+            //  
+            //}
+            
+            //code started to check cleaning started or not
+            
+            this.storage.get('startNfcClean').then((valClean) => {
+          
+              if(valClean==true)
+              {
+                this.storage.get('scanType').then((valstype) => {
+                  if(valstype=='nfc')
+                  {
+                    this.storage.get('alertScanQrSettingsSignoff').then((valScanActive) => {
+                      if(valScanActive==true)
+                      {
+                        this.storage.get('loginUserToken').then((valloginUserToken) => {
+                          if(valloginUserToken)
+                          {
+                            //have to call complete cleaning api and redirect to the comp summary page
+                            
+                            this.nav.push(CompletionSummaryPage);
+                          }
+                          else
+                          {
+                            this.nav.push(HomePage);
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+              else
+              {
+                //section for start cleaning
+                
+                //code to check scan type is NFC or not
+                
+                this.storage.get('scanType').then((valstype) => {
+                  if(valstype=='nfc')
+                  {
+                    //code to check sign in is active or not
+                    this.storage.get('alertScanQrSettings').then((valScanActive) => {
+                      
+                      if(valScanActive==true)
+                      {
+                        //code to save all storage values including domain, store and department
+                        this.storage.set(this.keynfcclean,true);
+                        
+                        //write => pending code to set data
+                        
+                        
+                        this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
+                        this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
+                        
+                        //code to check for login
+                        this.storage.get('loginUserToken').then((valloginUserToken) => {
+                  
+                          if(valloginUserToken)
+                          {
+                            //check if app in background mode
+                            if(isAppInForeground==false)
+                            {
+                              //code to send local notification
+                              
+                              this.localNotifications.schedule({
+                                id: 88,
+                                text: 'You have scanned NFC Tag for location:'
+                              });
+                              
+                              this.localNotifications.on('click').subscribe(notification => {
+                                
+                                if(notification.id==88)
+                                {                         
+                                  const alert = this.alertCtrl.create({            
+                                    title: 'Notification',
+                                    message: 'You have scanned NFC Tag',                  
+                                    buttons: [
+                                      {
+                                        text: 'OK',
+                                        role: 'ok',
+                                        handler: () => {
+                                          
+                                          //code to check timer settings and call start cleaning api
+                                          this.storage.get('alertTimerSettings').then((val1) => {    
+                                            if(val1==true)
+                                            {
+                                              //redirect to the next page ie Timer Page
+                                              this.nav.push(TimerPage);
+                                            }
+                                            else
+                                            {
+                                              this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+                                                
+                                                //write => pending code have to call start cleaning api
+                                                
+                                                  //let values = valloginuserDomainID.split("**__**");
+                                                  //let curDomainID = values[0];
+                                                  //let curStoreID = values[1];
+                                                  //let curDepartmentID = values[2];
+                                                  //
+                                                  //this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                                  //
+                                                  //  var headers = new Headers();
+                                                  //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                                  //  const requestOptions = new RequestOptions({ headers: headers });
+                                                  //
+                                                  //  let postData = {
+                                                  //  "DomainID": curDomainID,
+                                                  //  "StoreID": curStoreID,
+                                                  //  "DepartmentID": curDepartmentID
+                                                  //  }
+                                                  //
+                                                  //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                                  //  
+                                                  //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                                  //    .map(res => res.json())
+                                                  //    .subscribe(data =>{
+                                                  //      this.data = data;
+                                                  //      console.log(data);
+                                                  //    },err => {
+                                                  //      console.log(err);
+                                                  //    });            
+                                                  //  });
+                                                  //});
+                                                
+                                              });        
+                                              
+                                              //redirect to the next page of the Timer Page ie Timer Page
+                                              this.nav.push(TimerSignoffPage);
+                                            }                          
+                                          });
+                                          
+                                        },                
+                                      }              
+                                    ]          
+                                  });        
+                                  alert.present();
+                                }
+                                
+                              });
+                              
+                            }
+                            else
+                            {
+                              //code to check timer settings and call start cleaning api
+                              this.storage.get('alertTimerSettings').then((val1) => {    
+                                if(val1==true)
+                                {
+                                  //redirect to the next page ie Timer Page
+                                  this.nav.push(TimerPage);
+                                }
+                                else
+                                {
+                                  this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+                                    
+                                  // write => pending have to call start cleaning api
+                                  
+                                    //let values = valloginuserDomainID.split("**__**");
+                                    //let curDomainID = values[0];
+                                    //let curStoreID = values[1];
+                                    //let curDepartmentID = values[2];
+                                    //
+                                    //this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                    //
+                                    //  var headers = new Headers();
+                                    //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                    //  const requestOptions = new RequestOptions({ headers: headers });
+                                    //
+                                    //  let postData = {
+                                    //  "DomainID": curDomainID,
+                                    //  "StoreID": curStoreID,
+                                    //  "DepartmentID": curDepartmentID
+                                    //  }
+                                    //
+                                    //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                    //  
+                                    //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                    //    .map(res => res.json())
+                                    //    .subscribe(data =>{
+                                    //      this.data = data;
+                                    //      console.log(data);
+                                    //    },err => {
+                                    //      console.log(err);
+                                    //    });            
+                                    //  });
+                                    //});
+                                  
+                                    
+                                  });        
+                                  
+                                  //redirect to the next page of the Timer Page ie Timer Page
+                                  this.nav.push(TimerSignoffPage);
+                                }                          
+                              });
+                            }
+                          }
+                          else
+                          {
+                            this.nav.push(HomePage);
+                          }                        
+                        });
+                      }
+                      else
+                      {
+                        //redirect to the alert page
+                        this.nav.push(AlertPage);
+                      }
+                    });                  
+                  }
+                });
+              }          
+            });
+            
+            
+          });
+        },
+        err => {
+          console.log(err);
+        });            
+      }
+      if(platform.is('android'))
+      {  
+        this.nfc.addNdefListener(() => {
+        
+          console.log('successfully attached ndef listener');
+          
+        }, (err) => {
+        
+          console.log('error attaching ndef listener', err);
+          
+        }).subscribe((event) => {
+        
+          console.log('received ndef message. the tag contains: ', event.tag);
+          console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
+          
+          
+          //have to check location is redable or not here
+          
+          //if(event.tag.id)
+          //{
+          //  
+          //}
+          //else
+          //{
+          //  
+          //}
     
-    
+          
+          //code start to check cleaning started for NFC or not
+          
+          this.storage.get('startNfcClean').then((valClean) => {
+          
+            if(valClean==true)
+            {
+              this.storage.get('scanType').then((valstype) => {
+                if(valstype=='nfc')
+                {
+                  this.storage.get('alertScanQrSettingsSignoff').then((valScanActive) => {
+                    if(valScanActive==true)
+                    {
+                      this.storage.get('loginUserToken').then((valloginUserToken) => {
+                        if(valloginUserToken)
+                        {
+                          //have to call complete cleaning api and redirect to the comp summary page
+                          
+                          this.nav.push(CompletionSummaryPage);
+                        }
+                        else
+                        {
+                          this.nav.push(HomePage);
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+            else
+            {
+              //section for start cleaning
+              
+              //code to check scan type is NFC or not
+              
+              this.storage.get('scanType').then((valstype) => {
+                if(valstype=='nfc')
+                {
+                  //code to check sign in is active or not
+                  this.storage.get('alertScanQrSettings').then((valScanActive) => {
+                    
+                    if(valScanActive==true)
+                    {
+                      //write => pending code to save all storage values including domain, store and department
+                      this.storage.set(this.keynfcclean,true);
+                      
+                      
+                      this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
+                      this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
+                      
+                      
+                      //code to check for login
+                      this.storage.get('loginUserToken').then((valloginUserToken) => {
+                
+                        if(valloginUserToken)
+                        {
+                          //check if app in background mode
+                          if(isAppInForeground==false)
+                          {
+                            //code to send local notification
+                            
+                            this.localNotifications.schedule({
+                              id: 77,
+                              text: 'You have scanned NFC Tag for location:'
+                            });
+                            
+                            this.localNotifications.on('click').subscribe(notification => {
+                              
+                              if(notification.id==77)
+                              {                         
+                                const alert = this.alertCtrl.create({            
+                                  title: 'Notification',
+                                  message: 'You have scanned NFC Tag',                  
+                                  buttons: [
+                                    {
+                                      text: 'OK',
+                                      role: 'ok',
+                                      handler: () => {
+                                        
+                                        //code to check timer settings and call start cleaning api
+                                        this.storage.get('alertTimerSettings').then((val1) => {    
+                                          if(val1==true)
+                                          {
+                                            //redirect to the next page ie Timer Page
+                                            this.nav.push(TimerPage);
+                                          }
+                                          else
+                                          {
+                                            this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+                                              
+                                            //write=> pending code have to call start cleaning api
+                                            
+                                              //let values = valloginuserDomainID.split("**__**");
+                                              //let curDomainID = values[0];
+                                              //let curStoreID = values[1];
+                                              //let curDepartmentID = values[2];
+                                              //
+                                              //this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                              //
+                                              //  var headers = new Headers();
+                                              //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                              //  const requestOptions = new RequestOptions({ headers: headers });
+                                              //
+                                              //  let postData = {
+                                              //  "DomainID": curDomainID,
+                                              //  "StoreID": curStoreID,
+                                              //  "DepartmentID": curDepartmentID
+                                              //  }
+                                              //
+                                              //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                              //  
+                                              //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                              //    .map(res => res.json())
+                                              //    .subscribe(data =>{
+                                              //      this.data = data;
+                                              //      console.log(data);
+                                              //    },err => {
+                                              //      console.log(err);
+                                              //    });            
+                                              //  });
+                                              //});
+                                            
+                                              
+                                            });        
+                                            
+                                            //redirect to the next page of the Timer Page ie Timer Page
+                                            this.nav.push(TimerSignoffPage);
+                                          }                          
+                                        });
+                                        
+                                      },                
+                                    }              
+                                  ]          
+                                });        
+                                alert.present();
+                              }
+                              
+                            });
+                            
+                          }
+                          else
+                          {
+                            //code to check timer settings and call start cleaning api
+                            this.storage.get('alertTimerSettings').then((val1) => {    
+                              if(val1==true)
+                              {
+                                //redirect to the next page ie Timer Page
+                                this.nav.push(TimerPage);
+                              }
+                              else
+                              {
+                                this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+                                  
+                                //write=> pending code have to call start cleaning api
+                                
+                                  //let values = valloginuserDomainID.split("**__**");
+                                  //let curDomainID = values[0];
+                                  //let curStoreID = values[1];
+                                  //let curDepartmentID = values[2];
+                                  //
+                                  //this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                  //
+                                  //  var headers = new Headers();
+                                  //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                  //  const requestOptions = new RequestOptions({ headers: headers });
+                                  //
+                                  //  let postData = {
+                                  //  "DomainID": curDomainID,
+                                  //  "StoreID": curStoreID,
+                                  //  "DepartmentID": curDepartmentID
+                                  //  }
+                                  //
+                                  //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                  //  
+                                  //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                  //    .map(res => res.json())
+                                  //    .subscribe(data =>{
+                                  //      this.data = data;
+                                  //      console.log(data);
+                                  //    },err => {
+                                  //      console.log(err);
+                                  //    });            
+                                  //  });
+                                  //});
+                                  
+                                });        
+                                
+                                //redirect to the next page of the Timer Page ie Timer Page
+                                this.nav.push(TimerSignoffPage);
+                              }                          
+                            });
+                          }
+                        }
+                        else
+                        {
+                          this.nav.push(HomePage);
+                        }                        
+                      });
+                    }                    
+                  });                  
+                }
+              });
+            }          
+          });
+        });
+      }
+      
+      //code end for NFC
+      
+    });    
   }
   
   

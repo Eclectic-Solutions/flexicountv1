@@ -8,16 +8,22 @@
     <h3 class="text_center">You are about to sign off cleaning for {{LoginUserapiDetails}}</h3>
   </ion-card>
   
-  <!-- <ion-card >
-    <h3 class="text_center">Abcd {{timer}}</h3>
-  </ion-card> -->
   </div>
 
   <!-- <h3 class="text_center">You are about to sign off cleaning for {{abc.store}} {{abc.department}} </h3>   -->
 
-<button ion-button color="secondary" full large (click) = completion_summary() >Sign Off cleaning for<br/>this location here</button>
-<!--<button ion-button color="dark" full large (click) = back() >Cancel and return to<br/>scan QR code</button>
-<button ion-button color="textlight" full large (click) = home() >Home</button>-->
+  <div [class]="classVariable11">
+    <button ion-button color="secondary" full large (click) = completion_summary() >Sign Off cleaning for<br/>this location here</button>
+  </div>
+  
+  <div [class]="classVariable12">
+    <div class="qrscaner" ></div>
+    <button ion-button color="secondary" full large (click) = scan2Code() >Capture QR Code</button>
+  </div>
+  
+  <div [class]="classVariable13">
+    <button ion-button color="secondary" full large disable>Touch out tag to sign off cleaning</button>
+  </div>
 
 
 </ion-content>

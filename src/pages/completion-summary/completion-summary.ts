@@ -33,6 +33,9 @@ export class CompletionSummaryPage {
   keyAllapiDetails:string = 'loginuserApiDetails';
   
   public LoginUserapiDetails='';
+  
+  keynfcclean:string = 'startNfcClean';
+  keytimervalue:string = 'loginUserTimerValue';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
   }
@@ -87,6 +90,18 @@ export class CompletionSummaryPage {
       
     
     });
+    
+    //code to clear startNfcClean
+    
+    this.storage.get('startNfcClean').then((valClean7) => {
+     if(valClean7)
+     {
+      this.storage.set(this.keynfcclean,false);
+      this.storage.set(this.keytimervalue,'');
+     }
+    });
+    
+    
     
    });
    

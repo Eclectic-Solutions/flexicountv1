@@ -22,6 +22,8 @@ import { NativeAudio } from '@ionic-native/native-audio';
 
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
+import { NFC, Ndef } from '@ionic-native/nfc';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -85,6 +87,8 @@ import { Signoff2Page } from '../pages/signoff2/signoff2';
     Insomnia,
     NativeAudio,
     LocalNotifications,
+    NFC,
+    Ndef,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

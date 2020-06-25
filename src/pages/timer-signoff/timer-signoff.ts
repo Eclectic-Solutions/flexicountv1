@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+
+//import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 
 
 import { DashboardPage } from '../dashboard/dashboard';
@@ -28,6 +31,14 @@ import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirm
 })
 export class TimerSignoffPage {
 
+ //for barcode
+
+  data={};
+  option:BarcodeScannerOptions;
+  public aDevice = 0;
+  
+ //for barcode
+
   public timer='';
   public min=0;
   public seconds = 0;
@@ -36,10 +47,67 @@ export class TimerSignoffPage {
 
   public LoginUserapiDetails='';
   keytimervalue:string = 'loginUserTimerValue';
+  
+  classVariable11: string = 'cls-disp-block';
+  classVariable12: string = 'cls-disp-none';
+  classVariable13: string = 'cls-disp-none';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, public barcodeScaner: BarcodeScanner, private alertController:AlertController) {
   
    this.startTimer();
+   
+   
+   //code start to display/hide section on Scan type
+   
+   this.storage.get('scanType').then((vall7) => {
+      console.log(vall7);
+      if(vall7=='nfc')
+      {      
+       this.storage.get('alertScanQrSettingsSignoff').then((val) => {
+        //check wheather QRScan settings is on or off
+        if(val==true)
+        {
+         this.classVariable11 = 'cls-disp-none';
+         this.classVariable12 = 'cls-disp-none';
+         this.classVariable13 = 'cls-disp-block';
+        }
+        else
+        {     
+         this.classVariable11 = 'cls-disp-block';
+         this.classVariable12 = 'cls-disp-none';
+         this.classVariable13 = 'cls-disp-none';  
+        }    
+       });      
+       
+      }
+      else if(vall7=='qr')
+      {
+       this.storage.get('alertScanQrSettingsSignoff').then((val) => {
+        //check wheather QRScan settings is on or off
+        if(val==true)
+        {
+         this.classVariable11 = 'cls-disp-none';
+         this.classVariable12 = 'cls-disp-block';
+         this.classVariable13 = 'cls-disp-none';
+        }
+        else
+        {     
+         this.classVariable11 = 'cls-disp-block';
+         this.classVariable12 = 'cls-disp-none';
+         this.classVariable13 = 'cls-disp-none';  
+        }    
+       });
+       
+      }
+      else
+      {
+       this.classVariable11 = 'cls-disp-block';
+       this.classVariable12 = 'cls-disp-none';
+       this.classVariable13 = 'cls-disp-none';
+      }
+    });
+   
+   //code end to display/hide section on Scan type
    
   }
   
@@ -166,5 +234,118 @@ export class TimerSignoffPage {
     
    this.navCtrl.push(CompletionSummaryPage);
   }
+  
+  
+  
+  scan2Code(){
+  
+   this.option={
+    prompt: "Focus the QR code in the window below to sign off cleaning"
+   }
+   
+   this.barcodeScaner.scan(this.option).then(barcodeData => {
+   
+    console.log(barcodeData);
+    this.data = barcodeData;
+    
+    
+    //code to check selected scan type
+    this.storage.get('scanType').then((valstype) => {
+     if(valstype=='qr')
+     {
+      //write => pending code check scaned location data with local storage data
+      
+      let addTodoAlert=this.alertController.create({                       
+        title: "QR Scanned Data",
+        message: barcodeData.text,
+        buttons:[
+         {
+          text:"OK",           
+         }
+        ]     
+      });
+      addTodoAlert.present();
+      
+      let scanned_qr_data =  barcodeData.text;
+      let all_values_qr_data = scanned_qr_data.split(",");      
+      
+      let scanned_departmentID = all_values_qr_data[all_values_qr_data.length-1];
+      let scanned_storeID = all_values_qr_data[all_values_qr_data.length-2];
+      let scanned_domainID = all_values_qr_data[all_values_qr_data.length-3];
+      
+      scanned_departmentID = scanned_departmentID.trim();
+      scanned_storeID = scanned_storeID.trim();
+      scanned_domainID = scanned_domainID.trim();
+      
+      this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+       
+       let values = valloginuserDomainID.split("**__**");
+       let curDomainID = values[0];
+       let curStoreID = values[1];
+       let curDepartmentID = values[2];
+       
+       let flg = 0;
+       
+       if(scanned_departmentID!=curDepartmentID || scanned_storeID!=scanned_storeID || scanned_domainID!=curDomainID)
+       {
+        flg = 1;
+       }
+       else
+       {
+        flg = 0;
+       }
+       
+       if(flg==1)
+       {        
+        let addTodoAlert=this.alertController.create({                       
+          title: "QR Scanned Data",
+          message: "Location not found, please access manually via the alert page",
+          buttons:[
+           {
+            text:"OK",
+           }
+          ]     
+        });
+        addTodoAlert.present();
+       }
+       else
+       {
+        //write => pending code check scaned location data with local storage data
+         
+         //code to check sign off settings
+         this.storage.get('alertScanQrSettingsSignoff').then((valScanActive) => {
+          if(valScanActive==true)
+          {
+           //write => pending code start to check location details and redirect to the completion summart page
+            
+            this.storage.set(this.keytimervalue,'');
+            this.navCtrl.push(CompletionSummaryPage);
+            
+           //code end to check location details and redirect to the completion summart page
+          }
+          else
+          {
+           this.storage.set(this.keytimervalue,'');
+           this.navCtrl.push(CompletionSummaryPage); 
+          }
+         });
+       }
+       
+      });
+      
+     }
+     else
+     {
+      this.storage.set(this.keytimervalue,'');
+      this.navCtrl.push(CompletionSummaryPage);
+     }
+    });
+   
+   }).catch(err => {   
+    console.log('Error', err);
+   });
+  
+  }
+  
 
 }

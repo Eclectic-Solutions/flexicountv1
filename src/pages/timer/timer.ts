@@ -50,6 +50,10 @@ export class TimerPage {
   
   
    this.startTimer();
+   
+  
+   
+   
   }
     
   doRefresh(refresher) {

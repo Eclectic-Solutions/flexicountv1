@@ -29,6 +29,34 @@
       {{siteName}}
     </div>
   </ion-item>
+  
+  
+  <ion-row radio-group [(ngModel)]="scantype" (ionChange)="changeScanType()" style="background-color: #fff; margin-top: 10px;">
+    
+    
+    <ion-col style="border: 0;">
+      <ion-item>
+        <ion-label>No Tag</ion-label>
+        <ion-radio value="notag"></ion-radio>
+      </ion-item>
+    </ion-col>
+    
+    <ion-col style="border: 0;">
+      <ion-item>
+        <ion-label>NFC</ion-label>
+        <ion-radio value="nfc"></ion-radio>
+      </ion-item>
+    </ion-col>
+    
+    <ion-col style="border: 0;">
+      <ion-item>
+        <ion-label>QR</ion-label>
+        <ion-radio value="qr"></ion-radio>
+      </ion-item>
+    </ion-col>
+    
+  </ion-row>
+    
 
   <ion-item>
     <ion-label>Alerts - Turn on Timer</ion-label>
@@ -36,8 +64,13 @@
   </ion-item>
   
   <ion-item>
-    <ion-label>Alerts - Scan QR Code</ion-label>
-    <ion-toggle [(ngModel)]="pepperoni" (ionChange)="change()" color="secondary"></ion-toggle>
+    <ion-label>Scan to sign in</ion-label>
+    <ion-toggle disabled="{{disableScanSignin}}" [(ngModel)]="pepperoni" (ionChange)="change()" color="secondary"></ion-toggle>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Scan to sign off</ion-label>
+    <ion-toggle disabled="{{disableScanSignoff}}" [(ngModel)]="scansignoff" (ionChange)="changeScanSignoff()" color="secondary"></ion-toggle>
   </ion-item>
   
   <ion-item>

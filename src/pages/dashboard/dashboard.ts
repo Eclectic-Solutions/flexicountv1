@@ -34,6 +34,8 @@ export class DashboardPage {
   //console.log('current platform: '+platForm[0]);
   
    this.saveDeviceToken();
+   
+    
   
   }
   
