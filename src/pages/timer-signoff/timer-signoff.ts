@@ -14,6 +14,7 @@ import { TimerPage } from '../timer/timer';
 import { CompletionSummaryPage } from '../completion-summary/completion-summary';
 import { ManualArrivalConfirmationPage } from '../manual-arrival-confirmation/manual-arrival-confirmation';
 import { ArrivalConfirmationPage } from '../arrival-confirmation/arrival-confirmation';
+import { AlertPage } from '../alert/alert';
 
 
 
@@ -255,6 +256,7 @@ export class TimerSignoffPage {
      {
       //write => pending code check scaned location data with local storage data
       
+      /*
       let addTodoAlert=this.alertController.create({                       
         title: "QR Scanned Data",
         message: barcodeData.text,
@@ -265,6 +267,7 @@ export class TimerSignoffPage {
         ]     
       });
       addTodoAlert.present();
+      */
       
       let scanned_qr_data =  barcodeData.text;
       let all_values_qr_data = scanned_qr_data.split(",");      
@@ -303,6 +306,10 @@ export class TimerSignoffPage {
           buttons:[
            {
             text:"OK",
+            handler: () => {
+             //redirect to alert page
+             this.navCtrl.push(AlertPage);
+            }
            }
           ]     
         });

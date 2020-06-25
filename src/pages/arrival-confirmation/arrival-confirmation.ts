@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 
 import { TimerPage } from '../timer/timer';
 import { TimerSignoffPage } from '../timer-signoff/timer-signoff';
+import { AlertPage } from '../alert/alert';
 
 /**
  * Generated class for the ArrivalConfirmationPage page.
@@ -58,6 +59,7 @@ export class ArrivalConfirmationPage {
      {
        //write => pending code check scaned location data with local storage data
        
+       /*
        let addTodoAlert=this.alertController.create({                       
         title: "QR Scanned Data",
         message: barcodeData.text,
@@ -68,6 +70,7 @@ export class ArrivalConfirmationPage {
         ]     
       });
       addTodoAlert.present();
+      */
       
       let scanned_qr_data =  barcodeData.text;
       let all_values_qr_data = scanned_qr_data.split(",");      
@@ -106,6 +109,10 @@ export class ArrivalConfirmationPage {
           buttons:[
            {
             text:"OK",
+            handler: () => {
+             //redirect to alert page
+             this.navCtrl.push(AlertPage);
+            }
            }
           ]     
         });     
