@@ -622,6 +622,22 @@ export class AlertPage {
      else
      {
       //this.navCtrl.push(ManualArrivalConfirmationPage);
+      //code for NFC Tags
+      
+      this.storage.get('alertScanQrSettings').then((val) => {
+        //check wheather QRScan settings is on or off
+        if(val==true)
+        {
+         //alert('on');
+        }
+        else
+        {     
+         //alert('off');
+         this.navCtrl.push(ManualArrivalConfirmationPage);
+        }    
+       });
+      
+      
      }
      
     }  
