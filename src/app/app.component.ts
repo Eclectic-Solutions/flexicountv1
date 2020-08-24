@@ -144,16 +144,41 @@ export class MyApp {
             console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
             
             
-            //write => pending code to check location is redable or not
+            //write => pending code/waiting for testing to check location is redable or not
             
-            //if(event.tag.id)
-            //{
-            //  
-            //}
-            //else
-            //{
-            //  
-            //}
+            let scanned_NfcdepartmentID='';
+            let scanned_NfcstoreID='';
+            let scanned_NfcdomainID='';
+            
+            if(event.tag.id)
+            {
+              //code to get domain, store & department id
+              
+              //let scanned_nfc_data = event.tag.id.toString();
+              //let scanned_nfc_data = this.nfc.bytesToHexString(event.tag.id);
+              
+              let payload = event.tag.ndefMessage[0].payload;
+              let scanned_nfc_data = this.nfc.bytesToString(payload);
+              let all_values_nfc_data = scanned_nfc_data.split(",");
+              
+              scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
+              scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
+              scanned_NfcdomainID = all_values_nfc_data[all_values_nfc_data.length-3];
+              
+              scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
+              scanned_NfcstoreID = scanned_NfcstoreID.trim();
+              scanned_NfcdomainID = scanned_NfcdomainID.trim();
+            }
+            else
+            {
+              //pending code - write an alert code
+              const alert = this.alertCtrl.create({
+                title: 'NFC Tag Scan',
+                message: 'No tag id found',
+                buttons: ['OK']
+              });
+              alert.present();
+            }
             
             //code started to check cleaning started or not
             
@@ -161,6 +186,7 @@ export class MyApp {
           
               if(valClean==true)
               {
+                //section for complete cleaning
                 this.storage.get('scanType').then((valstype) => {
                   if(valstype=='nfc')
                   {
@@ -201,11 +227,49 @@ export class MyApp {
                         //code to save all storage values including domain, store and department
                         this.storage.set(this.keynfcclean,true);
                         
-                        //write => pending code to set data
+                        //write => pending code/waiting for testing to set data
                         
+                        let nfcScannedDomainName='';
+                        let nfcScannedDomainDescription='';
+                        let nfcScannedStoreName='';
+                        let nfcScannedDepartName='';
                         
-                        this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
-                        this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
+                        //code - api to call and get domain, store and depart name
+                        
+                        this.storage.get('loginUserToken').then((valloginUserToken) => {   
+                          if(valloginUserToken!='')
+                          {
+                            var headers = new Headers();
+                            headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                            const requestOptions = new RequestOptions({ headers: headers });
+                            
+                            this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                              
+                              this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID=2&StoreID=3&DepartmentID=1', requestOptions)
+                                .map(res => res.json())
+                                .subscribe(data =>{
+                                  console.log('get store details');
+                                  
+                                  nfcScannedDomainName=data.Domain.Name;
+                                  nfcScannedDomainDescription=data.Domain.Description;
+                                  nfcScannedStoreName=data.Store.Name;
+                                  nfcScannedDepartName=data.Department.Name;
+                                  //console.log(data.Store.Name);
+                                  //console.log(data.Department.Name);
+                                },err => {
+                                  console.log(err);
+                                });
+                            });
+                            
+                          }
+                         
+                        });
+                        
+                        //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
+                        //this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
+                        
+                        this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);
+                        this.storage.set(this.keyAllapiDetails,nfcScannedDomainName+'**__**'+nfcScannedStoreName+'**__**'+nfcScannedDepartName+'**__**'+nfcScannedDomainDescription);
                         
                         //code to check for login
                         this.storage.get('loginUserToken').then((valloginUserToken) => {
@@ -239,44 +303,44 @@ export class MyApp {
                                           this.storage.get('alertTimerSettings').then((val1) => {    
                                             if(val1==true)
                                             {
-                                              //redirect to the next page ie Timer Page
+                                              //redirect to the next page ie Timer Page if Timer settings is ON
                                               this.nav.push(TimerPage);
                                             }
                                             else
                                             {
                                               this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
                                                 
-                                                //write => pending code have to call start cleaning api
+                                                //write => pending code/waiting for testing to call start cleaning api
                                                 
-                                                  //let values = valloginuserDomainID.split("**__**");
-                                                  //let curDomainID = values[0];
-                                                  //let curStoreID = values[1];
-                                                  //let curDepartmentID = values[2];
-                                                  //
-                                                  //this.storage.get('loginUserToken').then((valloginUserToken) => {
-                                                  //
-                                                  //  var headers = new Headers();
-                                                  //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                                                  //  const requestOptions = new RequestOptions({ headers: headers });
-                                                  //
-                                                  //  let postData = {
-                                                  //  "DomainID": curDomainID,
-                                                  //  "StoreID": curStoreID,
-                                                  //  "DepartmentID": curDepartmentID
-                                                  //  }
-                                                  //
-                                                  //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-                                                  //  
-                                                  //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-                                                  //    .map(res => res.json())
-                                                  //    .subscribe(data =>{
-                                                  //      this.data = data;
-                                                  //      console.log(data);
-                                                  //    },err => {
-                                                  //      console.log(err);
-                                                  //    });            
-                                                  //  });
-                                                  //});
+                                                let values = valloginuserDomainID.split("**__**");
+                                                let curDomainID = values[0];
+                                                let curStoreID = values[1];
+                                                let curDepartmentID = values[2];
+                                                
+                                                this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                                
+                                                  var headers = new Headers();
+                                                  headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                                  const requestOptions = new RequestOptions({ headers: headers });
+                                                
+                                                  let postData = {
+                                                  "DomainID": curDomainID,
+                                                  "StoreID": curStoreID,
+                                                  "DepartmentID": curDepartmentID
+                                                  }
+                                                
+                                                  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                                  
+                                                    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                                    .map(res => res.json())
+                                                    .subscribe(data =>{
+                                                      //this.data = data;
+                                                      console.log(data);
+                                                    },err => {
+                                                      console.log(err);
+                                                    });            
+                                                  });
+                                                });
                                                 
                                               });        
                                               
@@ -297,6 +361,7 @@ export class MyApp {
                             }
                             else
                             {
+                              //-------------when app is on foreground ------------------------
                               //code to check timer settings and call start cleaning api
                               this.storage.get('alertTimerSettings').then((val1) => {    
                                 if(val1==true)
@@ -308,37 +373,37 @@ export class MyApp {
                                 {
                                   this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
                                     
-                                  // write => pending have to call start cleaning api
+                                  // write => pending/waiting for test to call start cleaning api
                                   
-                                    //let values = valloginuserDomainID.split("**__**");
-                                    //let curDomainID = values[0];
-                                    //let curStoreID = values[1];
-                                    //let curDepartmentID = values[2];
-                                    //
-                                    //this.storage.get('loginUserToken').then((valloginUserToken) => {
-                                    //
-                                    //  var headers = new Headers();
-                                    //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                                    //  const requestOptions = new RequestOptions({ headers: headers });
-                                    //
-                                    //  let postData = {
-                                    //  "DomainID": curDomainID,
-                                    //  "StoreID": curStoreID,
-                                    //  "DepartmentID": curDepartmentID
-                                    //  }
-                                    //
-                                    //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-                                    //  
-                                    //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-                                    //    .map(res => res.json())
-                                    //    .subscribe(data =>{
-                                    //      this.data = data;
-                                    //      console.log(data);
-                                    //    },err => {
-                                    //      console.log(err);
-                                    //    });            
-                                    //  });
-                                    //});
+                                    let values = valloginuserDomainID.split("**__**");
+                                    let curDomainID = values[0];
+                                    let curStoreID = values[1];
+                                    let curDepartmentID = values[2];
+                                    
+                                    this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                    
+                                      var headers = new Headers();
+                                      headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                      const requestOptions = new RequestOptions({ headers: headers });
+                                    
+                                      let postData = {
+                                      "DomainID": curDomainID,
+                                      "StoreID": curStoreID,
+                                      "DepartmentID": curDepartmentID
+                                      }
+                                    
+                                      this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                      
+                                        this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                        .map(res => res.json())
+                                        .subscribe(data =>{
+                                          //this.data = data;
+                                          console.log(data);
+                                        },err => {
+                                          console.log(err);
+                                        });            
+                                      });
+                                    });
                                   
                                     
                                   });        
@@ -389,16 +454,36 @@ export class MyApp {
           console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
           
           
-          //have to check location is redable or not here
+          //write => pending code/waiting for testing to check location is redable or not
           
-          //if(event.tag.id)
-          //{
-          //  
-          //}
-          //else
-          //{
-          //  
-          //}
+          let scanned_NfcdepartmentID='';
+          let scanned_NfcstoreID='';
+          let scanned_NfcdomainID='';
+          
+          if(event.tag.id)
+          {
+            let payload = event.tag.ndefMessage[0].payload;
+            let scanned_nfc_data = this.nfc.bytesToString(payload);
+            let all_values_nfc_data = scanned_nfc_data.split(",");
+            
+            scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
+            scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
+            scanned_NfcdomainID = all_values_nfc_data[all_values_nfc_data.length-3];
+            
+            scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
+            scanned_NfcstoreID = scanned_NfcstoreID.trim();
+            scanned_NfcdomainID = scanned_NfcdomainID.trim();
+          }
+          else
+          {
+            //pending code - write an alert code
+            const alert = this.alertCtrl.create({
+              title: 'NFC Tag Scan',
+              message: 'No tag id found',
+              buttons: ['OK']
+            });
+            alert.present();
+          }
     
           
           //code start to check cleaning started for NFC or not
@@ -407,6 +492,7 @@ export class MyApp {
           
             if(valClean==true)
             {
+              //section for complete cleaning
               this.storage.get('scanType').then((valstype) => {
                 if(valstype=='nfc')
                 {
@@ -447,9 +533,49 @@ export class MyApp {
                       //write => pending code to save all storage values including domain, store and department
                       this.storage.set(this.keynfcclean,true);
                       
+                      //write => pending code/waiting for testing to set data
                       
-                      this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
-                      this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
+                      let nfcScannedDomainName='';
+                      let nfcScannedDomainDescription='';
+                      let nfcScannedStoreName='';
+                      let nfcScannedDepartName='';
+                      
+                      //code - api to call and get domain, store and depart name
+                      
+                      this.storage.get('loginUserToken').then((valloginUserToken) => {   
+                        if(valloginUserToken!='')
+                        {
+                          var headers = new Headers();
+                          headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                          const requestOptions = new RequestOptions({ headers: headers });
+                          
+                          this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                            
+                            this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID=2&StoreID=3&DepartmentID=1', requestOptions)
+                              .map(res => res.json())
+                              .subscribe(data =>{
+                                console.log('get store details');
+                                
+                                nfcScannedDomainName=data.Domain.Name;
+                                nfcScannedDomainDescription=data.Domain.Description;
+                                nfcScannedStoreName=data.Store.Name;
+                                nfcScannedDepartName=data.Department.Name;
+                                //console.log(data.Store.Name);
+                                //console.log(data.Department.Name);
+                              },err => {
+                                console.log(err);
+                              });
+                          });
+                          
+                        }                         
+                    });
+                      
+                      
+                    //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
+                    //this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
+                    
+                    this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);
+                    this.storage.set(this.keyAllapiDetails,nfcScannedDomainName+'**__**'+nfcScannedStoreName+'**__**'+nfcScannedDepartName+'**__**'+nfcScannedDomainDescription);
                       
                       
                       //code to check for login
@@ -493,35 +619,35 @@ export class MyApp {
                                               
                                             //write=> pending code have to call start cleaning api
                                             
-                                              //let values = valloginuserDomainID.split("**__**");
-                                              //let curDomainID = values[0];
-                                              //let curStoreID = values[1];
-                                              //let curDepartmentID = values[2];
-                                              //
-                                              //this.storage.get('loginUserToken').then((valloginUserToken) => {
-                                              //
-                                              //  var headers = new Headers();
-                                              //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                                              //  const requestOptions = new RequestOptions({ headers: headers });
-                                              //
-                                              //  let postData = {
-                                              //  "DomainID": curDomainID,
-                                              //  "StoreID": curStoreID,
-                                              //  "DepartmentID": curDepartmentID
-                                              //  }
-                                              //
-                                              //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-                                              //  
-                                              //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-                                              //    .map(res => res.json())
-                                              //    .subscribe(data =>{
-                                              //      this.data = data;
-                                              //      console.log(data);
-                                              //    },err => {
-                                              //      console.log(err);
-                                              //    });            
-                                              //  });
-                                              //});
+                                              let values = valloginuserDomainID.split("**__**");
+                                              let curDomainID = values[0];
+                                              let curStoreID = values[1];
+                                              let curDepartmentID = values[2];
+                                              
+                                              this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                              
+                                                var headers = new Headers();
+                                                headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                                const requestOptions = new RequestOptions({ headers: headers });
+                                              
+                                                let postData = {
+                                                "DomainID": curDomainID,
+                                                "StoreID": curStoreID,
+                                                "DepartmentID": curDepartmentID
+                                                }
+                                              
+                                                this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                                
+                                                  this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                                  .map(res => res.json())
+                                                  .subscribe(data =>{
+                                                    //this.data = data;
+                                                    console.log(data);
+                                                  },err => {
+                                                    console.log(err);
+                                                  });            
+                                                });
+                                              });
                                             
                                               
                                             });        
@@ -543,6 +669,7 @@ export class MyApp {
                           }
                           else
                           {
+                            //-------------when app is on foreground ------------------------
                             //code to check timer settings and call start cleaning api
                             this.storage.get('alertTimerSettings').then((val1) => {    
                               if(val1==true)
@@ -554,37 +681,37 @@ export class MyApp {
                               {
                                 this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
                                   
-                                //write=> pending code have to call start cleaning api
+                                  // write => pending/waiting for test to call start cleaning api
                                 
-                                  //let values = valloginuserDomainID.split("**__**");
-                                  //let curDomainID = values[0];
-                                  //let curStoreID = values[1];
-                                  //let curDepartmentID = values[2];
-                                  //
-                                  //this.storage.get('loginUserToken').then((valloginUserToken) => {
-                                  //
-                                  //  var headers = new Headers();
-                                  //  headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                                  //  const requestOptions = new RequestOptions({ headers: headers });
-                                  //
-                                  //  let postData = {
-                                  //  "DomainID": curDomainID,
-                                  //  "StoreID": curStoreID,
-                                  //  "DepartmentID": curDepartmentID
-                                  //  }
-                                  //
-                                  //  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-                                  //  
-                                  //    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-                                  //    .map(res => res.json())
-                                  //    .subscribe(data =>{
-                                  //      this.data = data;
-                                  //      console.log(data);
-                                  //    },err => {
-                                  //      console.log(err);
-                                  //    });            
-                                  //  });
-                                  //});
+                                  let values = valloginuserDomainID.split("**__**");
+                                  let curDomainID = values[0];
+                                  let curStoreID = values[1];
+                                  let curDepartmentID = values[2];
+                                  
+                                  this.storage.get('loginUserToken').then((valloginUserToken) => {
+                                  
+                                    var headers = new Headers();
+                                    headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                    const requestOptions = new RequestOptions({ headers: headers });
+                                  
+                                    let postData = {
+                                    "DomainID": curDomainID,
+                                    "StoreID": curStoreID,
+                                    "DepartmentID": curDepartmentID
+                                    }
+                                  
+                                    this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                                    
+                                      this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                      .map(res => res.json())
+                                      .subscribe(data =>{
+                                        //this.data = data;
+                                        console.log(data);
+                                      },err => {
+                                        console.log(err);
+                                      });            
+                                    });
+                                  });
                                   
                                 });        
                                 
@@ -966,7 +1093,7 @@ export class MyApp {
                   if(valloginUserToken!='')
                   {
                     //if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
-                    if(view.component.name!='TimerPage')
+                    if(view.component.name!='TimerPage' || view.component.name!='CompletionSummaryPage')
                     {
                       this.nav.push(AlertPage);
                     }
@@ -1189,7 +1316,8 @@ export class MyApp {
                   if(valloginUserToken!='')
                   {
                     //if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
-                    if(view.component.name!='TimerPage')
+                    //if(view.component.name!='TimerPage')
+                    if(view.component.name!='TimerPage' || view.component.name!='CompletionSummaryPage')
                     {
                       this.nav.push(AlertPage);
                     }                        
