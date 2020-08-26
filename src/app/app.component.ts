@@ -144,6 +144,24 @@ export class MyApp {
             console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
             
             
+            let nfc_data77 = event.tag.toString();
+            let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
+            
+            const alert1 = this.alertCtrl.create({
+              title: 'Event Tag',
+              message: nfc_data77,
+              buttons: ['OK']
+            });
+            alert1.present();
+            
+            const alert2 = this.alertCtrl.create({
+              title: 'Tag ID',
+              message: nfc_data7,
+              buttons: ['OK']
+            });
+            alert2.present();
+            
+            
             //write => pending code/waiting for testing to check location is redable or not
             
             let scanned_NfcdepartmentID='';
