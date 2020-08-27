@@ -1111,7 +1111,7 @@ export class MyApp {
                   if(valloginUserToken!='')
                   {
                     //if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
-                    if(view.component.name!='TimerPage' || view.component.name!='CompletionSummaryPage')
+                    if(view.component.name!='TimerPage' && view.component.name!='CompletionSummaryPage')
                     {
                       this.nav.push(AlertPage);
                     }
@@ -1335,7 +1335,7 @@ export class MyApp {
                   {
                     //if(view.component.name!='TimerPage' && data.additionalData.Action!="completed_cleaning")
                     //if(view.component.name!='TimerPage')
-                    if(view.component.name!='TimerPage' || view.component.name!='CompletionSummaryPage')
+                    if(view.component.name!='TimerPage' && view.component.name!='CompletionSummaryPage')
                     {
                       this.nav.push(AlertPage);
                     }                        
