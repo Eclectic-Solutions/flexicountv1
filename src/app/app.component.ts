@@ -147,6 +147,9 @@ export class MyApp {
             let nfc_data77 = event.tag.toString();
             let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
             
+            let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
+            let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
+            
             const alert1 = this.alertCtrl.create({
               title: 'Event Tag',
               message: nfc_data77,
@@ -160,6 +163,13 @@ export class MyApp {
               buttons: ['OK']
             });
             alert2.present();
+            
+            const alert3 = this.alertCtrl.create({
+              title: 'Msg Data Payload',
+              message: nfc_data_payloadString77,
+              buttons: ['OK']
+            });
+            alert3.present();
             
             
             //write => pending code/waiting for testing to check location is redable or not
@@ -197,6 +207,15 @@ export class MyApp {
               });
               alert.present();
             }
+            
+            let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;
+            
+            const alert999 = this.alertCtrl.create({
+              title: 'Scanned ID Details',
+              message: scannedIdDetails,
+              buttons: ['OK']
+            });
+            alert999.present();
             
             //code started to check cleaning started or not
             
@@ -263,7 +282,7 @@ export class MyApp {
                             
                             this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
                               
-                              this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID=2&StoreID=3&DepartmentID=1', requestOptions)
+                              this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID='+scanned_NfcdomainID+'&StoreID='+scanned_NfcstoreID+'&DepartmentID='+scanned_NfcdepartmentID, requestOptions)
                                 .map(res => res.json())
                                 .subscribe(data =>{
                                   console.log('get store details');
@@ -282,6 +301,15 @@ export class MyApp {
                           }
                          
                         });
+                        
+                        let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
+                    
+                        const alert99 = this.alertCtrl.create({
+                          title: 'Scanned Details',
+                          message: scannedDetails,
+                          buttons: ['OK']
+                        });
+                        alert99.present();
                         
                         //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
                         //this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
@@ -471,6 +499,32 @@ export class MyApp {
           console.log('received ndef message. the tag contains: ', event.tag);
           console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
           
+          let nfc_data77 = event.tag.toString();
+          let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
+          
+          let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
+          let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
+          
+          const alert1 = this.alertCtrl.create({
+            title: 'Event Tag',
+            message: nfc_data77,
+            buttons: ['OK']
+          });
+          alert1.present();
+            
+          const alert2 = this.alertCtrl.create({
+            title: 'Tag ID',
+            message: nfc_data7,
+            buttons: ['OK']
+          });
+          alert2.present();
+          
+          const alert3 = this.alertCtrl.create({
+            title: 'Msg Data Payload',
+            message: nfc_data_payloadString77,
+            buttons: ['OK']
+          });
+          alert3.present();                    
           
           //write => pending code/waiting for testing to check location is redable or not
           
@@ -502,6 +556,14 @@ export class MyApp {
             });
             alert.present();
           }
+          
+          let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;                    
+          const alert999 = this.alertCtrl.create({
+            title: 'Scanned ID Details',
+            message: scannedIdDetails,
+            buttons: ['OK']
+          });
+          alert999.present();
     
           
           //code start to check cleaning started for NFC or not
@@ -569,7 +631,7 @@ export class MyApp {
                           
                           this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
                             
-                            this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID=2&StoreID=3&DepartmentID=1', requestOptions)
+                            this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID='+scanned_NfcdomainID+'&StoreID='+scanned_NfcstoreID+'&DepartmentID='+scanned_NfcdepartmentID, requestOptions)
                               .map(res => res.json())
                               .subscribe(data =>{
                                 console.log('get store details');
@@ -587,6 +649,16 @@ export class MyApp {
                           
                         }                         
                     });
+                      
+                    
+                    let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
+                    
+                    const alert99 = this.alertCtrl.create({
+                      title: 'Scanned Details',
+                      message: scannedDetails,
+                      buttons: ['OK']
+                    });
+                    alert99.present();
                       
                       
                     //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
