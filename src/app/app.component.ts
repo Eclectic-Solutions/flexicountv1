@@ -46,6 +46,20 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       //statusBar.styleDefault();
       
+      /*
+      var testDate = 'en17';
+      testDate = testDate.slice(-2);
+      console.log('domain: '+testDate);
+      
+      var myObj;
+      myObj = {"name":"John", "age":30, "car":null};
+      
+      var testData = JSON.stringify(myObj);
+      
+      console.log(myObj);
+      console.log(testData);
+      */
+      
       
       statusBar.styleDefault();
       if(platform.is('android'))
@@ -144,7 +158,8 @@ export class MyApp {
             console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
             
             
-            let nfc_data77 = event.tag.toString();
+            //let nfc_data77 = event.tag.toString();
+            let nfc_data77 = JSON.stringify(event.tag);
             let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
             
             let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
@@ -196,6 +211,8 @@ export class MyApp {
               scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
               scanned_NfcstoreID = scanned_NfcstoreID.trim();
               scanned_NfcdomainID = scanned_NfcdomainID.trim();
+              
+              scanned_NfcdomainID = scanned_NfcdomainID.slice(-2);
             }
             else
             {
@@ -499,7 +516,8 @@ export class MyApp {
           console.log('received ndef message. the tag contains: ', event.tag);
           console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
           
-          let nfc_data77 = event.tag.toString();
+          //let nfc_data77 = event.tag.toString();
+          let nfc_data77 = JSON.stringify(event.tag);
           let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
           
           let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
@@ -545,6 +563,8 @@ export class MyApp {
             scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
             scanned_NfcstoreID = scanned_NfcstoreID.trim();
             scanned_NfcdomainID = scanned_NfcdomainID.trim();
+            
+            scanned_NfcdomainID = scanned_NfcdomainID.slice(-2);
           }
           else
           {
