@@ -46,11 +46,14 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       //statusBar.styleDefault();
       
+      
       /*
       var testDate = 'en17';
-      testDate = testDate.slice(-2);
+      testDate = testDate.substring(2);
       console.log('domain: '+testDate);
       
+      
+      /*
       var myObj;
       myObj = {"name":"John", "age":30, "car":null};
       
@@ -212,7 +215,7 @@ export class MyApp {
               scanned_NfcstoreID = scanned_NfcstoreID.trim();
               scanned_NfcdomainID = scanned_NfcdomainID.trim();
               
-              scanned_NfcdomainID = scanned_NfcdomainID.slice(-2);
+              scanned_NfcdomainID = scanned_NfcdomainID.substring(2);
             }
             else
             {
@@ -564,7 +567,7 @@ export class MyApp {
             scanned_NfcstoreID = scanned_NfcstoreID.trim();
             scanned_NfcdomainID = scanned_NfcdomainID.trim();
             
-            scanned_NfcdomainID = scanned_NfcdomainID.slice(-2);
+            scanned_NfcdomainID = scanned_NfcdomainID.substring(2);
           }
           else
           {
