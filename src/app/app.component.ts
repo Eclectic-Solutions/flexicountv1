@@ -46,11 +46,52 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       //statusBar.styleDefault();
       
-      
       /*
-      var testDate = 'en17';
-      testDate = testDate.substring(2);
-      console.log('domain: '+testDate);
+      let scanned_NfcdepartmentID='';
+      let scanned_NfcstoreID='';
+      let scanned_NfcdomainID='';
+      
+      let firstTwoChar = '';
+      let stringLength = 0;
+      
+      
+      let scanned_nfc_data = 'en2, 3, 1';
+      //code to trim the scanned data
+      scanned_nfc_data = scanned_nfc_data.trim();
+      
+      //code to get string length
+      stringLength = scanned_nfc_data.length;
+      
+      //code to get first two character of the scanned string
+      firstTwoChar = scanned_nfc_data.substr(0,2);
+      
+      //alert(firstTwoChar);
+      //alert(stringLength);
+      
+      if(firstTwoChar=='en')
+      {
+        scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
+      }
+      
+      alert(scanned_nfc_data);
+      
+      let all_values_nfc_data = scanned_nfc_data.split(",");
+      
+      scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
+      scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
+      scanned_NfcdomainID = all_values_nfc_data[all_values_nfc_data.length-3];
+      
+      scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
+      scanned_NfcstoreID = scanned_NfcstoreID.trim();
+      scanned_NfcdomainID = scanned_NfcdomainID.trim();
+      
+      
+      let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;
+      
+      
+      console.log(scannedIdDetails);
+      alert(scannedIdDetails);
+      */
       
       
       /*
@@ -168,26 +209,26 @@ export class MyApp {
             let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
             let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
             
-            const alert1 = this.alertCtrl.create({
-              title: 'Event Tag',
-              message: nfc_data77,
-              buttons: ['OK']
-            });
-            alert1.present();
+            //const alert1 = this.alertCtrl.create({
+            //  title: 'Event Tag',
+            //  message: nfc_data77,
+            //  buttons: ['OK']
+            //});
+            //alert1.present();
             
-            const alert2 = this.alertCtrl.create({
-              title: 'Tag ID',
-              message: nfc_data7,
-              buttons: ['OK']
-            });
-            alert2.present();
+            //const alert2 = this.alertCtrl.create({
+            //  title: 'Tag ID',
+            //  message: nfc_data7,
+            //  buttons: ['OK']
+            //});
+            //alert2.present();
             
-            const alert3 = this.alertCtrl.create({
-              title: 'Msg Data Payload',
-              message: nfc_data_payloadString77,
-              buttons: ['OK']
-            });
-            alert3.present();
+            //const alert3 = this.alertCtrl.create({
+            //  title: 'Msg Data Payload',
+            //  message: nfc_data_payloadString77,
+            //  buttons: ['OK']
+            //});
+            //alert3.present();
             
             
             //write => pending code/waiting for testing to check location is redable or not
@@ -195,6 +236,9 @@ export class MyApp {
             let scanned_NfcdepartmentID='';
             let scanned_NfcstoreID='';
             let scanned_NfcdomainID='';
+            
+            let firstTwoChar = '';
+            let stringLength = 0;
             
             if(event.tag.id)
             {
@@ -205,6 +249,19 @@ export class MyApp {
               
               let payload = event.tag.ndefMessage[0].payload;
               let scanned_nfc_data = this.nfc.bytesToString(payload);
+              
+              //code to trim the scanned data
+              scanned_nfc_data = scanned_nfc_data.trim();              
+              //code to get string length
+              stringLength = scanned_nfc_data.length;              
+              //code to get first two character of the scanned string
+              firstTwoChar = scanned_nfc_data.substr(0,2);
+              
+              if(firstTwoChar=='en')
+              {
+                scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
+              }
+              
               let all_values_nfc_data = scanned_nfc_data.split(",");
               
               scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
@@ -213,9 +270,7 @@ export class MyApp {
               
               scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
               scanned_NfcstoreID = scanned_NfcstoreID.trim();
-              scanned_NfcdomainID = scanned_NfcdomainID.trim();
-              
-              scanned_NfcdomainID = scanned_NfcdomainID.substring(2);
+              scanned_NfcdomainID = scanned_NfcdomainID.trim();              
             }
             else
             {
@@ -228,14 +283,14 @@ export class MyApp {
               alert.present();
             }
             
-            let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;
-            
-            const alert999 = this.alertCtrl.create({
-              title: 'Scanned ID Details',
-              message: scannedIdDetails,
-              buttons: ['OK']
-            });
-            alert999.present();
+            //let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;
+            //
+            //const alert999 = this.alertCtrl.create({
+            //  title: 'Scanned ID Details',
+            //  message: scannedIdDetails,
+            //  buttons: ['OK']
+            //});
+            //alert999.present();
             
             //code started to check cleaning started or not
             
@@ -322,14 +377,14 @@ export class MyApp {
                          
                         });
                         
-                        let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
-                    
-                        const alert99 = this.alertCtrl.create({
-                          title: 'Scanned Details',
-                          message: scannedDetails,
-                          buttons: ['OK']
-                        });
-                        alert99.present();
+                        //let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
+                        //
+                        //const alert99 = this.alertCtrl.create({
+                        //  title: 'Scanned Details',
+                        //  message: scannedDetails,
+                        //  buttons: ['OK']
+                        //});
+                        //alert99.present();
                         
                         //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
                         //this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
@@ -526,26 +581,26 @@ export class MyApp {
           let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
           let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
           
-          const alert1 = this.alertCtrl.create({
-            title: 'Event Tag',
-            message: nfc_data77,
-            buttons: ['OK']
-          });
-          alert1.present();
+          //const alert1 = this.alertCtrl.create({
+          //  title: 'Event Tag',
+          //  message: nfc_data77,
+          //  buttons: ['OK']
+          //});
+          //alert1.present();
             
-          const alert2 = this.alertCtrl.create({
-            title: 'Tag ID',
-            message: nfc_data7,
-            buttons: ['OK']
-          });
-          alert2.present();
+          //const alert2 = this.alertCtrl.create({
+          //  title: 'Tag ID',
+          //  message: nfc_data7,
+          //  buttons: ['OK']
+          //});
+          //alert2.present();
           
-          const alert3 = this.alertCtrl.create({
-            title: 'Msg Data Payload',
-            message: nfc_data_payloadString77,
-            buttons: ['OK']
-          });
-          alert3.present();                    
+          //const alert3 = this.alertCtrl.create({
+          //  title: 'Msg Data Payload',
+          //  message: nfc_data_payloadString77,
+          //  buttons: ['OK']
+          //});
+          //alert3.present();                    
           
           //write => pending code/waiting for testing to check location is redable or not
           
@@ -553,10 +608,26 @@ export class MyApp {
           let scanned_NfcstoreID='';
           let scanned_NfcdomainID='';
           
+          let firstTwoChar = '';
+          let stringLength = 0;
+          
           if(event.tag.id)
           {
             let payload = event.tag.ndefMessage[0].payload;
             let scanned_nfc_data = this.nfc.bytesToString(payload);
+            
+            //code to trim the scanned data
+            scanned_nfc_data = scanned_nfc_data.trim();            
+            //code to get string length
+            stringLength = scanned_nfc_data.length;            
+            //code to get first two character of the scanned string
+            firstTwoChar = scanned_nfc_data.substr(0,2);
+            
+            if(firstTwoChar=='en')
+            {
+              scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
+            }
+            
             let all_values_nfc_data = scanned_nfc_data.split(",");
             
             scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
@@ -566,8 +637,6 @@ export class MyApp {
             scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
             scanned_NfcstoreID = scanned_NfcstoreID.trim();
             scanned_NfcdomainID = scanned_NfcdomainID.trim();
-            
-            scanned_NfcdomainID = scanned_NfcdomainID.substring(2);
           }
           else
           {
@@ -580,13 +649,13 @@ export class MyApp {
             alert.present();
           }
           
-          let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;                    
-          const alert999 = this.alertCtrl.create({
-            title: 'Scanned ID Details',
-            message: scannedIdDetails,
-            buttons: ['OK']
-          });
-          alert999.present();
+          //let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;                    
+          //const alert999 = this.alertCtrl.create({
+          //  title: 'Scanned ID Details',
+          //  message: scannedIdDetails,
+          //  buttons: ['OK']
+          //});
+          //alert999.present();
     
           
           //code start to check cleaning started for NFC or not
@@ -674,14 +743,14 @@ export class MyApp {
                     });
                       
                     
-                    let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
-                    
-                    const alert99 = this.alertCtrl.create({
-                      title: 'Scanned Details',
-                      message: scannedDetails,
-                      buttons: ['OK']
-                    });
-                    alert99.present();
+                    //let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
+                    //
+                    //const alert99 = this.alertCtrl.create({
+                    //  title: 'Scanned Details',
+                    //  message: scannedDetails,
+                    //  buttons: ['OK']
+                    //});
+                    //alert99.present();
                       
                       
                     //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
