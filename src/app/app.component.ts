@@ -46,65 +46,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       //statusBar.styleDefault();
       
-      /*
-      let scanned_NfcdepartmentID='';
-      let scanned_NfcstoreID='';
-      let scanned_NfcdomainID='';
-      
-      let firstTwoChar = '';
-      let stringLength = 0;
-      
-      
-      let scanned_nfc_data = 'en2, 3, 1';
-      //code to trim the scanned data
-      scanned_nfc_data = scanned_nfc_data.trim();
-      
-      //code to get string length
-      stringLength = scanned_nfc_data.length;
-      
-      //code to get first two character of the scanned string
-      firstTwoChar = scanned_nfc_data.substr(0,2);
-      
-      //alert(firstTwoChar);
-      //alert(stringLength);
-      
-      if(firstTwoChar=='en')
-      {
-        scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
-      }
-      
-      alert(scanned_nfc_data);
-      
-      let all_values_nfc_data = scanned_nfc_data.split(",");
-      
-      scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
-      scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
-      scanned_NfcdomainID = all_values_nfc_data[all_values_nfc_data.length-3];
-      
-      scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
-      scanned_NfcstoreID = scanned_NfcstoreID.trim();
-      scanned_NfcdomainID = scanned_NfcdomainID.trim();
-      
-      
-      let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;
-      
-      
-      console.log(scannedIdDetails);
-      alert(scannedIdDetails);
-      */
-      
-      
-      /*
-      var myObj;
-      myObj = {"name":"John", "age":30, "car":null};
-      
-      var testData = JSON.stringify(myObj);
-      
-      console.log(myObj);
-      console.log(testData);
-      */
-      
-      
       statusBar.styleDefault();
       if(platform.is('android'))
       {
@@ -112,25 +53,18 @@ export class MyApp {
         statusBar.backgroundColorByHexString('#000000');
       }
       
-      
       splashScreen.hide();
       
-      //code start for native audio
-      
+      //code start for native audio      
       this.nativeAudio.preloadSimple('uniqueId1', 'assets/ding.mp3').then((success)=>{
         console.log("success");
       },(error)=>{
         console.log(error);
-      });
-      
+      });      
       //code end for native audio
       
-      
-      
-      this.backgroundMode.enable();
-      
-      this.initPushNotification();
-      
+      this.backgroundMode.enable();      
+      this.initPushNotification();      
       
       //code start to trigger local notification on every 1min for ios device
       
@@ -163,15 +97,10 @@ export class MyApp {
           console.log('deactivated');          
           clearInterval(timerId);
         });
-      }
+      }      
+      //this code activate runs when app goes to background mode      
       
-      //this code activate runs when app goes to background mode
-      
-      
-      
-      
-      //code end to trigger local notification on every 1min for ios device
-      
+      //code end to trigger local notification on every 1min for ios device      
       
       //code start for NFC
       
@@ -209,28 +138,6 @@ export class MyApp {
             let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
             let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
             
-            //const alert1 = this.alertCtrl.create({
-            //  title: 'Event Tag',
-            //  message: nfc_data77,
-            //  buttons: ['OK']
-            //});
-            //alert1.present();
-            
-            //const alert2 = this.alertCtrl.create({
-            //  title: 'Tag ID',
-            //  message: nfc_data7,
-            //  buttons: ['OK']
-            //});
-            //alert2.present();
-            
-            //const alert3 = this.alertCtrl.create({
-            //  title: 'Msg Data Payload',
-            //  message: nfc_data_payloadString77,
-            //  buttons: ['OK']
-            //});
-            //alert3.present();
-            
-            
             //write => pending code/waiting for testing to check location is redable or not
             
             let scanned_NfcdepartmentID='';
@@ -243,9 +150,6 @@ export class MyApp {
             if(event.tag.id)
             {
               //code to get domain, store & department id
-              
-              //let scanned_nfc_data = event.tag.id.toString();
-              //let scanned_nfc_data = this.nfc.bytesToHexString(event.tag.id);
               
               let payload = event.tag.ndefMessage[0].payload;
               let scanned_nfc_data = this.nfc.bytesToString(payload);
@@ -271,6 +175,7 @@ export class MyApp {
               scanned_NfcdepartmentID = scanned_NfcdepartmentID.trim();
               scanned_NfcstoreID = scanned_NfcstoreID.trim();
               scanned_NfcdomainID = scanned_NfcdomainID.trim();              
+              
             }
             else
             {
@@ -281,16 +186,7 @@ export class MyApp {
                 buttons: ['OK']
               });
               alert.present();
-            }
-            
-            //let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;
-            //
-            //const alert999 = this.alertCtrl.create({
-            //  title: 'Scanned ID Details',
-            //  message: scannedIdDetails,
-            //  buttons: ['OK']
-            //});
-            //alert999.present();
+            }            
             
             //code started to check cleaning started or not
             
@@ -339,13 +235,7 @@ export class MyApp {
                         //code to save all storage values including domain, store and department
                         this.storage.set(this.keynfcclean,true);
                         
-                        //write => pending code/waiting for testing to set data
-                        
-                        let nfcScannedDomainName='';
-                        let nfcScannedDomainDescription='';
-                        let nfcScannedStoreName='';
-                        let nfcScannedDepartName='';
-                        
+                        //write => pending code/waiting for testing to set data                        
                         //code - api to call and get domain, store and depart name
                         
                         this.storage.get('loginUserToken').then((valloginUserToken) => {   
@@ -360,37 +250,21 @@ export class MyApp {
                               this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID='+scanned_NfcdomainID+'&StoreID='+scanned_NfcstoreID+'&DepartmentID='+scanned_NfcdepartmentID, requestOptions)
                                 .map(res => res.json())
                                 .subscribe(data =>{
-                                  console.log('get store details');
-                                  
-                                  nfcScannedDomainName=data.Domain.Name;
-                                  nfcScannedDomainDescription=data.Domain.Description;
-                                  nfcScannedStoreName=data.Store.Name;
-                                  nfcScannedDepartName=data.Department.Name;
+                                  console.log('get store details');                                  
                                   //console.log(data.Store.Name);
-                                  //console.log(data.Department.Name);
+                                  //console.log(data.Department.Name);                                  
+                                  //code to save domain name, dept name, desc, store name in storage
+                                  this.storage.set(this.keyAllapiDetails,data.Domain.Name+'**__**'+data.Store.Name+'**__**'+data.Department.Name+'**__**'+data.Domain.Description);
+                                  
                                 },err => {
                                   console.log(err);
                                 });
                             });
                             
-                          }
-                         
+                            //code to save domain id, store id, department id in storage
+                            this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);                            
+                          }                         
                         });
-                        
-                        //let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
-                        //
-                        //const alert99 = this.alertCtrl.create({
-                        //  title: 'Scanned Details',
-                        //  message: scannedDetails,
-                        //  buttons: ['OK']
-                        //});
-                        //alert99.present();
-                        
-                        //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
-                        //this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
-                        
-                        this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);
-                        this.storage.set(this.keyAllapiDetails,nfcScannedDomainName+'**__**'+nfcScannedStoreName+'**__**'+nfcScannedDepartName+'**__**'+nfcScannedDomainDescription);
                         
                         //code to check for login
                         this.storage.get('loginUserToken').then((valloginUserToken) => {
@@ -581,27 +455,6 @@ export class MyApp {
           let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
           let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
           
-          //const alert1 = this.alertCtrl.create({
-          //  title: 'Event Tag',
-          //  message: nfc_data77,
-          //  buttons: ['OK']
-          //});
-          //alert1.present();
-            
-          //const alert2 = this.alertCtrl.create({
-          //  title: 'Tag ID',
-          //  message: nfc_data7,
-          //  buttons: ['OK']
-          //});
-          //alert2.present();
-          
-          //const alert3 = this.alertCtrl.create({
-          //  title: 'Msg Data Payload',
-          //  message: nfc_data_payloadString77,
-          //  buttons: ['OK']
-          //});
-          //alert3.present();                    
-          
           //write => pending code/waiting for testing to check location is redable or not
           
           let scanned_NfcdepartmentID='';
@@ -647,16 +500,7 @@ export class MyApp {
               buttons: ['OK']
             });
             alert.present();
-          }
-          
-          //let scannedIdDetails = 'Domain: '+scanned_NfcdomainID+', Store: '+scanned_NfcstoreID+', Department: '+scanned_NfcdepartmentID;                    
-          //const alert999 = this.alertCtrl.create({
-          //  title: 'Scanned ID Details',
-          //  message: scannedIdDetails,
-          //  buttons: ['OK']
-          //});
-          //alert999.present();
-    
+          }    
           
           //code start to check cleaning started for NFC or not
           
@@ -707,11 +551,6 @@ export class MyApp {
                       
                       //write => pending code/waiting for testing to set data
                       
-                      let nfcScannedDomainName='';
-                      let nfcScannedDomainDescription='';
-                      let nfcScannedStoreName='';
-                      let nfcScannedDepartName='';
-                      
                       //code - api to call and get domain, store and depart name
                       
                       this.storage.get('loginUserToken').then((valloginUserToken) => {   
@@ -727,39 +566,19 @@ export class MyApp {
                               .map(res => res.json())
                               .subscribe(data =>{
                                 console.log('get store details');
-                                
-                                nfcScannedDomainName=data.Domain.Name;
-                                nfcScannedDomainDescription=data.Domain.Description;
-                                nfcScannedStoreName=data.Store.Name;
-                                nfcScannedDepartName=data.Department.Name;
                                 //console.log(data.Store.Name);
-                                //console.log(data.Department.Name);
+                                //console.log(data.Department.Name);                                
+                                this.storage.set(this.keyAllapiDetails,data.Domain.Name+'**__**'+data.Store.Name+'**__**'+data.Department.Name+'**__**'+data.Domain.Description);
                               },err => {
                                 console.log(err);
                               });
                           });
                           
+                          //code to save domain id, store id, department id in storage
+                          this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);
+                          
                         }                         
                     });
-                      
-                    
-                    //let scannedDetails = 'Domain: '+nfcScannedDomainName+', Store: '+nfcScannedStoreName+', Department: '+nfcScannedDepartName+',Desc: '+nfcScannedDomainDescription;
-                    //
-                    //const alert99 = this.alertCtrl.create({
-                    //  title: 'Scanned Details',
-                    //  message: scannedDetails,
-                    //  buttons: ['OK']
-                    //});
-                    //alert99.present();
-                      
-                      
-                    //this.storage.set(this.keyDomainID,'2'+'**__**'+'3'+'**__**'+'1');
-                    //this.storage.set(this.keyAllapiDetails,'Building 1'+'**__**'+'Floor 1'+'**__**'+'Unisex 1'+'**__**'+'B1');
-                    
-                    this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);
-                    this.storage.set(this.keyAllapiDetails,nfcScannedDomainName+'**__**'+nfcScannedStoreName+'**__**'+nfcScannedDepartName+'**__**'+nfcScannedDomainDescription);
-                      
-                      
                       //code to check for login
                       this.storage.get('loginUserToken').then((valloginUserToken) => {
                 
