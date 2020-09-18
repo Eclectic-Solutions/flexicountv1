@@ -152,52 +152,26 @@ export class MyApp {
               //code to get domain, store & department id
               
               let payload = event.tag.ndefMessage[0].payload;
+              //let scanned_nfc_data = this.nfc.bytesToString(payload);
               let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
               
-              //let payload = data.tag.ndefMessage[0].payload;
-              //let tagContent = this.nfc.bytesToString(payload).substring(3);
-              //console.log(tagContent);
-              
-              
-              
-              
               //code to trim the scanned data
-              scanned_nfc_data = scanned_nfc_data.trim();              
+              scanned_nfc_data = scanned_nfc_data.trim();
+              
+              
+              /*
               //code to get string length
               stringLength = scanned_nfc_data.length;              
               //code to get first two character of the scanned string
               firstTwoChar = scanned_nfc_data.substr(0,2);
               
-              const alert7777 = this.alertCtrl.create({
-                title: 'first two char',
-                message: firstTwoChar,
-                buttons: ['OK']
-              });
-              alert7777.present();
-              
-              const alert1235 = this.alertCtrl.create({
-                title: 'before remove en',
-                message: scanned_nfc_data,
-                buttons: ['OK']
-              });
-              alert1235.present();
-              
-              let scanned_nfc_dataN = '';
-              
               if(firstTwoChar=='en')
               {
-                //scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
-                scanned_nfc_dataN = scanned_nfc_data.replace('en','');
+                scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
               }
+              */
               
-              const alert1236 = this.alertCtrl.create({
-                title: 'after remove en',
-                message: scanned_nfc_dataN,
-                buttons: ['OK']
-              });
-              alert1236.present();
-              
-              let all_values_nfc_data = scanned_nfc_dataN.split(",");
+              let all_values_nfc_data = scanned_nfc_data.split(",");
               
               scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
               scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
@@ -225,13 +199,6 @@ export class MyApp {
           
               if(valClean==true)
               {
-                const alert51 = this.alertCtrl.create({
-                  title: 'complete clean',
-                  message: 'complete clean',
-                  buttons: ['OK']
-                });
-                alert51.present();
-                
                 //section for complete cleaning
                 this.storage.get('scanType').then((valstype) => {
                   if(valstype=='nfc')
@@ -242,8 +209,11 @@ export class MyApp {
                         this.storage.get('loginUserToken').then((valloginUserToken) => {
                           if(valloginUserToken)
                           {
-                            //have to call complete cleaning api and redirect to the comp summary page
                             
+                            //reset start cleaning storage flag
+                            this.storage.set(this.keynfcclean,false);
+                            
+                            //have to call complete cleaning api and redirect to the comp summary page                            
                             this.nav.push(CompletionSummaryPage);
                           }
                           else
@@ -260,13 +230,6 @@ export class MyApp {
               {
                 //section for start cleaning
                 
-                const alert52 = this.alertCtrl.create({
-                  title: 'start clean',
-                  message: 'start clean',
-                  buttons: ['OK']
-                });
-                alert52.present();
-                
                 //code to check scan type is NFC or not
                 
                 this.storage.get('scanType').then((valstype) => {
@@ -279,21 +242,6 @@ export class MyApp {
                       {
                         //code to save all storage values including domain, store and department
                         this.storage.set(this.keynfcclean,true);
-                        
-                        
-                        //alert start -------
-                      
-                        const alert11 = this.alertCtrl.create({
-                          title: 'Scanned IDS',
-                          message: 'domain: '+scanned_NfcdomainID+',store: '+scanned_NfcstoreID+'dept: '+scanned_NfcdepartmentID,
-                          buttons: ['OK']
-                        });
-                        alert11.present();
-                        
-                        //alert end -------
-                        
-                        
-                        
                         
                         //write => pending code/waiting for testing to set data                        
                         //code - api to call and get domain, store and depart name
@@ -312,21 +260,7 @@ export class MyApp {
                                 .subscribe(data =>{
                                   console.log('get store details');                                  
                                   //console.log(data.Store.Name);
-                                  //console.log(data.Department.Name);
-                                  
-                                  
-                                  //alert start -------
-                      
-                                  const alert22 = this.alertCtrl.create({
-                                    title: 'Scanned Details',
-                                    message: 'domain: '+data.Domain.Name+',store: '+data.Store.Name+',dept: '+data.Department.Name+',desc: '+data.Domain.Description,
-                                    buttons: ['OK']
-                                  });
-                                  alert22.present();
-                                  
-                                  //alert end -------
-                                  
-                                  
+                                  //console.log(data.Department.Name);                                  
                                   //code to save domain name, dept name, desc, store name in storage
                                   this.storage.set(this.keyAllapiDetails,data.Domain.Name+'**__**'+data.Store.Name+'**__**'+data.Department.Name+'**__**'+data.Domain.Description);
                                   
@@ -334,31 +268,6 @@ export class MyApp {
                                   console.log(err);
                                 });
                             });
-                            
-                            
-                            
-                            this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
-          
-                            const alert8888 = this.alertCtrl.create({
-                                  title: 'Storage Details at APP',
-                                  message: 'storage-data: '+valloginuserApiDetails,
-                                  buttons: [
-                                           {
-                                             text: 'OK',
-                                             role: 'ok',
-                                             handler: () => {                   
-                                              //this.navCtrl.push(ManualArrivalConfirmationPage);
-                                              //this.navCtrl.push(TimerPage);
-                                             },                
-                                           }              
-                                         ]
-                                });
-                            alert8888.present();
-                            
-                          });
-                            
-                            
-                            
                             
                             //code to save domain id, store id, department id in storage
                             this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);                            
@@ -566,53 +475,26 @@ export class MyApp {
           if(event.tag.id)
           {
             let payload = event.tag.ndefMessage[0].payload;
+            //let scanned_nfc_data = this.nfc.bytesToString(payload);
             let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
             
             
-            //let payload = data.tag.ndefMessage[0].payload;
-            //let tagContent = this.nfc.bytesToString(payload).substring(3);
-            //console.log(tagContent);
-            
-            
             //code to trim the scanned data
-            scanned_nfc_data = scanned_nfc_data.trim();            
+            scanned_nfc_data = scanned_nfc_data.trim();
+            
+            /*
             //code to get string length
             stringLength = scanned_nfc_data.length;            
             //code to get first two character of the scanned string
             firstTwoChar = scanned_nfc_data.substr(0,2);
             
-            const alert8888 = this.alertCtrl.create({
-                title: 'first two char',
-                message: firstTwoChar,
-                buttons: ['OK']
-              });
-            alert8888.present();
-            
-            const alert123 = this.alertCtrl.create({
-              title: 'before remove en',
-              message: scanned_nfc_data,
-              buttons: ['OK']
-            });
-            alert123.present();
-            
-            let scanned_nfc_dataN = '';
-            
             if(firstTwoChar=='en')
             {
-              //scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
-              scanned_nfc_dataN = scanned_nfc_data.replace('en','');
+              scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
             }
+            */
             
-            
-            const alert1234 = this.alertCtrl.create({
-              title: 'after remove en',
-              message: scanned_nfc_dataN,
-              buttons: ['OK']
-            });
-            alert1234.present();
-            
-            
-            let all_values_nfc_data = scanned_nfc_dataN.split(",");
+            let all_values_nfc_data = scanned_nfc_data.split(",");
             
             scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
             scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
@@ -639,26 +521,20 @@ export class MyApp {
           
             if(valClean==true)
             {
-              
-              const alert53 = this.alertCtrl.create({
-                  title: 'complete clean',
-                  message: 'complete clean',
-                  buttons: ['OK']
-                });
-                alert53.present();
-              
               //section for complete cleaning
               this.storage.get('scanType').then((valstype) => {
                 if(valstype=='nfc')
-                {
+                {                  
                   this.storage.get('alertScanQrSettingsSignoff').then((valScanActive) => {
                     if(valScanActive==true)
                     {
                       this.storage.get('loginUserToken').then((valloginUserToken) => {
                         if(valloginUserToken)
-                        {
-                          //have to call complete cleaning api and redirect to the comp summary page
+                        {                          
+                          //reset start cleaning storage flag
+                          this.storage.set(this.keynfcclean,false);
                           
+                          //have to call complete cleaning api and redirect to the comp summary page                          
                           this.nav.push(CompletionSummaryPage);
                         }
                         else
@@ -675,13 +551,6 @@ export class MyApp {
             {
               //section for start cleaning
               
-              const alert54 = this.alertCtrl.create({
-                  title: 'start clean',
-                  message: 'start clean',
-                  buttons: ['OK']
-                });
-                alert54.present();
-              
               //code to check scan type is NFC or not
               
               this.storage.get('scanType').then((valstype) => {
@@ -694,19 +563,6 @@ export class MyApp {
                     {
                       //write => pending code to save all storage values including domain, store and department
                       this.storage.set(this.keynfcclean,true);
-                      
-                      
-                      //alert start -------
-                      
-                      const alert1 = this.alertCtrl.create({
-                        title: 'Scanned IDS',
-                        message: 'domain: '+scanned_NfcdomainID+',store: '+scanned_NfcstoreID+'dept: '+scanned_NfcdepartmentID,
-                        buttons: ['OK']
-                      });
-                      alert1.present();
-                      
-                      //alert end -------
-                      
                       
                       //write => pending code/waiting for testing to set data
                       
@@ -726,21 +582,7 @@ export class MyApp {
                               .subscribe(data =>{
                                 console.log('get store details');
                                 //console.log(data.Store.Name);
-                                //console.log(data.Department.Name);
-                                
-                                
-                                //alert start -------
-                      
-                                const alert2 = this.alertCtrl.create({
-                                  title: 'Scanned Details',
-                                  message: 'domain: '+data.Domain.Name+',store: '+data.Store.Name+',dept: '+data.Department.Name+',desc: '+data.Domain.Description,
-                                  buttons: ['OK']
-                                });
-                                alert2.present();
-                                
-                                //alert end -------
-                                
-                                
+                                //console.log(data.Department.Name);                                
                                 this.storage.set(this.keyAllapiDetails,data.Domain.Name+'**__**'+data.Store.Name+'**__**'+data.Department.Name+'**__**'+data.Domain.Description);
                               },err => {
                                 console.log(err);
@@ -749,29 +591,6 @@ export class MyApp {
                           
                           //code to save domain id, store id, department id in storage
                           this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);
-                          
-                          
-                          this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
-          
-                            const alert888 = this.alertCtrl.create({
-                                  title: 'Storage Details at APP',
-                                  message: 'storage-data: '+valloginuserApiDetails,
-                                  buttons: [
-                                           {
-                                             text: 'OK',
-                                             role: 'ok',
-                                             handler: () => {                   
-                                              //this.navCtrl.push(ManualArrivalConfirmationPage);
-                                              //this.navCtrl.push(TimerPage);
-                                             },                
-                                           }              
-                                         ]
-                                });
-                            alert888.present();
-                            
-                          });
-                          
-                          
                           
                         }                         
                     });
