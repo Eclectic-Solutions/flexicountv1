@@ -179,7 +179,8 @@ export class MyApp {
               
               if(firstTwoChar=='en')
               {
-                scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
+                //scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
+                scanned_nfc_dataN = scanned_nfc_dataN.replace('en','');
               }
               
               const alert1236 = this.alertCtrl.create({
@@ -585,7 +586,8 @@ export class MyApp {
             
             if(firstTwoChar=='en')
             {
-              scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
+              //scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
+              scanned_nfc_dataN = scanned_nfc_dataN.replace('en','');
             }
             
             
