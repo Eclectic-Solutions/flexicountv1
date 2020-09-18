@@ -123,6 +123,26 @@ export class TimerPage {
   loadSelectedLocation(){
    
    this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+    
+    
+    const alert88888 = this.alertCtrl.create({
+           title: 'Storage Details Timer',
+           message: 'storage-data: '+valloginuserApiDetails,
+           buttons: [
+                    {
+                      text: 'OK',
+                      role: 'ok',
+                      handler: () => {                   
+                       //this.navCtrl.push(ManualArrivalConfirmationPage);
+                       //this.navCtrl.push(TimerPage);
+                      },                
+                    }              
+                  ]
+         });
+     alert88888.present();
+    
+    
+    
     let all_values = valloginuserApiDetails.split("**__**");
     
     let first_value = '';
@@ -135,6 +155,24 @@ export class TimerPage {
     {
      first_value = all_values[3];
     }
+    
+    
+    const alert555 = this.alertCtrl.create({
+           title: 'Timer Page Display Data',
+           message: 'timer-data: '+first_value+','+all_values[1]+','+all_values[2],
+           buttons: [
+                    {
+                      text: 'OK',
+                      role: 'ok',
+                      handler: () => {                   
+                       //this.navCtrl.push(ManualArrivalConfirmationPage);
+                       //this.navCtrl.push(TimerPage);
+                      },                
+                    }              
+                  ]
+         });
+     alert555.present();
+    
     
     this.LoginUserapiDetails = first_value+' - '+all_values[1]+' - '+all_values[2];
    });
