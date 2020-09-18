@@ -161,12 +161,35 @@ export class MyApp {
               //code to get first two character of the scanned string
               firstTwoChar = scanned_nfc_data.substr(0,2);
               
+              const alert7777 = this.alertCtrl.create({
+                title: 'first two char',
+                message: firstTwoChar,
+                buttons: ['OK']
+              });
+              alert7777.present();
+              
+              const alert1235 = this.alertCtrl.create({
+                title: 'before remove en',
+                message: scanned_nfc_data,
+                buttons: ['OK']
+              });
+              alert1235.present();
+              
+              let scanned_nfc_dataN = '';
+              
               if(firstTwoChar=='en')
               {
-                scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
+                scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
               }
               
-              let all_values_nfc_data = scanned_nfc_data.split(",");
+              const alert1236 = this.alertCtrl.create({
+                title: 'after remove en',
+                message: scanned_nfc_dataN,
+                buttons: ['OK']
+              });
+              alert1236.present();
+              
+              let all_values_nfc_data = scanned_nfc_dataN.split(",");
               
               scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
               scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
@@ -544,12 +567,37 @@ export class MyApp {
             //code to get first two character of the scanned string
             firstTwoChar = scanned_nfc_data.substr(0,2);
             
+            const alert8888 = this.alertCtrl.create({
+                title: 'first two char',
+                message: firstTwoChar,
+                buttons: ['OK']
+              });
+            alert8888.present();
+            
+            const alert123 = this.alertCtrl.create({
+              title: 'before remove en',
+              message: scanned_nfc_data,
+              buttons: ['OK']
+            });
+            alert123.present();
+            
+            let scanned_nfc_dataN = '';
+            
             if(firstTwoChar=='en')
             {
-              scanned_nfc_data = scanned_nfc_data.substr(2,stringLength);
+              scanned_nfc_dataN = scanned_nfc_data.substr(2,stringLength);
             }
             
-            let all_values_nfc_data = scanned_nfc_data.split(",");
+            
+            const alert1234 = this.alertCtrl.create({
+              title: 'after remove en',
+              message: scanned_nfc_dataN,
+              buttons: ['OK']
+            });
+            alert1234.present();
+            
+            
+            let all_values_nfc_data = scanned_nfc_dataN.split(",");
             
             scanned_NfcdepartmentID = all_values_nfc_data[all_values_nfc_data.length-1];
             scanned_NfcstoreID = all_values_nfc_data[all_values_nfc_data.length-2];
