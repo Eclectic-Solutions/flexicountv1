@@ -152,7 +152,14 @@ export class MyApp {
               //code to get domain, store & department id
               
               let payload = event.tag.ndefMessage[0].payload;
-              let scanned_nfc_data = this.nfc.bytesToString(payload);
+              let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
+              
+              //let payload = data.tag.ndefMessage[0].payload;
+              //let tagContent = this.nfc.bytesToString(payload).substring(3);
+              //console.log(tagContent);
+              
+              
+              
               
               //code to trim the scanned data
               scanned_nfc_data = scanned_nfc_data.trim();              
@@ -559,7 +566,13 @@ export class MyApp {
           if(event.tag.id)
           {
             let payload = event.tag.ndefMessage[0].payload;
-            let scanned_nfc_data = this.nfc.bytesToString(payload);
+            let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
+            
+            
+            //let payload = data.tag.ndefMessage[0].payload;
+            //let tagContent = this.nfc.bytesToString(payload).substring(3);
+            //console.log(tagContent);
+            
             
             //code to trim the scanned data
             scanned_nfc_data = scanned_nfc_data.trim();            
