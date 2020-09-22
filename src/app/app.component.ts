@@ -123,7 +123,16 @@ export class MyApp {
         this.nfc.beginSession().subscribe(res => {
         
           this.nfc.addNdefListener(() => {
+            
             console.log('successfully attached ndef listener');
+            
+            const alertDomainSuccess = this.alertCtrl.create({
+              title: 'Success',
+              message: 'callback on success',
+              buttons: ['OK']
+            });
+            alertDomainSuccess.present();
+            
           }, (err) => {
             console.log('error attaching ndef listener', err);
           }).subscribe((event) => {
@@ -471,6 +480,16 @@ export class MyApp {
         this.nfc.addNdefListener(() => {
         
           console.log('successfully attached ndef listener');
+          
+          
+          const alertDomainSuccess = this.alertCtrl.create({
+            title: 'Success',
+            message: 'callback on success',
+            buttons: ['OK']
+          });
+          alertDomainSuccess.present();
+          
+          
           
         }, (err) => {
         
