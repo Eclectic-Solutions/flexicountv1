@@ -128,7 +128,7 @@ export class MyApp {
             
           }, (err) => {
             console.log('error attaching ndef listener', err);
-          }).subscribe(async (event) => {
+          }).subscribe((event) => {
             
             
             console.log('received ndef message. the tag contains: ', event.tag);
@@ -137,10 +137,10 @@ export class MyApp {
             
             //let nfc_data77 = event.tag.toString();
             let nfc_data77 = JSON.stringify(event.tag);
-            let nfc_data7 = await this.nfc.bytesToHexString(event.tag.id);
+            let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
             
             let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
-            let nfc_data_payloadString77 = await this.nfc.bytesToString(nfc_data_payload7);
+            let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
             
             //write => pending code/waiting for testing to check location is redable or not
             
@@ -156,7 +156,7 @@ export class MyApp {
               //code to get domain, store & department id              
               let payload = event.tag.ndefMessage[0].payload;
               //let scanned_nfc_data = this.nfc.bytesToString(payload);
-              let scanned_nfc_data = await this.nfc.bytesToString(payload).substring(3);
+              let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
               
               //code to trim the scanned data
               scanned_nfc_data = scanned_nfc_data.trim();
@@ -200,10 +200,19 @@ export class MyApp {
                                 
                                 if(curDomainID==scanned_NfcdomainID && curStoreID==scanned_NfcstoreID && curDepartmentID==scanned_NfcdepartmentID)
                                 {
-                                  //reset start cleaning storage flag
-                                  this.storage.set(this.keynfcclean,false);                            
-                                  //have to call complete cleaning api and redirect to the comp summary page                          
-                                  this.nav.push(CompletionSummaryPage);
+                                  
+                                  setTimeout(function() {                                    
+                                    //reset start cleaning storage flag
+                                    this.storage.set(this.keynfcclean,false);                            
+                                    //have to call complete cleaning api and redirect to the comp summary page                          
+                                    this.nav.push(CompletionSummaryPage);
+                                  }, 20000);
+                                  
+                                  
+                                  ////reset start cleaning storage flag
+                                  //this.storage.set(this.keynfcclean,false);                            
+                                  ////have to call complete cleaning api and redirect to the comp summary page                          
+                                  //this.nav.push(CompletionSummaryPage);
                                 }
                                 else
                                 {
@@ -243,8 +252,8 @@ export class MyApp {
                         
                         if(valScanActive==true)
                         {
-                          //code to save all storage values including domain, store and department
-                          this.storage.set(this.keynfcclean,true);
+                          ////code to save all storage values including domain, store and department
+                          //this.storage.set(this.keynfcclean,true);
                           
                           //write => pending code/waiting for testing to set data                        
                           //code - api to call and get domain, store and depart name
@@ -309,8 +318,46 @@ export class MyApp {
                                             this.storage.get('alertTimerSettings').then((val1) => {    
                                               if(val1==true)
                                               {
-                                                //redirect to the next page ie Timer Page if Timer settings is ON
-                                                this.nav.push(TimerPage);
+                                                
+                                                this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                                
+                                                  let all_values = valloginuserApiDetails.split("**__**");
+                                                  let allValueLength = all_values.length;
+                                                  
+                                                  if(allValueLength>0)
+                                                  {
+                                                    
+                                                    const alertScannedData07 = this.alertCtrl.create({
+                                                      title: 'Scanned data',
+                                                      message: all_values[1],
+                                                      buttons: ['OK']
+                                                    });
+                                                    alertScannedData07.present();
+                                                    
+                                                    setTimeout(function() {
+                                                      
+                                                      //write => pending code to save all storage values including domain, store and department
+                                                      this.storage.set(this.keynfcclean,true);
+                                                      
+                                                      //redirect to the next page ie Timer Page
+                                                      this.nav.push(TimerPage);                                                  
+                                                    }, 20000);
+                                                  }
+                                                  else
+                                                  {
+                                                    const alertScannedDataError07 = this.alertCtrl.create({
+                                                      title: 'Invalid Read',
+                                                      message: 'unable to read tag.',
+                                                      buttons: ['OK']
+                                                    });
+                                                    alertScannedDataError07.present();
+                                                  }
+                                                
+                                                });
+                                                
+                                                
+                                                ////redirect to the next page ie Timer Page if Timer settings is ON
+                                                //this.nav.push(TimerPage);
                                               }
                                               else
                                               {
@@ -348,10 +395,47 @@ export class MyApp {
                                                     });
                                                   });
                                                   
-                                                });        
+                                                });
                                                 
-                                                //redirect to the next page of the Timer Page ie Timer Page
-                                                this.nav.push(TimerSignoffPage);
+                                                this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                                
+                                                  let all_values = valloginuserApiDetails.split("**__**");
+                                                  let allValueLength = all_values.length;
+                                                  
+                                                  if(allValueLength>0)
+                                                  {
+                                                    
+                                                    const alertScannedData07 = this.alertCtrl.create({
+                                                      title: 'Scanned data',
+                                                      message: all_values[1],
+                                                      buttons: ['OK']
+                                                    });
+                                                    alertScannedData07.present();
+                                                    
+                                                    setTimeout(function() {
+                                                      
+                                                      //write => pending code to save all storage values including domain, store and department
+                                                      this.storage.set(this.keynfcclean,true);
+                                                      
+                                                      //redirect to the next page ie Timer Page
+                                                      this.nav.push(TimerSignoffPage);                                                  
+                                                    }, 20000);
+                                                  }
+                                                  else
+                                                  {
+                                                    const alertScannedDataError07 = this.alertCtrl.create({
+                                                      title: 'Invalid Read',
+                                                      message: 'unable to read tag.',
+                                                      buttons: ['OK']
+                                                    });
+                                                    alertScannedDataError07.present();
+                                                  }
+                                                
+                                                });
+                                                
+                                                
+                                                ////redirect to the next page of the Timer Page ie Timer Page
+                                                //this.nav.push(TimerSignoffPage);
                                               }                          
                                             });
                                             
@@ -372,8 +456,41 @@ export class MyApp {
                                 this.storage.get('alertTimerSettings').then((val1) => {    
                                   if(val1==true)
                                   {
-                                    //redirect to the next page ie Timer Page
-                                    this.nav.push(TimerPage);
+                                    this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                      let all_values = valloginuserApiDetails.split("**__**");
+                                      let allValueLength = all_values.length;
+                                      
+                                      if(allValueLength>0)
+                                      {
+                                        
+                                        const alertScannedData07 = this.alertCtrl.create({
+                                          title: 'Scanned data',
+                                          message: all_values[1],
+                                          buttons: ['OK']
+                                        });
+                                        alertScannedData07.present();
+                                        
+                                        setTimeout(function() {
+                                          
+                                          //write => pending code to save all storage values including domain, store and department
+                                          this.storage.set(this.keynfcclean,true);
+                                          
+                                          //redirect to the next page ie Timer Page
+                                          this.nav.push(TimerPage);                                                  
+                                        }, 20000);
+                                      }
+                                      else
+                                      {
+                                        const alertScannedDataError07 = this.alertCtrl.create({
+                                          title: 'Invalid Read',
+                                          message: 'unable to read tag.',
+                                          buttons: ['OK']
+                                        });
+                                        alertScannedDataError07.present();
+                                      }
+                                    });
+                                    ////redirect to the next page ie Timer Page
+                                    //this.nav.push(TimerPage);
                                   }
                                   else
                                   {
@@ -412,10 +529,46 @@ export class MyApp {
                                       });
                                     
                                       
-                                    });        
+                                    });
                                     
-                                    //redirect to the next page of the Timer Page ie Timer Page
-                                    this.nav.push(TimerSignoffPage);
+                                    
+                                    this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                      let all_values = valloginuserApiDetails.split("**__**");
+                                      let allValueLength = all_values.length;
+                                      
+                                      if(allValueLength>0)
+                                      {
+                                        
+                                        const alertScannedData07 = this.alertCtrl.create({
+                                          title: 'Scanned data',
+                                          message: all_values[1],
+                                          buttons: ['OK']
+                                        });
+                                        alertScannedData07.present();
+                                        
+                                        setTimeout(function() {
+                                          
+                                          //write => pending code to save all storage values including domain, store and department
+                                          this.storage.set(this.keynfcclean,true);
+                                          
+                                          //redirect to the next page ie Timer Page
+                                          this.nav.push(TimerSignoffPage);                                                  
+                                        }, 20000);
+                                      }
+                                      else
+                                      {
+                                        const alertScannedDataError07 = this.alertCtrl.create({
+                                          title: 'Invalid Read',
+                                          message: 'unable to read tag.',
+                                          buttons: ['OK']
+                                        });
+                                        alertScannedDataError07.present();
+                                      }
+                                    });
+                                    
+                                    
+                                    ////redirect to the next page of the Timer Page ie Timer Page
+                                    //this.nav.push(TimerSignoffPage);
                                   }                          
                                 });
                               }
@@ -478,7 +631,7 @@ export class MyApp {
         
           console.log('error attaching ndef listener', err);
           
-        }).subscribe(async (event) => {
+        }).subscribe((event) => {
           
           
           console.log('received ndef message. the tag contains: ', event.tag);
@@ -486,10 +639,10 @@ export class MyApp {
           
           //let nfc_data77 = event.tag.toString();
           let nfc_data77 = JSON.stringify(event.tag);
-          let nfc_data7 = await this.nfc.bytesToHexString(event.tag.id);
+          let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
           
           let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
-          let nfc_data_payloadString77 = await this.nfc.bytesToString(nfc_data_payload7);
+          let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
           
           //write => pending code/waiting for testing to check location is redable or not
           
@@ -503,7 +656,7 @@ export class MyApp {
           if(event.tag.id)
           {
             let payload = event.tag.ndefMessage[0].payload;            
-            let scanned_nfc_data = await this.nfc.bytesToString(payload).substring(3);
+            let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
             
             //code to trim the scanned data
             scanned_nfc_data = scanned_nfc_data.trim();
@@ -547,10 +700,21 @@ export class MyApp {
                                 
                                 if(curDomainID==scanned_NfcdomainID && curStoreID==scanned_NfcstoreID && curDepartmentID==scanned_NfcdepartmentID)
                                 {
-                                  //reset start cleaning storage flag
-                                  this.storage.set(this.keynfcclean,false);                            
-                                  //have to call complete cleaning api and redirect to the comp summary page                          
-                                  this.nav.push(CompletionSummaryPage);
+                                  
+                                  setTimeout(function() {
+                                    
+                                    //reset start cleaning storage flag
+                                    this.storage.set(this.keynfcclean,false);                            
+                                    //have to call complete cleaning api and redirect to the comp summary page                          
+                                    this.nav.push(CompletionSummaryPage);
+                                  
+                                  
+                                  }, 20000);
+                                  
+                                  ////reset start cleaning storage flag
+                                  //this.storage.set(this.keynfcclean,false);                            
+                                  ////have to call complete cleaning api and redirect to the comp summary page                          
+                                  //this.nav.push(CompletionSummaryPage);
                                 }
                                 else
                                 {
@@ -589,8 +753,8 @@ export class MyApp {
                       
                       if(valScanActive==true)
                       {
-                        //write => pending code to save all storage values including domain, store and department
-                        this.storage.set(this.keynfcclean,true);
+                        ////write => pending code to save all storage values including domain, store and department
+                        //this.storage.set(this.keynfcclean,true);
                         
                         //write => pending code/waiting for testing to set data
                         
@@ -654,8 +818,47 @@ export class MyApp {
                                           this.storage.get('alertTimerSettings').then((val1) => {    
                                             if(val1==true)
                                             {
-                                              //redirect to the next page ie Timer Page
-                                              this.nav.push(TimerPage);
+                                              
+                                              this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                                
+                                                let all_values = valloginuserApiDetails.split("**__**");
+                                                let allValueLength = all_values.length;
+                                                
+                                                if(allValueLength>0)
+                                                {
+                                                  
+                                                  const alertScannedData07 = this.alertCtrl.create({
+                                                    title: 'Scanned data',
+                                                    message: all_values[1],
+                                                    buttons: ['OK']
+                                                  });
+                                                  alertScannedData07.present();
+                                                  
+                                                  setTimeout(function() {
+                                                    
+                                                    //write => pending code to save all storage values including domain, store and department
+                                                    this.storage.set(this.keynfcclean,true);
+                                                    
+                                                    //redirect to the next page ie Timer Page
+                                                    this.nav.push(TimerPage);                                                  
+                                                  }, 20000);
+                                                }
+                                                else
+                                                {
+                                                  const alertScannedDataError07 = this.alertCtrl.create({
+                                                    title: 'Invalid Read',
+                                                    message: 'unable to read tag.',
+                                                    buttons: ['OK']
+                                                  });
+                                                  alertScannedDataError07.present();
+                                                }
+                                                
+                                              });
+                                              
+                                              
+                                              
+                                              ////redirect to the next page ie Timer Page
+                                              //this.nav.push(TimerPage);
                                             }
                                             else
                                             {
@@ -694,10 +897,45 @@ export class MyApp {
                                                 });
                                               
                                                 
-                                              });        
+                                              });
                                               
-                                              //redirect to the next page of the Timer Page ie Timer Page
-                                              this.nav.push(TimerSignoffPage);
+                                              
+                                              this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                                let all_values = valloginuserApiDetails.split("**__**");
+                                                let allValueLength = all_values.length;
+                                                
+                                                if(allValueLength>0)
+                                                {
+                                                  
+                                                  const alertScannedData07 = this.alertCtrl.create({
+                                                    title: 'Scanned data',
+                                                    message: all_values[1],
+                                                    buttons: ['OK']
+                                                  });
+                                                  alertScannedData07.present();
+                                                  
+                                                  setTimeout(function() {
+                                                    
+                                                    //write => pending code to save all storage values including domain, store and department
+                                                    this.storage.set(this.keynfcclean,true);
+                                                    
+                                                    //redirect to the next page ie Timer Page
+                                                    this.nav.push(TimerSignoffPage);                                                  
+                                                  }, 20000);
+                                                }
+                                                else
+                                                {
+                                                  const alertScannedDataError07 = this.alertCtrl.create({
+                                                    title: 'Invalid Read',
+                                                    message: 'unable to read tag.',
+                                                    buttons: ['OK']
+                                                  });
+                                                  alertScannedDataError07.present();
+                                                }
+                                              });
+                                              
+                                              ////redirect to the next page of the Timer Page ie Timer Page
+                                              //this.nav.push(TimerSignoffPage);
                                             }                          
                                           });
                                           
@@ -718,8 +956,43 @@ export class MyApp {
                               this.storage.get('alertTimerSettings').then((val1) => {    
                                 if(val1==true)
                                 {
-                                  //redirect to the next page ie Timer Page
-                                  this.nav.push(TimerPage);
+                                  
+                                  this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                    let all_values = valloginuserApiDetails.split("**__**");
+                                    let allValueLength = all_values.length;
+                                    
+                                    if(allValueLength>0)
+                                    {
+                                      
+                                      const alertScannedData07 = this.alertCtrl.create({
+                                        title: 'Scanned data',
+                                        message: all_values[1],
+                                        buttons: ['OK']
+                                      });
+                                      alertScannedData07.present();
+                                      
+                                      setTimeout(function() {
+                                        
+                                        //write => pending code to save all storage values including domain, store and department
+                                        this.storage.set(this.keynfcclean,true);
+                                        
+                                        //redirect to the next page ie Timer Page
+                                        this.nav.push(TimerPage);                                                  
+                                      }, 20000);
+                                    }
+                                    else
+                                    {
+                                      const alertScannedDataError07 = this.alertCtrl.create({
+                                        title: 'Invalid Read',
+                                        message: 'unable to read tag.',
+                                        buttons: ['OK']
+                                      });
+                                      alertScannedDataError07.present();
+                                    }
+                                  });
+                                  
+                                  ////redirect to the next page ie Timer Page
+                                  //this.nav.push(TimerPage);
                                 }
                                 else
                                 {
@@ -757,10 +1030,44 @@ export class MyApp {
                                       });
                                     });
                                     
-                                  });        
+                                  });
                                   
-                                  //redirect to the next page of the Timer Page ie Timer Page
-                                  this.nav.push(TimerSignoffPage);
+                                    this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
+                                      let all_values = valloginuserApiDetails.split("**__**");
+                                      let allValueLength = all_values.length;
+                                      
+                                      if(allValueLength>0)
+                                      {
+                                        
+                                        const alertScannedData07 = this.alertCtrl.create({
+                                          title: 'Scanned data',
+                                          message: all_values[1],
+                                          buttons: ['OK']
+                                        });
+                                        alertScannedData07.present();
+                                        
+                                        setTimeout(function() {
+                                          
+                                          //write => pending code to save all storage values including domain, store and department
+                                          this.storage.set(this.keynfcclean,true);
+                                          
+                                          //redirect to the next page ie Timer Page
+                                          this.nav.push(TimerSignoffPage);                                                  
+                                        }, 20000);
+                                      }
+                                      else
+                                      {
+                                        const alertScannedDataError07 = this.alertCtrl.create({
+                                          title: 'Invalid Read',
+                                          message: 'unable to read tag.',
+                                          buttons: ['OK']
+                                        });
+                                        alertScannedDataError07.present();
+                                      }
+                                    });
+                                  
+                                  ////redirect to the next page of the Timer Page ie Timer Page
+                                  //this.nav.push(TimerSignoffPage);
                                 }                          
                               });
                             }
