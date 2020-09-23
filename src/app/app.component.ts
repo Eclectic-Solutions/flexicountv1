@@ -128,7 +128,7 @@ export class MyApp {
             
           }, (err) => {
             console.log('error attaching ndef listener', err);
-          }).subscribe((event) => {
+          }).subscribe(async (event) => {
             
             
             console.log('received ndef message. the tag contains: ', event.tag);
@@ -137,10 +137,10 @@ export class MyApp {
             
             //let nfc_data77 = event.tag.toString();
             let nfc_data77 = JSON.stringify(event.tag);
-            let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
+            let nfc_data7 = await this.nfc.bytesToHexString(event.tag.id);
             
             let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
-            let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
+            let nfc_data_payloadString77 = await this.nfc.bytesToString(nfc_data_payload7);
             
             //write => pending code/waiting for testing to check location is redable or not
             
@@ -156,7 +156,7 @@ export class MyApp {
               //code to get domain, store & department id              
               let payload = event.tag.ndefMessage[0].payload;
               //let scanned_nfc_data = this.nfc.bytesToString(payload);
-              let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
+              let scanned_nfc_data = await this.nfc.bytesToString(payload).substring(3);
               
               //code to trim the scanned data
               scanned_nfc_data = scanned_nfc_data.trim();
@@ -478,7 +478,7 @@ export class MyApp {
         
           console.log('error attaching ndef listener', err);
           
-        }).subscribe((event) => {
+        }).subscribe(async (event) => {
           
           
           console.log('received ndef message. the tag contains: ', event.tag);
@@ -486,10 +486,10 @@ export class MyApp {
           
           //let nfc_data77 = event.tag.toString();
           let nfc_data77 = JSON.stringify(event.tag);
-          let nfc_data7 = this.nfc.bytesToHexString(event.tag.id);
+          let nfc_data7 = await this.nfc.bytesToHexString(event.tag.id);
           
           let nfc_data_payload7 = event.tag.ndefMessage[0].payload;
-          let nfc_data_payloadString77 = this.nfc.bytesToString(nfc_data_payload7);
+          let nfc_data_payloadString77 = await this.nfc.bytesToString(nfc_data_payload7);
           
           //write => pending code/waiting for testing to check location is redable or not
           
@@ -503,7 +503,7 @@ export class MyApp {
           if(event.tag.id)
           {
             let payload = event.tag.ndefMessage[0].payload;            
-            let scanned_nfc_data = this.nfc.bytesToString(payload).substring(3);
+            let scanned_nfc_data = await this.nfc.bytesToString(payload).substring(3);
             
             //code to trim the scanned data
             scanned_nfc_data = scanned_nfc_data.trim();
