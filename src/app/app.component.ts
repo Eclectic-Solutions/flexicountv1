@@ -324,6 +324,13 @@ export class MyApp {
                                                   let all_values = valloginuserApiDetails.split("**__**");
                                                   let allValueLength = all_values.length;
                                                   
+                                                  const alertScannedData09 = this.alertCtrl.create({
+                                                    title: 'Scanned data from storage',
+                                                    message: valloginuserApiDetails,
+                                                    buttons: ['OK']
+                                                  });
+                                                  alertScannedData09.present();
+                                                  
                                                   if(allValueLength>0)
                                                   {
                                                     
@@ -402,6 +409,13 @@ export class MyApp {
                                                   let all_values = valloginuserApiDetails.split("**__**");
                                                   let allValueLength = all_values.length;
                                                   
+                                                  const alertScannedData09 = this.alertCtrl.create({
+                                                    title: 'Scanned data from storage',
+                                                    message: valloginuserApiDetails,
+                                                    buttons: ['OK']
+                                                  });
+                                                  alertScannedData09.present();
+                                                  
                                                   if(allValueLength>0)
                                                   {
                                                     
@@ -459,6 +473,13 @@ export class MyApp {
                                     this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
                                       let all_values = valloginuserApiDetails.split("**__**");
                                       let allValueLength = all_values.length;
+                                      
+                                      const alertScannedData09 = this.alertCtrl.create({
+                                          title: 'Scanned data from storage',
+                                          message: valloginuserApiDetails,
+                                          buttons: ['OK']
+                                        });
+                                      alertScannedData09.present();
                                       
                                       if(allValueLength>0)
                                       {
@@ -535,6 +556,13 @@ export class MyApp {
                                     this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
                                       let all_values = valloginuserApiDetails.split("**__**");
                                       let allValueLength = all_values.length;
+                                      
+                                      const alertScannedData09 = this.alertCtrl.create({
+                                          title: 'Scanned data from storage',
+                                          message: valloginuserApiDetails,
+                                          buttons: ['OK']
+                                        });
+                                      alertScannedData09.present();
                                       
                                       if(allValueLength>0)
                                       {
@@ -824,6 +852,13 @@ export class MyApp {
                                                 let all_values = valloginuserApiDetails.split("**__**");
                                                 let allValueLength = all_values.length;
                                                 
+                                                const alertScannedData09 = this.alertCtrl.create({
+                                                    title: 'Scanned data from storage',
+                                                    message: valloginuserApiDetails,
+                                                    buttons: ['OK']
+                                                  });
+                                                alertScannedData09.present();
+                                                
                                                 if(allValueLength>0)
                                                 {
                                                   
@@ -961,6 +996,14 @@ export class MyApp {
                                     let all_values = valloginuserApiDetails.split("**__**");
                                     let allValueLength = all_values.length;
                                     
+                                    
+                                    const alertScannedData09 = this.alertCtrl.create({
+                                        title: 'Scanned data from storage',
+                                        message: valloginuserApiDetails,
+                                        buttons: ['OK']
+                                      });
+                                    alertScannedData09.present();
+                                    
                                     if(allValueLength>0)
                                     {
                                       
@@ -1035,6 +1078,13 @@ export class MyApp {
                                     this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
                                       let all_values = valloginuserApiDetails.split("**__**");
                                       let allValueLength = all_values.length;
+                                      
+                                      const alertScannedData09 = this.alertCtrl.create({
+                                          title: 'Scanned data from storage',
+                                          message: valloginuserApiDetails,
+                                          buttons: ['OK']
+                                        });
+                                      alertScannedData09.present();
                                       
                                       if(allValueLength>0)
                                       {
