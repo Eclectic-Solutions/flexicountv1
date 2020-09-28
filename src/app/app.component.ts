@@ -324,13 +324,6 @@ export class MyApp {
                                                   let all_values = valloginuserApiDetails.split("**__**");
                                                   let allValueLength = all_values.length;
                                                   
-                                                  const alertScannedData09 = this.alertCtrl.create({
-                                                    title: 'Scanned data from storage',
-                                                    message: valloginuserApiDetails,
-                                                    buttons: ['OK']
-                                                  });
-                                                  alertScannedData09.present();
-                                                  
                                                   if(allValueLength>0)
                                                   {
                                                     
@@ -409,13 +402,6 @@ export class MyApp {
                                                   let all_values = valloginuserApiDetails.split("**__**");
                                                   let allValueLength = all_values.length;
                                                   
-                                                  const alertScannedData09 = this.alertCtrl.create({
-                                                    title: 'Scanned data from storage',
-                                                    message: valloginuserApiDetails,
-                                                    buttons: ['OK']
-                                                  });
-                                                  alertScannedData09.present();
-                                                  
                                                   if(allValueLength>0)
                                                   {
                                                     
@@ -473,13 +459,6 @@ export class MyApp {
                                     this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
                                       let all_values = valloginuserApiDetails.split("**__**");
                                       let allValueLength = all_values.length;
-                                      
-                                      const alertScannedData09 = this.alertCtrl.create({
-                                          title: 'Scanned data from storage',
-                                          message: valloginuserApiDetails,
-                                          buttons: ['OK']
-                                        });
-                                      alertScannedData09.present();
                                       
                                       if(allValueLength>0)
                                       {
@@ -556,13 +535,6 @@ export class MyApp {
                                     this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
                                       let all_values = valloginuserApiDetails.split("**__**");
                                       let allValueLength = all_values.length;
-                                      
-                                      const alertScannedData09 = this.alertCtrl.create({
-                                          title: 'Scanned data from storage',
-                                          message: valloginuserApiDetails,
-                                          buttons: ['OK']
-                                        });
-                                      alertScannedData09.present();
                                       
                                       if(allValueLength>0)
                                       {
@@ -700,10 +672,8 @@ export class MyApp {
             scanned_NfcdomainID = scanned_NfcdomainID.trim();
             
             if(scanned_NfcdomainID)
-            {            
-              //code start to check cleaning started/stopped for NFC or not                       
-            
-            
+            {
+              //code start to check cleaning started/stopped for NFC or not            
               this.storage.get('startNfcClean').then((valClean) => {
               
                 if(valClean==true)
@@ -729,15 +699,10 @@ export class MyApp {
                                 if(curDomainID==scanned_NfcdomainID && curStoreID==scanned_NfcstoreID && curDepartmentID==scanned_NfcdepartmentID)
                                 {
                                   
-                                  setTimeout(function() {
-                                    
-                                    //reset start cleaning storage flag
-                                    this.storage.set(this.keynfcclean,false);                            
-                                    //have to call complete cleaning api and redirect to the comp summary page                          
-                                    this.nav.push(CompletionSummaryPage);
-                                  
-                                  
-                                  }, 20000);
+                                  //reset start cleaning storage flag
+                                  this.storage.set(this.keynfcclean,false);                            
+                                  //have to call complete cleaning api and redirect to the comp summary page                          
+                                  this.nav.push(CompletionSummaryPage);
                                   
                                   ////reset start cleaning storage flag
                                   //this.storage.set(this.keynfcclean,false);                            
@@ -770,370 +735,331 @@ export class MyApp {
                 }
                 else
                 {
+                  
                   //section for start cleaning              
                   //code to check scan type is NFC or not
-                
                   this.storage.get('scanType').then((valstype) => {
                     if(valstype=='nfc')
                     {
                       //code to check sign in is active or not
                       this.storage.get('alertScanQrSettings').then((valScanActive) => {
-                      
-                      if(valScanActive==true)
-                      {
-                        ////write => pending code to save all storage values including domain, store and department
-                        //this.storage.set(this.keynfcclean,true);
-                        
-                        //write => pending code/waiting for testing to set data
-                        
-                        //code - api to call and get domain, store and depart name
-                        
-                        this.storage.get('loginUserToken').then((valloginUserToken) => {   
-                          if(valloginUserToken!='')
-                          {
-                            var headers = new Headers();
-                            headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                            const requestOptions = new RequestOptions({ headers: headers });
-                            
-                            this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
+                        if(valScanActive==true)
+                        {
+                          this.storage.get('loginUserToken').then((valloginUserToken) => {
+                            if(valloginUserToken!='')
+                            {
+                              var headers = new Headers();
+                              headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                              const requestOptions = new RequestOptions({ headers: headers });
+                              
+                              this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
                               
                               this.http.get('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/GetMetricAlertMonitoringByID?DomainID='+scanned_NfcdomainID+'&StoreID='+scanned_NfcstoreID+'&DepartmentID='+scanned_NfcdepartmentID, requestOptions)
                                 .map(res => res.json())
                                 .subscribe(data =>{
                                   console.log('get store details');
-                                  //console.log(data.Store.Name);
-                                  //console.log(data.Department.Name);                                
-                                  this.storage.set(this.keyAllapiDetails,data.Domain.Name+'**__**'+data.Store.Name+'**__**'+data.Department.Name+'**__**'+data.Domain.Description);
-                                },err => {
-                                  console.log(err);
-                                });
-                            });
-                            
-                            //code to save domain id, store id, department id in storage
-                            this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);                          
-                          }                         
-                        });                      
-                        
-                        //code to check for login
-                        this.storage.get('loginUserToken').then((valloginUserToken) => {
-                  
-                          if(valloginUserToken)
-                          {
-                            //check if app in background mode
-                            if(isAppInForeground==false)
-                            {
-                              //code to send local notification
-                              
-                              this.localNotifications.schedule({
-                                id: 77,
-                                text: 'You have scanned NFC Tag for location:'
-                              });
-                              
-                              this.localNotifications.on('click').subscribe(notification => {
-                                
-                                if(notification.id==77)
-                                {                         
-                                  const alert = this.alertCtrl.create({            
-                                    title: 'Notification',
-                                    message: 'You have scanned NFC Tag',                  
-                                    buttons: [
-                                      {
-                                        text: 'OK',
-                                        role: 'ok',
-                                        handler: () => {
-                                          
-                                          //code to check timer settings and call start cleaning api
-                                          this.storage.get('alertTimerSettings').then((val1) => {    
-                                            if(val1==true)
-                                            {
-                                              
-                                              this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
-                                                
-                                                let all_values = valloginuserApiDetails.split("**__**");
-                                                let allValueLength = all_values.length;
-                                                
-                                                const alertScannedData09 = this.alertCtrl.create({
-                                                    title: 'Scanned data from storage',
-                                                    message: valloginuserApiDetails,
-                                                    buttons: ['OK']
-                                                  });
-                                                alertScannedData09.present();
-                                                
-                                                if(allValueLength>0)
-                                                {
-                                                  
-                                                  const alertScannedData07 = this.alertCtrl.create({
-                                                    title: 'Scanned data',
-                                                    message: all_values[1],
-                                                    buttons: ['OK']
-                                                  });
-                                                  alertScannedData07.present();
-                                                  
-                                                  setTimeout(function() {
-                                                    
-                                                    //write => pending code to save all storage values including domain, store and department
-                                                    this.storage.set(this.keynfcclean,true);
-                                                    
-                                                    //redirect to the next page ie Timer Page
-                                                    this.nav.push(TimerPage);                                                  
-                                                  }, 20000);
-                                                }
-                                                else
-                                                {
-                                                  const alertScannedDataError07 = this.alertCtrl.create({
-                                                    title: 'Invalid Read',
-                                                    message: 'unable to read tag.',
-                                                    buttons: ['OK']
-                                                  });
-                                                  alertScannedDataError07.present();
-                                                }
-                                                
-                                              });
-                                              
-                                              
-                                              
-                                              ////redirect to the next page ie Timer Page
-                                              //this.nav.push(TimerPage);
-                                            }
-                                            else
-                                            {
-                                              this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
-                                                
-                                              //write=> pending code have to call start cleaning api
-                                              
-                                                let values = valloginuserDomainID.split("**__**");
-                                                let curDomainID = values[0];
-                                                let curStoreID = values[1];
-                                                let curDepartmentID = values[2];
-                                                
-                                                this.storage.get('loginUserToken').then((valloginUserToken) => {
-                                                
-                                                  var headers = new Headers();
-                                                  headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                                                  const requestOptions = new RequestOptions({ headers: headers });
-                                                
-                                                  let postData = {
-                                                  "DomainID": curDomainID,
-                                                  "StoreID": curStoreID,
-                                                  "DepartmentID": curDepartmentID
-                                                  }
-                                                
-                                                  this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-                                                  
-                                                    this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-                                                    .map(res => res.json())
-                                                    .subscribe(data =>{
-                                                      //this.data = data;
-                                                      console.log(data);
-                                                    },err => {
-                                                      console.log(err);
-                                                    });            
-                                                  });
-                                                });
-                                              
-                                                
-                                              });
-                                              
-                                              
-                                              this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
-                                                let all_values = valloginuserApiDetails.split("**__**");
-                                                let allValueLength = all_values.length;
-                                                
-                                                if(allValueLength>0)
-                                                {
-                                                  
-                                                  const alertScannedData07 = this.alertCtrl.create({
-                                                    title: 'Scanned data',
-                                                    message: all_values[1],
-                                                    buttons: ['OK']
-                                                  });
-                                                  alertScannedData07.present();
-                                                  
-                                                  setTimeout(function() {
-                                                    
-                                                    //write => pending code to save all storage values including domain, store and department
-                                                    this.storage.set(this.keynfcclean,true);
-                                                    
-                                                    //redirect to the next page ie Timer Page
-                                                    this.nav.push(TimerSignoffPage);                                                  
-                                                  }, 20000);
-                                                }
-                                                else
-                                                {
-                                                  const alertScannedDataError07 = this.alertCtrl.create({
-                                                    title: 'Invalid Read',
-                                                    message: 'unable to read tag.',
-                                                    buttons: ['OK']
-                                                  });
-                                                  alertScannedDataError07.present();
-                                                }
-                                              });
-                                              
-                                              ////redirect to the next page of the Timer Page ie Timer Page
-                                              //this.nav.push(TimerSignoffPage);
-                                            }                          
-                                          });
-                                          
-                                        },                
-                                      }              
-                                    ]          
-                                  });        
-                                  alert.present();
-                                }
-                                
-                              });
-                              
-                            }
-                            else
-                            {
-                              //-------------when app is on foreground ------------------------
-                              //code to check timer settings and call start cleaning api
-                              this.storage.get('alertTimerSettings').then((val1) => {    
-                                if(val1==true)
-                                {
                                   
-                                  this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
-                                    let all_values = valloginuserApiDetails.split("**__**");
-                                    let allValueLength = all_values.length;
-                                    
-                                    
-                                    const alertScannedData09 = this.alertCtrl.create({
-                                        title: 'Scanned data from storage',
-                                        message: valloginuserApiDetails,
-                                        buttons: ['OK']
-                                      });
-                                    alertScannedData09.present();
-                                    
-                                    if(allValueLength>0)
-                                    {
-                                      
-                                      const alertScannedData07 = this.alertCtrl.create({
-                                        title: 'Scanned data',
-                                        message: all_values[1],
-                                        buttons: ['OK']
-                                      });
-                                      alertScannedData07.present();
-                                      
-                                      setTimeout(function() {
-                                        
-                                        //write => pending code to save all storage values including domain, store and department
-                                        this.storage.set(this.keynfcclean,true);
-                                        
-                                        //redirect to the next page ie Timer Page
-                                        this.nav.push(TimerPage);                                                  
-                                      }, 20000);
-                                    }
-                                    else
-                                    {
-                                      const alertScannedDataError07 = this.alertCtrl.create({
-                                        title: 'Invalid Read',
-                                        message: 'unable to read tag.',
-                                        buttons: ['OK']
-                                      });
-                                      alertScannedDataError07.present();
-                                    }
+                                  const alertApiDomain = this.alertCtrl.create({
+                                    title: 'Api Domain Details',
+                                    message: 'domain name:'+data.Domain.Name+',store name:'+data.Store.Name+',department:'+data.Department.Name+',domain desc:'+data.Domain.Description,
+                                    buttons: ['OK']
                                   });
+                                  alertApiDomain.present();
                                   
-                                  ////redirect to the next page ie Timer Page
-                                  //this.nav.push(TimerPage);
-                                }
-                                else
-                                {
-                                  this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+                                  if(data.Store.Name)
+                                  {                                  
+                                    this.storage.set(this.keyAllapiDetails,data.Domain.Name+'**__**'+data.Store.Name+'**__**'+data.Department.Name+'**__**'+data.Domain.Description);
+                                    //code to save domain id, store id, department id in storage
+                                    this.storage.set(this.keyDomainID,scanned_NfcdomainID+'**__**'+scanned_NfcstoreID+'**__**'+scanned_NfcdepartmentID);
                                     
-                                    // write => pending/waiting for test to call start cleaning api
-                                  
-                                    let values = valloginuserDomainID.split("**__**");
-                                    let curDomainID = values[0];
-                                    let curStoreID = values[1];
-                                    let curDepartmentID = values[2];
                                     
-                                    this.storage.get('loginUserToken').then((valloginUserToken) => {
-                                    
-                                      var headers = new Headers();
-                                      headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                                      const requestOptions = new RequestOptions({ headers: headers });
-                                    
-                                      let postData = {
-                                      "DomainID": curDomainID,
-                                      "StoreID": curStoreID,
-                                      "DepartmentID": curDepartmentID
-                                      }
-                                    
-                                      this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {
-                                      
-                                        this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-                                        .map(res => res.json())
-                                        .subscribe(data =>{
-                                          //this.data = data;
-                                          console.log(data);
-                                        },err => {
-                                          console.log(err);
-                                        });            
-                                      });
-                                    });
-                                    
-                                  });
-                                  
                                     this.storage.get('loginuserApiDetails').then((valloginuserApiDetails) => {
-                                      let all_values = valloginuserApiDetails.split("**__**");
-                                      let allValueLength = all_values.length;
                                       
-                                      const alertScannedData09 = this.alertCtrl.create({
+                                      if(valloginuserApiDetails)
+                                      {
+                                        const alertScannedData09 = this.alertCtrl.create({
                                           title: 'Scanned data from storage',
                                           message: valloginuserApiDetails,
                                           buttons: ['OK']
                                         });
-                                      alertScannedData09.present();
-                                      
-                                      if(allValueLength>0)
-                                      {
+                                        alertScannedData09.present();
                                         
-                                        const alertScannedData07 = this.alertCtrl.create({
-                                          title: 'Scanned data',
-                                          message: all_values[1],
-                                          buttons: ['OK']
-                                        });
-                                        alertScannedData07.present();
+                                        let all_values = valloginuserApiDetails.split("**__**");
+                                        let allValueLength = all_values.length;
                                         
-                                        setTimeout(function() {
-                                          
-                                          //write => pending code to save all storage values including domain, store and department
-                                          this.storage.set(this.keynfcclean,true);
-                                          
-                                          //redirect to the next page ie Timer Page
-                                          this.nav.push(TimerSignoffPage);                                                  
-                                        }, 20000);
+                                        if(allValueLength>0)
+                                        {
+                                          if(all_values[1])
+                                          {
+                                            
+                                            //error alert section
+                                            const alertScannedStoreNameTest = this.alertCtrl.create({
+                                              title: 'Store Name from Storage',
+                                              message: all_values[1],
+                                              buttons: ['OK']
+                                            });
+                                            alertScannedStoreNameTest.present();                                            
+                                            
+                                            //check if app in background mode
+                                            if(isAppInForeground==false)
+                                            {
+                                              const alert = this.alertCtrl.create({
+                                                title: 'Notification',
+                                                message: 'You have scanned NFC Tag',
+                                                buttons: [
+                                                  {
+                                                    text: 'OK',
+                                                    role: 'ok',
+                                                    handler: () => {
+                                                      
+                                                      //code to check timer settings and call start cleaning api
+                                                      this.storage.get('alertTimerSettings').then((val1) => {
+                                                        if(val1==true)
+                                                        {
+                                                          const alertScannedData07 = this.alertCtrl.create({
+                                                            title: 'Scanned store name',
+                                                            message: all_values[1],
+                                                            buttons: [
+                                                              {
+                                                                text: 'OK',
+                                                                role: 'ok',
+                                                                handler: () => {
+                                                                  this.storage.set(this.keynfcclean,true);
+                                                                  this.nav.push(TimerPage);
+                                                                }
+                                                              }
+                                                            ]
+                                                          });
+                                                          alertScannedData07.present();
+                                                        }
+                                                        else
+                                                        {
+                                                          //get domain id from storage to call api
+                                                          this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+                                                            
+                                                            let values = valloginuserDomainID.split("**__**");
+                                                            let curDomainID = values[0];
+                                                            let curStoreID = values[1];
+                                                            let curDepartmentID = values[2];
+                                                            
+                                                            //code to call start cleaning api
+                                                            
+                                                            var headers = new Headers();
+                                                            headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                                            const requestOptions = new RequestOptions({ headers: headers });
+                                                            
+                                                            let postData = {
+                                                              "DomainID": curDomainID,
+                                                              "StoreID": curStoreID,
+                                                              "DepartmentID": curDepartmentID
+                                                            }
+                                                            
+                                                            //api call start
+                                                            this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {                                      
+                                                              this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                                              .map(res => res.json())
+                                                              .subscribe(data =>{                                                      
+                                                                console.log(data);
+                                                                
+                                                                const alertScannedData07 = this.alertCtrl.create({
+                                                                  title: 'Scanned store name',
+                                                                  message: all_values[1],
+                                                                  buttons: [
+                                                                    {
+                                                                      text: 'OK',
+                                                                      role: 'ok',
+                                                                      handler: () => {
+                                                                        this.storage.set(this.keynfcclean,true);
+                                                                        this.nav.push(TimerSignoffPage);
+                                                                      }
+                                                                    }
+                                                                  ]
+                                                                });
+                                                                alertScannedData07.present();                                                      
+                                                                
+                                                              },err => {
+                                                                console.log(err);
+                                                              });                                                    
+                                                            });
+                                                            //api call start
+                                                          });
+                                                        }
+                                                      });
+                                                      
+                                                    }
+                                                  }
+                                                ]
+                                              });
+                                              alert.present();
+                                            }
+                                            else
+                                            {
+                                              //code for foreground mode
+                                              
+                                              //code to check timer settings and call start cleaning api
+                                              this.storage.get('alertTimerSettings').then((val1) => {
+                                                if(val1==true)
+                                                {
+                                                  const alertScannedData07 = this.alertCtrl.create({
+                                                    title: 'Scanned store name',
+                                                    message: all_values[1],
+                                                    buttons: [
+                                                      {
+                                                        text: 'OK',
+                                                        role: 'ok',
+                                                        handler: () => {
+                                                          this.storage.set(this.keynfcclean,true);
+                                                          this.nav.push(TimerPage);
+                                                        }
+                                                      }
+                                                    ]
+                                                  });
+                                                  alertScannedData07.present();
+                                                }
+                                                else
+                                                {
+                                                  //get domain id from storage to call api
+                                                  this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
+                                                    
+                                                    let values = valloginuserDomainID.split("**__**");
+                                                    let curDomainID = values[0];
+                                                    let curStoreID = values[1];
+                                                    let curDepartmentID = values[2];
+                                                    
+                                                    //code to call start cleaning api
+                                                    
+                                                    var headers = new Headers();
+                                                    headers.append("Authorization", 'Bearer '+valloginUserToken);       
+                                                    const requestOptions = new RequestOptions({ headers: headers });
+                                                    
+                                                    let postData = {
+                                                      "DomainID": curDomainID,
+                                                      "StoreID": curStoreID,
+                                                      "DepartmentID": curDepartmentID
+                                                    }
+                                                    
+                                                    //api call start
+                                                    this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {                                      
+                                                      this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
+                                                      .map(res => res.json())
+                                                      .subscribe(data =>{                                                      
+                                                        console.log(data);
+                                                        
+                                                        const alertScannedData07 = this.alertCtrl.create({
+                                                          title: 'Scanned store name',
+                                                          message: all_values[1],
+                                                          buttons: [
+                                                            {
+                                                              text: 'OK',
+                                                              role: 'ok',
+                                                              handler: () => {
+                                                                this.storage.set(this.keynfcclean,true);
+                                                                this.nav.push(TimerSignoffPage);
+                                                              }
+                                                            }
+                                                          ]
+                                                        });
+                                                        alertScannedData07.present();                                                      
+                                                        
+                                                      },err => {
+                                                        console.log(err);
+                                                      });                                                    
+                                                    });
+                                                    //api call start
+                                                  });
+                                                }
+                                              });
+                                            }
+                                          }
+                                          else
+                                          {
+                                            //error alert section
+                                            const alertScannedStoreError = this.alertCtrl.create({
+                                              title: 'Invalid Store Name. Please scan the tag again.',
+                                              message: 'No data found in storage. Please scan the tag again.',
+                                              buttons: ['OK']
+                                            });
+                                            alertScannedStoreError.present();
+                                          }
+                                        }
+                                        else
+                                        {
+                                          const alertScannedDataError07 = this.alertCtrl.create({
+                                            title: 'Invalid Tag Read',
+                                            message: 'No data found in storage. Please scan the tag again.',
+                                            buttons: ['OK']
+                                          });
+                                          alertScannedDataError07.present();
+                                        }                                        
                                       }
                                       else
                                       {
                                         const alertScannedDataError07 = this.alertCtrl.create({
                                           title: 'Invalid Read',
-                                          message: 'unable to read tag.',
+                                          message: 'No data found in storage. Please scan the tag again.',
                                           buttons: ['OK']
                                         });
                                         alertScannedDataError07.present();
                                       }
+                                      
+                                      
                                     });
+                                    
+                                  }
+                                  else
+                                  {
+                                    const alertDomainApiErr = this.alertCtrl.create({                                        
+                                      message: 'No store details found from API Call. Please scan the tag again',
+                                      buttons: ['OK']
+                                    });
+                                    alertDomainApiErr.present();
+                                  }
                                   
-                                  ////redirect to the next page of the Timer Page ie Timer Page
-                                  //this.nav.push(TimerSignoffPage);
-                                }                          
+                                },err => {
+                                  console.log(err);
+                                });
                               });
                             }
-                          }
-                          else
-                          {
-                            this.nav.push(HomePage);
-                          }                        
-                        });
-                      }                    
-                    });                  
-                  }
-                });
-              }          
-            });            
-            
+                            else
+                            {
+                              const alertNotLogin = this.alertCtrl.create({                          
+                                message: 'Please Login before scan NFC',
+                                buttons: [
+                                  {
+                                    text: 'OK',
+                                    role: 'ok',
+                                    handler: () => {
+                                      this.nav.push(HomePage);
+                                    }
+                                  }
+                                ]
+                              });
+                              alertNotLogin.present();
+                            }
+                          });
+                        }
+                        else
+                        {
+                          const alertNfcSignIn = this.alertCtrl.create({                          
+                            message: 'Please enable Scan to Sign In for Nfc',
+                            buttons: ['OK']
+                          });
+                          alertNfcSignIn.present();
+                        }
+                      });
+                    }
+                    else
+                    {
+                      const alertNfctagSettings = this.alertCtrl.create({                          
+                        message: 'Please enable NFC',
+                        buttons: ['OK']
+                      });
+                      alertNfctagSettings.present();
+                    }
+                  });
+                  
+                }          
+              });
               //code end to check cleaning started/stopped for NFC or not
             }
             else
