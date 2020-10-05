@@ -713,8 +713,8 @@ export class MyApp {
                                 {
                                   //pending code - write an alert code
                                   const alertDomainError = this.alertCtrl.create({
-                                    title: 'Invalid Domain',
-                                    message: 'Please scanned the correct domain',
+                                    title: 'Incorrect Tag',
+                                    message: 'Please scan the correct tag which you used to signin',
                                     buttons: ['OK']
                                   });
                                   alertDomainError.present();
@@ -759,12 +759,12 @@ export class MyApp {
                                 .subscribe(data =>{
                                   console.log('get store details');
                                   
-                                  const alertApiDomain = this.alertCtrl.create({
-                                    title: 'Api Domain Details',
-                                    message: 'domain name:'+data.Domain.Name+',store name:'+data.Store.Name+',department:'+data.Department.Name+',domain desc:'+data.Domain.Description,
-                                    buttons: ['OK']
-                                  });
-                                  alertApiDomain.present();
+                                  //const alertApiDomain = this.alertCtrl.create({
+                                  //  title: 'Api Domain Details',
+                                  //  message: 'domain name:'+data.Domain.Name+',store name:'+data.Store.Name+',department:'+data.Department.Name+',domain desc:'+data.Domain.Description,
+                                  //  buttons: ['OK']
+                                  //});
+                                  //alertApiDomain.present();
                                   
                                   if(data.Store.Name)
                                   {                                  
@@ -777,12 +777,12 @@ export class MyApp {
                                       
                                       if(valloginuserApiDetails)
                                       {
-                                        const alertScannedData09 = this.alertCtrl.create({
-                                          title: 'Scanned data from storage',
-                                          message: valloginuserApiDetails,
-                                          buttons: ['OK']
-                                        });
-                                        alertScannedData09.present();
+                                        //const alertScannedData09 = this.alertCtrl.create({
+                                        //  title: 'Scanned data from storage',
+                                        //  message: valloginuserApiDetails,
+                                        //  buttons: ['OK']
+                                        //});
+                                        //alertScannedData09.present();
                                         
                                         let all_values = valloginuserApiDetails.split("**__**");
                                         let allValueLength = all_values.length;
@@ -793,12 +793,12 @@ export class MyApp {
                                           {
                                             
                                             //error alert section
-                                            const alertScannedStoreNameTest = this.alertCtrl.create({
-                                              title: 'Store Name from Storage',
-                                              message: all_values[1],
-                                              buttons: ['OK']
-                                            });
-                                            alertScannedStoreNameTest.present();                                            
+                                            //const alertScannedStoreNameTest = this.alertCtrl.create({
+                                            //  title: 'Store Name from Storage',
+                                            //  message: all_values[1],
+                                            //  buttons: ['OK']
+                                            //});
+                                            //alertScannedStoreNameTest.present();                                            
                                             
                                             //check if app in background mode
                                             if(isAppInForeground==false)
@@ -900,21 +900,24 @@ export class MyApp {
                                               this.storage.get('alertTimerSettings').then((val1) => {
                                                 if(val1==true)
                                                 {
-                                                  const alertScannedData07 = this.alertCtrl.create({
-                                                    title: 'Scanned store name',
-                                                    message: all_values[1],
-                                                    buttons: [
-                                                      {
-                                                        text: 'OK',
-                                                        role: 'ok',
-                                                        handler: () => {
-                                                          this.storage.set(this.keynfcclean,true);
-                                                          this.nav.push(TimerPage);
-                                                        }
-                                                      }
-                                                    ]
-                                                  });
-                                                  alertScannedData07.present();
+                                                  //const alertScannedData07 = this.alertCtrl.create({
+                                                  //  title: 'Scanned store name',
+                                                  //  message: all_values[1],
+                                                  //  buttons: [
+                                                  //    {
+                                                  //      text: 'OK',
+                                                  //      role: 'ok',
+                                                  //      handler: () => {
+                                                  //        this.storage.set(this.keynfcclean,true);
+                                                  //        this.nav.push(TimerPage);
+                                                  //      }
+                                                  //    }
+                                                  //  ]
+                                                  //});
+                                                  //alertScannedData07.present();
+                                                  
+                                                  this.storage.set(this.keynfcclean,true);
+                                                  this.nav.push(TimerPage);
                                                 }
                                                 else
                                                 {
@@ -945,21 +948,24 @@ export class MyApp {
                                                       .subscribe(data =>{                                                      
                                                         console.log(data);
                                                         
-                                                        const alertScannedData07 = this.alertCtrl.create({
-                                                          title: 'Scanned store name',
-                                                          message: all_values[1],
-                                                          buttons: [
-                                                            {
-                                                              text: 'OK',
-                                                              role: 'ok',
-                                                              handler: () => {
-                                                                this.storage.set(this.keynfcclean,true);
-                                                                this.nav.push(TimerSignoffPage);
-                                                              }
-                                                            }
-                                                          ]
-                                                        });
-                                                        alertScannedData07.present();                                                      
+                                                        //const alertScannedData07 = this.alertCtrl.create({
+                                                        //  title: 'Scanned store name',
+                                                        //  message: all_values[1],
+                                                        //  buttons: [
+                                                        //    {
+                                                        //      text: 'OK',
+                                                        //      role: 'ok',
+                                                        //      handler: () => {
+                                                        //        this.storage.set(this.keynfcclean,true);
+                                                        //        this.nav.push(TimerSignoffPage);
+                                                        //      }
+                                                        //    }
+                                                        //  ]
+                                                        //});
+                                                        //alertScannedData07.present();
+                                                        
+                                                        this.storage.set(this.keynfcclean,true);
+                                                        this.nav.push(TimerSignoffPage);
                                                         
                                                       },err => {
                                                         console.log(err);
@@ -975,8 +981,8 @@ export class MyApp {
                                           {
                                             //error alert section
                                             const alertScannedStoreError = this.alertCtrl.create({
-                                              title: 'Invalid Store Name. Please scan the tag again.',
-                                              message: 'No data found in storage. Please scan the tag again.',
+                                              title: 'Incorrect Store',
+                                              message: 'Unable to find the store name. Please scan the correct tag once',
                                               buttons: ['OK']
                                             });
                                             alertScannedStoreError.present();
@@ -985,8 +991,8 @@ export class MyApp {
                                         else
                                         {
                                           const alertScannedDataError07 = this.alertCtrl.create({
-                                            title: 'Invalid Tag Read',
-                                            message: 'No data found in storage. Please scan the tag again.',
+                                            title: 'Incorrect Tag',
+                                            message: 'No data found. Please scan the tag again.',
                                             buttons: ['OK']
                                           });
                                           alertScannedDataError07.present();
@@ -995,8 +1001,8 @@ export class MyApp {
                                       else
                                       {
                                         const alertScannedDataError07 = this.alertCtrl.create({
-                                          title: 'Invalid Read',
-                                          message: 'No data found in storage. Please scan the tag again.',
+                                          title: 'Invalid Data',
+                                          message: 'No data found. Please scan the tag once.',
                                           buttons: ['OK']
                                         });
                                         alertScannedDataError07.present();
@@ -1009,7 +1015,7 @@ export class MyApp {
                                   else
                                   {
                                     const alertDomainApiErr = this.alertCtrl.create({                                        
-                                      message: 'No store details found from API Call. Please scan the tag again',
+                                      message: 'API Error. Please scan the correct tag.',
                                       buttons: ['OK']
                                     });
                                     alertDomainApiErr.present();

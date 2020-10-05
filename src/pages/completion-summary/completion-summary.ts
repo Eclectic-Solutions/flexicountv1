@@ -50,6 +50,18 @@ export class CompletionSummaryPage {
   }
 
   ionViewDidLoad() {
+   
+    //code to clear startNfcClean
+    
+    this.storage.get('startNfcClean').then((valClean7) => {
+     if(valClean7)
+     {
+      this.storage.set(this.keynfcclean,false);
+      this.storage.set(this.keytimervalue,'');
+     }
+    });
+   
+   
     console.log('ionViewDidLoad CompletionSummaryPage');
     this.loadUser();
     this.loadSelectedLocation();
@@ -81,7 +93,7 @@ export class CompletionSummaryPage {
 	 .map(res => res.json())
 	 .subscribe(data =>{
 		 this.data = data;
-		 //console.log(data);
+		 console.log(data);
 	 },err => {
 		 //console.log(err);
 	 });
