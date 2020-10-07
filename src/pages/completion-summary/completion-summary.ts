@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -37,7 +37,7 @@ export class CompletionSummaryPage {
   keynfcclean:string = 'startNfcClean';
   keytimervalue:string = 'loginUserTimerValue';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, public alertCtrl:AlertController) {
   }
   
   doRefresh(refresher) {
@@ -56,6 +56,14 @@ export class CompletionSummaryPage {
     this.storage.get('startNfcClean').then((valClean7) => {
      if(valClean7)
      {
+      
+      const alertTest01 = this.alertCtrl.create({	
+       message: 'Clear NFC cleaning flag storage.',
+       buttons: ['OK']
+      });
+      alertTest01.present();
+      
+      
       this.storage.set(this.keynfcclean,false);
       this.storage.set(this.keytimervalue,'');
      }
@@ -108,6 +116,13 @@ export class CompletionSummaryPage {
     this.storage.get('startNfcClean').then((valClean7) => {
      if(valClean7)
      {
+      
+      const alertTest02 = this.alertCtrl.create({	
+       message: 'Clear NFC cleaning flag storage 02.',
+       buttons: ['OK']
+      });
+      alertTest02.present();
+      
       this.storage.set(this.keynfcclean,false);
       this.storage.set(this.keytimervalue,'');
      }
