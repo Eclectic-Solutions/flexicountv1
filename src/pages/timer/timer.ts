@@ -35,7 +35,7 @@ export class TimerPage {
   public LoginUserapiDetails='';
   
   keytimervalue:string = 'loginUserTimerValue';
-  
+  keynfcclean:string = 'startNfcClean';
   
   url: string;
   data: string;
@@ -66,6 +66,12 @@ export class TimerPage {
   }
   
   startTimer(){
+   
+   const alertTestTime01 = this.alertCtrl.create({	
+    message: 'Time 01 start',
+    buttons: ['OK']
+   });
+   alertTestTime01.present();
   
    this.storage.get('loginUserTimerValue').then((timeVal) => {
     console.log('Current Timer Value: '+timeVal);
@@ -111,11 +117,31 @@ export class TimerPage {
     var numseconds_print = ("0" + numseconds).slice(-2);
     
     //this.timer = numhours + ":" + numminutes + ":" + numseconds;
+    
     this.timer = numhours_print + ":" + numminutes_print + ":" + numseconds_print;
+    
+   // const alertTestTime05 = this.alertCtrl.create({	
+   // message: 'print timer value: '+this.timer,
+   // buttons: ['OK']
+   //});
+   //alertTestTime05.present();
+    
   }
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimerPage');
+    
+    this.storage.get('startNfcClean').then((valClean7) => {
+     if(valClean7)
+     {      
+      const alertTestCheck = this.alertCtrl.create({	
+       message: 'NFC Start Cleaning Storage is Activated',
+       buttons: ['OK']
+      });
+      alertTestCheck.present();
+     }
+    });
+    
     this.loadSelectedLocation();
     this.loadUser();
   }
@@ -200,6 +226,14 @@ export class TimerPage {
                     else
                     {
                      //this.startTimer();
+                     
+                     const alertTestStartCleanAPI = this.alertCtrl.create({	
+                      message: 'Start Cleaning Api called successfully',
+                      buttons: ['OK']
+                     });
+                     alertTestStartCleanAPI.present();
+                     
+                     
                     }
                     
             },err => {

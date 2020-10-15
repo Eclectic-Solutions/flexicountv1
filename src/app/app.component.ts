@@ -689,6 +689,14 @@ export class MyApp {
                             if(valloginUserToken)
                             {
                               
+                              //test alert                              
+                              const alertTestStopClean = this.alertCtrl.create({                                  
+                                message: 'Complete Cleaning - NFC',
+                                buttons: ['OK']
+                              });
+                              alertTestStopClean.present();
+                              
+                              
                               this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
                                 
                                 let values = valloginuserDomainID.split("**__**");
@@ -700,14 +708,30 @@ export class MyApp {
                                 {
                                   
                                   //reset start cleaning storage flag
-                                  this.storage.set(this.keynfcclean,false);                            
+                                  //this.storage.set(this.keynfcclean,false);                            
                                   //have to call complete cleaning api and redirect to the comp summary page                          
-                                  this.nav.push(CompletionSummaryPage);
+                                  //this.nav.push(CompletionSummaryPage);
                                   
                                   ////reset start cleaning storage flag
                                   //this.storage.set(this.keynfcclean,false);                            
                                   ////have to call complete cleaning api and redirect to the comp summary page                          
                                   //this.nav.push(CompletionSummaryPage);
+                                  
+                                  const alertStopCleanRedirect = this.alertCtrl.create({                                  
+                                  message: 'Stop Cleaning',
+                                  buttons: [
+                                    {
+                                      text: 'OK',
+                                      role: 'ok',
+                                      handler: () => {                                        
+                                        this.nav.push(CompletionSummaryPage);
+                                      }
+                                    }
+                                  ]
+                                  });
+                                  alertStopCleanRedirect.present();
+                                  
+                                  
                                 }
                                 else
                                 {
@@ -791,15 +815,6 @@ export class MyApp {
                                         {
                                           if(all_values[1])
                                           {
-                                            
-                                            //error alert section
-                                            //const alertScannedStoreNameTest = this.alertCtrl.create({
-                                            //  title: 'Store Name from Storage',
-                                            //  message: all_values[1],
-                                            //  buttons: ['OK']
-                                            //});
-                                            //alertScannedStoreNameTest.present();                                            
-                                            
                                             //check if app in background mode
                                             if(isAppInForeground==false)
                                             {
@@ -900,24 +915,22 @@ export class MyApp {
                                               this.storage.get('alertTimerSettings').then((val1) => {
                                                 if(val1==true)
                                                 {
-                                                  //const alertScannedData07 = this.alertCtrl.create({
-                                                  //  title: 'Scanned store name',
-                                                  //  message: all_values[1],
-                                                  //  buttons: [
-                                                  //    {
-                                                  //      text: 'OK',
-                                                  //      role: 'ok',
-                                                  //      handler: () => {
-                                                  //        this.storage.set(this.keynfcclean,true);
-                                                  //        this.nav.push(TimerPage);
-                                                  //      }
-                                                  //    }
-                                                  //  ]
-                                                  //});
-                                                  //alertScannedData07.present();
+                                                  const alertStartCleanRedirect = this.alertCtrl.create({                                  
+                                                  message: 'Start Cleaning',
+                                                  buttons: [
+                                                    {
+                                                      text: 'OK',
+                                                      role: 'ok',
+                                                      handler: () => {
+                                                        this.storage.set(this.keynfcclean,true);
+                                                        this.nav.push(TimerPage);
+                                                      }
+                                                    }
+                                                  ]
+                                                  });
+                                                  alertStartCleanRedirect.present();
                                                   
-                                                  this.storage.set(this.keynfcclean,true);
-                                                  this.nav.push(TimerPage);
+                                                  
                                                 }
                                                 else
                                                 {

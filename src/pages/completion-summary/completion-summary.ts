@@ -49,30 +49,11 @@ export class CompletionSummaryPage {
     }, 2000);
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() {   
    
-    //code to clear startNfcClean
-    
-    this.storage.get('startNfcClean').then((valClean7) => {
-     if(valClean7)
-     {
-      
-      const alertTest01 = this.alertCtrl.create({	
-       message: 'Clear NFC cleaning flag storage.',
-       buttons: ['OK']
-      });
-      alertTest01.present();
-      
-      
-      this.storage.set(this.keynfcclean,false);
-      this.storage.set(this.keytimervalue,'');
-     }
-    });
-   
-   
-    console.log('ionViewDidLoad CompletionSummaryPage');
-    this.loadUser();
-    this.loadSelectedLocation();
+   console.log('ionViewDidLoad CompletionSummaryPage');
+   this.loadUser();
+   this.loadSelectedLocation();
   }
   
   loadUser(){
@@ -102,6 +83,32 @@ export class CompletionSummaryPage {
 	 .subscribe(data =>{
 		 this.data = data;
 		 console.log(data);
+		 
+		 
+		 const alertTest07 = this.alertCtrl.create({	
+		  message: 'Complete Cleaning API is called successfully.',
+		  buttons: ['OK']
+		 });
+		 alertTest07.present();
+		 
+		 //code to clear startNfcClean    
+		 this.storage.get('startNfcClean').then((valClean7) => {
+		  if(valClean7)
+		  {		   
+		   const alertTest01 = this.alertCtrl.create({	
+		    message: 'Call Complete Cleaning API & Clear NFC cleaning flag storage.',
+		    buttons: ['OK']
+		   });
+		   alertTest01.present();
+		   
+		   this.storage.set(this.keynfcclean,false);
+		   this.storage.set(this.keytimervalue,'');
+		  }
+		  
+		 });
+		 
+		 
+		 
 	 },err => {
 		 //console.log(err);
 	 });
