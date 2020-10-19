@@ -690,11 +690,11 @@ export class MyApp {
                             {
                               
                               //test alert                              
-                              const alertTestStopClean = this.alertCtrl.create({                                  
-                                message: 'Complete Cleaning - NFC',
-                                buttons: ['OK']
-                              });
-                              alertTestStopClean.present();
+                              //const alertTestStopClean = this.alertCtrl.create({                                  
+                              //  message: 'Complete Cleaning - NFC',
+                              //  buttons: ['OK']
+                              //});
+                              //alertTestStopClean.present();
                               
                               
                               this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
@@ -718,7 +718,7 @@ export class MyApp {
                                   //this.nav.push(CompletionSummaryPage);
                                   
                                   const alertStopCleanRedirect = this.alertCtrl.create({                                  
-                                  message: 'Stop Cleaning',
+                                  message: 'NFC - Complete Cleaning',
                                   buttons: [
                                     {
                                       text: 'OK',
@@ -916,7 +916,7 @@ export class MyApp {
                                                 if(val1==true)
                                                 {
                                                   const alertStartCleanRedirect = this.alertCtrl.create({                                  
-                                                  message: 'Start Cleaning',
+                                                  message: 'NFC - Start Cleaning',
                                                   buttons: [
                                                     {
                                                       text: 'OK',

@@ -67,11 +67,11 @@ export class TimerPage {
   
   startTimer(){
    
-   const alertTestTime01 = this.alertCtrl.create({	
-    message: 'Time 01 start',
-    buttons: ['OK']
-   });
-   alertTestTime01.present();
+   //const alertTestTime01 = this.alertCtrl.create({	
+   // message: 'Time 01 start',
+   // buttons: ['OK']
+   //});
+   //alertTestTime01.present();
   
    this.storage.get('loginUserTimerValue').then((timeVal) => {
     console.log('Current Timer Value: '+timeVal);
@@ -134,11 +134,11 @@ export class TimerPage {
     this.storage.get('startNfcClean').then((valClean7) => {
      if(valClean7)
      {      
-      const alertTestCheck = this.alertCtrl.create({	
-       message: 'NFC Start Cleaning Storage is Activated',
-       buttons: ['OK']
-      });
-      alertTestCheck.present();
+      //const alertTestCheck = this.alertCtrl.create({	
+      // message: 'NFC Start Cleaning Storage is Activated',
+      // buttons: ['OK']
+      //});
+      //alertTestCheck.present();
      }
     });
     
@@ -227,11 +227,11 @@ export class TimerPage {
                     {
                      //this.startTimer();
                      
-                     const alertTestStartCleanAPI = this.alertCtrl.create({	
-                      message: 'Start Cleaning Api called successfully',
-                      buttons: ['OK']
-                     });
-                     alertTestStartCleanAPI.present();
+                     //const alertTestStartCleanAPI = this.alertCtrl.create({	
+                     // message: 'Start Cleaning Api called successfully',
+                     // buttons: ['OK']
+                     //});
+                     //alertTestStartCleanAPI.present();
                      
                      
                     }
