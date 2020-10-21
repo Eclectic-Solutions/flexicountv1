@@ -38,7 +38,14 @@
           <ion-col col-8>
           </ion-col>
           <ion-col col-2 style="text-align: right;">
-            <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon>
+            <div [class]="classVariableBackAll">
+              <ion-icon name="arrow-round-back" color="primary" size="large" (click)=back() style="font-size: 36px;"></ion-icon>
+            </div>
+            
+            <div  [class]="classVariableBackNfc">
+              <ion-icon name="arrow-round-back" color="primary" size="large" style="font-size: 36px;  color: #9a9ea7;"></ion-icon>
+            </div>           
+            
           </ion-col>
         </ion-row>
     </ion-grid>  

@@ -52,6 +52,9 @@ export class TimerSignoffPage {
   classVariable11: string = 'cls-disp-block';
   classVariable12: string = 'cls-disp-none';
   classVariable13: string = 'cls-disp-none';
+  
+  classVariableBackAll: string = 'cls-disp-block';
+  classVariableBackNfc: string = 'cls-disp-none';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, public barcodeScaner: BarcodeScanner, private alertController:AlertController) {
   
@@ -78,7 +81,10 @@ export class TimerSignoffPage {
          this.classVariable12 = 'cls-disp-none';
          this.classVariable13 = 'cls-disp-none';  
         }    
-       });      
+       });
+       
+       this.classVariableBackNfc = 'cls-disp-bck-block';
+       this.classVariableBackAll = 'cls-disp-bck-none';
        
       }
       else if(vall7=='qr')
@@ -99,12 +105,18 @@ export class TimerSignoffPage {
         }    
        });
        
+       this.classVariableBackNfc = 'cls-disp-bck-none';
+       this.classVariableBackAll = 'cls-disp-bck-block';
+       
       }
       else
       {
        this.classVariable11 = 'cls-disp-block';
        this.classVariable12 = 'cls-disp-none';
        this.classVariable13 = 'cls-disp-none';
+       
+       this.classVariableBackNfc = 'cls-disp-bck-none';
+       this.classVariableBackAll = 'cls-disp-bck-block';
       }
     });
    
