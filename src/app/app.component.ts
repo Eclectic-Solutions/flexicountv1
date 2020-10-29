@@ -899,8 +899,7 @@ export class MyApp {
                                               //code to check timer settings and call start cleaning api
                                               this.storage.get('alertTimerSettings').then((val1) => {
                                                 if(val1==true)
-                                                {
-                                                  /*
+                                                {                                                  
                                                   const alertStartCleanRedirect = this.alertCtrl.create({                                  
                                                   message: 'NFC - Start Cleaning',
                                                   buttons: [
@@ -909,67 +908,12 @@ export class MyApp {
                                                       role: 'ok',
                                                       handler: () => {
                                                         this.storage.set(this.keynfcclean,true);
-                                                        this.nav.push(TimerPage);
+                                                        this.nav.push(TimerSignoffPage);
                                                       }
                                                     }
                                                   ]
                                                   });
-                                                  alertStartCleanRedirect.present();
-                                                  */
-                                                  
-                                                  //start cleaning api call - start
-                                                  
-                                                  this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
-                                                    
-                                                    let values = valloginuserDomainID.split("**__**");
-                                                    let curDomainID = values[0];
-                                                    let curStoreID = values[1];
-                                                    let curDepartmentID = values[2];
-                                                    
-                                                    //code to call start cleaning api                                                    
-                                                    var headers = new Headers();
-                                                    headers.append("Authorization", 'Bearer '+valloginUserToken);       
-                                                    const requestOptions = new RequestOptions({ headers: headers });
-                                                    
-                                                    let postData = {
-                                                      "DomainID": curDomainID,
-                                                      "StoreID": curStoreID,
-                                                      "DepartmentID": curDepartmentID
-                                                    }
-                                                    
-                                                    //api call start
-                                                    this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {                                      
-                                                        this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-                                                        .map(res => res.json())
-                                                        .subscribe(data =>{
-                                                          
-                                                          //console.log(data);
-                                                          
-                                                          const alertStartCleanRedirect = this.alertCtrl.create({                                  
-                                                          message: 'NFC - Start Cleaning',
-                                                          buttons: [
-                                                            {
-                                                              text: 'OK',
-                                                              role: 'ok',
-                                                              handler: () => {
-                                                                this.storage.set(this.keynfcclean,true);
-                                                                this.nav.push(TimerSignoffPage);
-                                                              }
-                                                            }
-                                                          ]
-                                                          });
-                                                          alertStartCleanRedirect.present();
-                                                          
-                                                          
-                                                        },err => {
-                                                          console.log(err);
-                                                        });                                                    
-                                                      });
-                                                    //api call start
-                                                  });
-                                                  
-                                                  //start cleaning api call - end
-                                                  
+                                                  alertStartCleanRedirect.present();                                                  
                                                 }
                                                 else
                                                 {
