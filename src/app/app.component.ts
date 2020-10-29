@@ -419,7 +419,10 @@ export class MyApp {
                                                         role: 'ok',
                                                         handler: () => {
                                                           this.storage.set(this.keynfcclean,true);
-                                                          this.nav.push(TimerPage);
+                                                          //this.nav.push(TimerPage);
+                                                          
+                                                          this.nav.push(TimerSignoffPage);
+                                                          
                                                         }
                                                       }
                                                     ]
@@ -908,7 +911,9 @@ export class MyApp {
                                                       role: 'ok',
                                                       handler: () => {
                                                         this.storage.set(this.keynfcclean,true);
-                                                        this.nav.push(TimerPage);
+                                                        //this.nav.push(TimerPage);
+                                                        
+                                                        this.nav.push(TimerSignoffPage);
                                                       }
                                                     }
                                                   ]
