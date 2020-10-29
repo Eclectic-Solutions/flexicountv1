@@ -899,7 +899,7 @@ export class MyApp {
                                               //code to check timer settings and call start cleaning api
                                               this.storage.get('alertTimerSettings').then((val1) => {
                                                 if(val1==true)
-                                                {                                                  
+                                                {
                                                   const alertStartCleanRedirect = this.alertCtrl.create({                                  
                                                   message: 'NFC - Start Cleaning',
                                                   buttons: [
@@ -908,7 +908,7 @@ export class MyApp {
                                                       role: 'ok',
                                                       handler: () => {
                                                         this.storage.set(this.keynfcclean,true);
-                                                        this.nav.push(TimerSignoffPage);
+                                                        this.nav.push(TimerPage);
                                                       }
                                                     }
                                                   ]

@@ -48,7 +48,6 @@ export class TimerSignoffPage {
 
   public LoginUserapiDetails='';
   keytimervalue:string = 'loginUserTimerValue';
-  keynfcclean:string = 'startNfcClean';
   
   classVariable11: string = 'cls-disp-block';
   classVariable12: string = 'cls-disp-none';
@@ -180,66 +179,7 @@ export class TimerSignoffPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimerSignoffPage');
-    //this.loadSelectedLocation();
-    
-    this.checkNFCStart();
-  }
-  
-  checkNFCStart(){
-   this.storage.get('startNfcClean').then((valClean) => {
-    if(valClean==true)
-    {
-     //section for NFC Start cleaning api call
-     
-     //start cleaning api call - start
-     
-     this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
-      
-      let values = valloginuserDomainID.split("**__**");
-      let curDomainID = values[0];
-      let curStoreID = values[1];
-      let curDepartmentID = values[2];
-      
-      this.storage.get('loginUserToken').then((valloginUserToken) => {
-      
-        //code to call start cleaning api                                                    
-        var headers = new Headers();
-        headers.append("Authorization", 'Bearer '+valloginUserToken);       
-        const requestOptions = new RequestOptions({ headers: headers });
-      
-        let postData = {
-          "DomainID": curDomainID,
-          "StoreID": curStoreID,
-          "DepartmentID": curDepartmentID
-        }
-      
-        //api call start
-        this.storage.get('loginUserConfirmSiteURL').then((valLoginUserConfirmSiteURL) => {                                      
-            this.http.post('https://'+valLoginUserConfirmSiteURL+'/api/Mobile/MetricAlertStartedCleaning',postData,requestOptions)
-            .map(res => res.json())
-            .subscribe(data =>{
-             
-             console.log('Get NFC Start Cleaning response');
-             this.loadSelectedLocation();
-             
-            },err => {
-              console.log(err);
-            });                                                    
-          });
-        //api call start
-      });
-      
-     });
-     
-     //start cleaning api call - end
-     
-    }
-    else
-    {
-     console.log('Non-NFC Section');
-     this.loadSelectedLocation();
-    }
-   });
+    this.loadSelectedLocation();
   }
   
   
