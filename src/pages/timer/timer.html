@@ -1,18 +1,27 @@
 <ion-content padding id="home_page1">
+  
+  <div [class]="classVariableNfcTimer">
   <img class="header_image" src="assets/imgs/brand.png"/>
-  <h2 class="mtitle" >Timer</h2>
+  </div>
+  
+  <div [class]="classVariableNfcTimer">
+    <h2 class="mtitle" >Timer</h2>
+  </div>
 
   <ion-col col-12>
     
-    <div class="cls-timer-disp"><p id="id_countdown">{{timer}}</p></div>
-    <div class="timer-txt">Timer for: {{LoginUserapiDetails}}</div>
+    <div [class]="classVariableNfcTimer">
+      <div class="cls-timer-disp"><p id="id_countdown">{{timer}}</p></div>
+      <div class="timer-txt">Timer for: {{LoginUserapiDetails}}</div>
     
     
-    <button ion-button color="secondary" block default (click) = stopTimer() >Stop Timer</button>
-    <!--<button ion-button color="light" block default (click) = back()>Back</button>-->
+      <button ion-button color="secondary" block default (click) = stopTimer() >Stop Timer</button>
+      <!--<button ion-button color="light" block default (click) = back()>Back</button>-->
+    </div>
     
     
   </ion-col>
+
   
 </ion-content>
 

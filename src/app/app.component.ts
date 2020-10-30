@@ -419,10 +419,7 @@ export class MyApp {
                                                         role: 'ok',
                                                         handler: () => {
                                                           this.storage.set(this.keynfcclean,true);
-                                                          //this.nav.push(TimerPage);
-                                                          
-                                                          this.nav.push(TimerSignoffPage);
-                                                          
+                                                          this.nav.push(TimerPage);
                                                         }
                                                       }
                                                     ]
@@ -911,18 +908,18 @@ export class MyApp {
                                                       role: 'ok',
                                                       handler: () => {
                                                         this.storage.set(this.keynfcclean,true);
-                                                        //this.nav.push(TimerPage);
-                                                        
-                                                        this.nav.push(TimerSignoffPage);
+                                                        this.nav.push(TimerPage);
                                                       }
                                                     }
                                                   ]
                                                   });
-                                                  alertStartCleanRedirect.present();                                                  
+                                                  alertStartCleanRedirect.present();
+                                                  
                                                 }
                                                 else
                                                 {
                                                   //get domain id from storage to call api
+                                                  /*
                                                   this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
                                                     
                                                     let values = valloginuserDomainID.split("**__**");
@@ -974,6 +971,27 @@ export class MyApp {
                                                     });
                                                     //api call start
                                                   });
+                                                  */
+                                                  
+                                                  //new logic start
+                                                  
+                                                  const alertStartCleanRedirect = this.alertCtrl.create({                                  
+                                                  message: 'NFC - Start Cleaning',
+                                                  buttons: [
+                                                    {
+                                                      text: 'OK',
+                                                      role: 'ok',
+                                                      handler: () => {
+                                                        this.storage.set(this.keynfcclean,true);
+                                                        this.nav.push(TimerPage);
+                                                      }
+                                                    }
+                                                  ]
+                                                  });
+                                                  alertStartCleanRedirect.present();
+                                                  
+                                                  //new logic end
+                                                  
                                                 }
                                               });
                                             }
@@ -1456,6 +1474,28 @@ export class MyApp {
                     {
                       this.nav.push(AlertPage);
                     }
+                    else
+                    {
+                      //New section start for NFC Redirection
+                      
+                      //1. current page is timer page
+                      if(view.component.name=='TimerPage')
+                      {
+                        //2.check notification type is Start Cleaning
+                        if(data.additionalData.Action=="started_cleaning")
+                        {
+                          //3.if scan type is NFC
+                          this.storage.get('startNfcClean').then((valClean) => {              
+                            if(valClean==true)
+                            {
+                              this.nav.push(TimerSignoffPage);
+                            }
+                          });
+                        }
+                      }
+                      
+                      //New section end for NFC Redirection
+                    }
                   }
                   else
                   {
@@ -1679,7 +1719,29 @@ export class MyApp {
                     if(view.component.name!='TimerPage' && view.component.name!='CompletionSummaryPage')
                     {
                       this.nav.push(AlertPage);
-                    }                        
+                    }
+                    else
+                    {
+                      //New section start for NFC Redirection
+                      
+                      //1. current page is timer page
+                      if(view.component.name=='TimerPage')
+                      {
+                        //2.check notification type is Start Cleaning
+                        if(data.additionalData.Action=="started_cleaning")
+                        {
+                          //3.if scan type is NFC
+                          this.storage.get('startNfcClean').then((valClean) => {              
+                            if(valClean==true)
+                            {
+                              this.nav.push(TimerSignoffPage);
+                            }
+                          });
+                        }
+                      }
+                      
+                      //New section end for NFC Redirection
+                    }
                   }
                   else
                   {

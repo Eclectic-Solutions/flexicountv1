@@ -39,6 +39,8 @@ export class TimerPage {
   
   url: string;
   data: string;
+  
+  classVariableNfcTimer: string = 'cls-timer-disp-block';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, private storage: Storage, private insomnia: Insomnia, public alertCtrl:AlertController) {
   
@@ -47,6 +49,30 @@ export class TimerPage {
     () => console.log('success'),
     () => console.log('error')
    );
+  
+   //new section start for nfc
+   
+   this.storage.get('scanType').then((vall7) => {
+    if(vall7=='nfc')
+    {     
+     this.storage.get('startNfcClean').then((valClean) => {              
+      if(valClean==true)
+      {
+       this.classVariableNfcTimer = 'cls-timer-disp-none';
+      }
+      else
+      {
+       this.classVariableNfcTimer = 'cls-timer-disp-block';
+      }
+     });
+    }
+    else
+    {     
+     this.classVariableNfcTimer = 'cls-timer-disp-block';
+    }
+   });
+   
+   //new section end for nfc
   
   
    this.startTimer();
