@@ -116,7 +116,7 @@ export class MyApp {
       
       console.log('d:'+isAppInForeground);
 
-      
+      //code start for NFC tag read for IOS
       if(platform.is('ios'))
       {
       
@@ -431,6 +431,7 @@ export class MyApp {
                                                   else
                                                   {
                                                     //get domain id from storage to call api
+                                                    /*
                                                     this.storage.get('loginuserDomainID').then((valloginuserDomainID) => {
                                                       
                                                       let values = valloginuserDomainID.split("**__**");
@@ -482,6 +483,25 @@ export class MyApp {
                                                       });
                                                       //api call start
                                                     });
+                                                    */
+                                                    
+                                                    //new logic start
+                                                  
+                                                    const alertStartCleanRedirect = this.alertCtrl.create({                                  
+                                                    message: 'NFC - Start Cleaning',
+                                                    buttons: [
+                                                      {
+                                                        text: 'OK',
+                                                        role: 'ok',
+                                                        handler: () => {
+                                                          this.storage.set(this.keynfcclean,true);
+                                                          this.nav.push(TimerPage);
+                                                        }
+                                                      }
+                                                    ]
+                                                    });
+                                                    alertStartCleanRedirect.present();                                                    
+                                                    //new logic end                                                    
                                                   }
                                                 });
                                               }
@@ -605,7 +625,7 @@ export class MyApp {
         err => {
           console.log(err);
         });            
-      }
+      }//code end for NFC tag for IOS
       if(platform.is('android'))
       {  
         this.nfc.addNdefListener(() => {
