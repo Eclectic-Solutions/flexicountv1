@@ -34,7 +34,7 @@
     "@ionic-native/sqlite": "^4.20.0",
     "@ionic-native/status-bar": "~4.20.0",
     "@ionic-native/toast": "^4.20.0",
-    "@ionic/storage": "^2.3.1",
+    "@ionic/storage": "^2.2.0",
     "cordova-android": "7.1.1",
     "cordova-plugin-advanced-http": "^3.1.0",
     "cordova-plugin-background-mode": "^0.7.3",
